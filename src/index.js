@@ -1,6 +1,6 @@
-import { Calendar } from './widgets/Calendar';
-import { Clock } from './widgets/Clock';
-import { DateWidget } from './widgets/Date';
+import { Calendar } from './Widgets/Calendar';
+import { Clock } from './Widgets/Clock';
+import { DateWidget } from './Widgets/Date';
 
 /** @type {HTMLElement} */
 let appElem;
