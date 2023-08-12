@@ -1,6 +1,14 @@
 const fs = require('fs');
 
-const beforeBody = `// @ts-ignore\ntry {`;
+const beforeBody = `if (!Object.defineProperty) {
+  Object.defineProperty = function defineProperty(object, property, descriptor) {
+    object[property] = descriptor;
+    return object;
+  }
+};
+try {
+  // @ts-ignore
+`;
 const afterBody = `
 } catch (err) {
   var _consoleElem = document.getElementById("_consoleElem");
