@@ -1,8 +1,7 @@
 const fs = require('fs');
 
-const beforeBody = `try {`;
-const afterBody =
-  `
+const beforeBody = `// @ts-ignore\ntry {`;
+const afterBody = `
 } catch (err) {
   var _consoleElem = document.getElementById("_consoleElem");
   if(!_consoleElem) {
