@@ -1,0 +1,23 @@
+{
+  "name": "calendar-1",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sebinsuresh/kindle-calendar-1.git",
+  "author": "Sebin Suresh <sebinsuresh@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "babel-loader": "^9.1.3",
+    "nodemon": "^3.0.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "scripts": {
+    "dev-babel": "babel src --watch --out-dir dist",
+    "build-babel": "babel src --out-dir dist",
+    "dev": "nodemon --watch src --exec \"yarn run build\"",
+    "build": "webpack && node wrapTryCatch.js"
+  }
+}

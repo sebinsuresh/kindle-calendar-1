@@ -140,7 +140,7 @@ function createCalendar(baseElem) {
   var startCurrWeekOnRow = 1;
 
   var startDateOfCurrentWeek = now.getDate() - now.getDay();
-  var pointerDate = new Date(now);
+  var pointerDate = new Date(now.getTime());
   pointerDate.setDate(startDateOfCurrentWeek - (startCurrWeekOnRow * 7));
   // var startDateOfCalendar = calendarStartDate.getDate();
 

@@ -1,19 +1,19 @@
 * {
   text-align: center;
   font-size: 24px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .clock,
 .date {
   text-transform: uppercase;
   letter-spacing: 8px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   display: inline-block;
 }
 
 .clock::after {
-  content: " | ";
+  content: ' | ';
   display: inline-block;
   margin-left: 4px;
   margin-right: 4px;
@@ -39,18 +39,17 @@
 
 .days td:last-child {
   border-right: thin solid;
-} */
+} 
 
 .calendar td.day-past {
-}
+}*/
 
 .calendar td.month-other {
   color: #7f7f7f;
 }
 
 .calendar td.day-today {
-  font-weight: bold;
   font-size: 24px;
-  border: 2px solid #000;
-  /* border-radius: 2px 2px; */
+  background-color: black;
+  color: white;
 }
