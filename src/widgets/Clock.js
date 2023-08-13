@@ -1,6 +1,12 @@
 import { getTimeString } from '../Utilities/getTimeString';
 
 /**
+ * @typedef {Object} Config
+ * @property {HTMLElement} baseElem The element to append the clock to
+ * @property {boolean} [showSeconds] Whether to show seconds or not
+ * */
+
+/**
  * @param {HTMLElement} clockElem
  * @param {boolean} showSeconds
  * */
@@ -14,12 +20,15 @@ export function setTime(clockElem, showSeconds) {
   }, updateInMs);
 }
 
-/** @param {HTMLElement} baseElem */
-export function createClock(baseElem) {
+/** @param {Config} config */
+export function createClock(config) {
+  const { baseElem, showSeconds } = config;
+
   const clockElem = document.createElement('div');
   clockElem.className += ' clock';
+  setTime(clockElem, showSeconds ?? false);
+
   baseElem.appendChild(clockElem);
-  setTime(clockElem, false);
 }
 
 export const Clock = {

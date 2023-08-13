@@ -1,5 +1,10 @@
 {
     "compilerOptions": {
-        "checkJs": true
-    }
+        "checkJs": true,
+        "strict": true, // This enabled boolean|undefined to warn in IDE if not handled
+    },
+    "exclude": [
+        "node_modules",
+        "dist",
+    ]
 }

@@ -1,16 +1,14 @@
-import { Calendar } from './Widgets/Calendar';
-import { Clock } from './Widgets/Clock';
-import { DateWidget } from './Widgets/Date';
-
-/** @type {HTMLElement} */
-let appElem;
-/** @type {HTMLElement} */
-let consoleElem;
+import { Calendar } from './widgets/Calendar';
+import { Clock } from './widgets/Clock';
+import { DateWidget } from './widgets/Date';
 
 function handleOnLoad() {
-  consoleElem = document.getElementById('consoleElem');
-  appElem = document.getElementById('app');
-  Clock.create(appElem);
+  let consoleElem = document.getElementById('consoleElem');
+  let appElem = document.getElementById('app');
+  if (!consoleElem || !appElem) {
+    throw new Error('Could not find Console or App elements in page');
+  }
+  Clock.create({ baseElem: appElem });
   DateWidget.create(appElem);
   Calendar.create(appElem);
 }
