@@ -1,9 +1,12 @@
 import { getTimeString } from '../Utilities/getTimeString';
 
 /**
- * @typedef {Object} Config
- * @property {HTMLElement} baseElem The element to append the clock to
- * @property {boolean} [showSeconds] Whether to show seconds or not
+ * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
+ *
+ * @typedef { Object } ClockConfigProperties
+ * @property { boolean } [showSeconds] Whether to show seconds or not
+ *
+ * @typedef { BaseWidgetConfig & ClockConfigProperties } Config
  * */
 
 /**

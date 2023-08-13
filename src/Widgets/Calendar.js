@@ -2,6 +2,14 @@ import { WeekDays } from '../Constants/Days';
 import { Months } from '../Constants/Months';
 import { getCurrentDate } from '../Utilities/getCurrentDate';
 
+/**
+ * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
+ *
+ * @typedef { Object } CalendarConfigProperties
+ *
+ * @typedef { BaseWidgetConfig & CalendarConfigProperties } Config
+ * */
+
 function createElement() {
   const calendarElem = document.createElement('table');
   calendarElem.className += ' calendar';
@@ -10,8 +18,10 @@ function createElement() {
   return calendarElem;
 }
 
-/** @param {HTMLElement} baseElem */
-function createCalendar(baseElem) {
+/** @param {Config} config */
+function createCalendar(config) {
+  const { baseElem } = config;
+
   const now = getCurrentDate();
 
   const calendarElem = createElement();
@@ -66,6 +76,5 @@ function createCalendar(baseElem) {
 }
 
 export const Calendar = {
-  configure: (config) => {},
   create: createCalendar,
 };
