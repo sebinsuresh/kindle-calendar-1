@@ -22,6 +22,18 @@ module.exports = {
             // Some optimizations added by this option is not supported by IE,
             // so probably also not by Kindle
             typeofs: false,
+            pure_funcs: [
+              'now.getFullYear',
+              'now.getMonth',
+              'now.getDate',
+              'now.getDay',
+              'now.getHours',
+              'now.getMinutes',
+              'now.getSeconds',
+              'now.getMilliseconds',
+              'now.getTime',
+              'now',
+            ],
           },
           // This only seems to change some undefined check
           ie8: true,
