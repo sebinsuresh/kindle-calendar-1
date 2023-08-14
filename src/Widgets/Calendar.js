@@ -123,6 +123,11 @@ function createCalendarBody(today, currentWeekRowIndex, numRows) {
   return calendarBody;
 }
 
+/** @param {HTMLTableElement} calendarTable */
+function populateCalendarData(calendarTable) {
+  // TODO
+}
+
 /**
  * Creates a calendar widget
  * @param { Config } config
@@ -151,6 +156,7 @@ function createCalendar(config) {
     now.getMilliseconds();
   // calendarTh.innerText += ` | Update in ${(updateInMs / 1000 / 60 / 60).toFixed(2)} hours`;
   setTimeout(() => {
+    calendarElem.remove();
     createCalendar(config);
   }, updateInMs);
 }
