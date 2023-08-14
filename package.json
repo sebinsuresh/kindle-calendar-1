@@ -17,7 +17,7 @@
   "scripts": {
     "dev-babel": "babel src --watch --out-dir dist",
     "build-babel": "babel src --out-dir dist",
-    "dev": "nodemon --watch src --watch postBundleScript.js --exec \"yarn run build\"",
+    "dev": "nodemon --watch src --watch postBundleScript.js --watch webpack.config.js --exec \"yarn run build\"",
     "build": "webpack && node postBundleScript.js"
   }
 }
