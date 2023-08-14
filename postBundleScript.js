@@ -36,10 +36,7 @@ const polyFills = [
   };`,
 ];
 
-const tryStart = `
-try {
-  // @ts-ignore
-`;
+const tryStart = '\ntry {\n';
 
 const beforeBody = polyFills.map((p) => p.replace(/\n  /g, '\n')).join('\n') + tryStart;
 

@@ -32,8 +32,200 @@ if (!Object.keys) {
   })();
 };
 try {
-  // @ts-ignore
-!function(){"use strict";var e={Short:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],Long:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]},t=["January","February","March","April","May","June","July","August","September","October","November","December"];function n(){var e=new Date,t=0==e.getTimezoneOffset()?5:0;return e.setHours(e.getHours()-t),e}function r(e){return r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},r(e)}function o(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),n.push.apply(n,r)}return n}function a(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{};t%2?o(Object(n),!0).forEach((function(t){i(e,t,n[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):o(Object(n)).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))}))}return e}function i(e,t,n){return(t=function(e){var t=function(e,t){if("object"!==r(e)||null===e)return e;var n=e[Symbol.toPrimitive];if(void 0!==n){var o=n.call(e,"string");if("object"!==r(o))return o;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"===r(t)?t:String(t)}(t))in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}var c={numRows:4,startCurrWeekOnRow:1};function u(e,t){var n=document.createElement("td"),r=e.getDate(),o=e.getMonth();return e<t&&(n.className+=" day-past"),o!=t.getMonth()&&(n.className+=" month-other"),r==t.getDate()&&o==t.getMonth()&&(n.className+=" day-today"),n.innerText=r.toString(),n}function l(t,n){for(var r=document.createElement("tr"),o=0;o<e.Short.length;o++){var a=u(t,n);r.appendChild(a),t.setDate(t.getDate()+1)}return r}var s=function(r){var o=a(a({},c),r),i=o.baseElem,u=o.numRows,s=o.startCurrWeekOnRow,d=n(),m=function(){var e=document.createElement("table");return e.className+=" calendar",e.setAttribute("cellspacing","0"),e.setAttribute("cellpadding","4"),e}();i.appendChild(m);var f=document.createElement("thead");m.appendChild(f);var p=function(e){var n=document.createElement("th");return n.setAttribute("colspan","7"),n.innerText=t[e.getMonth()]+" "+e.getFullYear(),n}(d);f.appendChild(p);var v=function(t,n,r){var o=document.createElement("tbody"),a=function(){var t=document.createElement("tr");t.className+=" days";for(var n=0;n<e.Short.length;n++){var r=document.createElement("td");t.appendChild(r),r.innerText=e.Short[n]}return t}();o.appendChild(a);var i=t.getDate()-t.getDay(),c=new Date(t.getTime());c.setDate(i-7*n);for(var u=0;u<r;u++){var s=l(new Date(c.getTime()),t);o.appendChild(s),c.setDate(c.getDate()+7)}return o}(d,s,u);m.appendChild(v)};function d(e,t){if(t>3)throw new Error("numDigits must be <= 3");return("000"+e).slice(-t)}function m(e,t){e.innerText=function(e){var t=n(),r=t.getHours(),o=r>=12?" PM":" AM",a=d(r>12?r-12:r,2),i=d(t.getMinutes(),2),c="".concat(a,":").concat(i);return e&&(c+=":"+d(t.getSeconds(),2)),c+o}(t);var r=1e3*(60-(new Date).getSeconds());setTimeout((function(){m(e,t)}),r)}var f=function(e){var t=e.baseElem,n=e.showSeconds,r=document.createElement("div");r.className+=" clock",m(r,null!=n&&n),t.appendChild(r)};function p(e,t){e.innerText=function(){var e=n(),t=d(e.getMonth()+1,2),r=d(e.getDate(),2),o=e.getFullYear().toString().slice(-2);return"".concat(t,"/").concat(r,"/").concat(o)}();var r=n(),o=864e5-1e3*(60*r.getHours()*60+60*r.getMinutes()+r.getSeconds());if(t){var a=(o/1e3/60/60).toFixed(2);e.innerText+=" (Update in: ".concat(a," hrs.)")}setTimeout((function(){p(e,t)}),o)}var v,g=function(e){var t=e.baseElem,n=e.showUpdateIn,r=document.createElement("div");r.className+=" date",p(r,null!=n&&n),t.appendChild(r)};document.addEventListener("DOMContentLoaded",(v=function(){var e=document.getElementById("app");if(!e)throw new Error("Could not find app element in page");f({baseElem:e}),g({baseElem:e}),s({baseElem:e})},function(){try{v()}catch(e){!function(e){var t=function(){var e=document.getElementById("consoleElem");if(!e)throw new Error("Could not find Console element in page");return e}(),n="--------------\n";if(t.innerText+="--------------\nError details:\n",!(e instanceof Error))return t.innerText+="  "+(null==e?void 0:e.toString()),void(t.innerText+=n);for(var r in e){var o=e[r];t.innerText+="  ".concat(r,": ").concat(o,"\n")}t.innerText+=n}(e)}}))}();
+  !function() {
+    "use strict";
+    var WeekDays = {
+      Short: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
+      Long: [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]
+    }, Months = {
+      Short: [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ],
+      Long: [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
+    };
+    function getCurrentDate() {
+      var now = new Date, offsetHours = 0 == now.getTimezoneOffset() ? 5 : 0;
+      return now.setHours(now.getHours() - offsetHours), now;
+    }
+    function _typeof(obj) {
+      return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+      } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      }, _typeof(obj);
+    }
+    function ownKeys(object, enumerableOnly) {
+      var keys = Object.keys(object);
+      if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter((function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        }))), keys.push.apply(keys, symbols);
+      }
+      return keys;
+    }
+    function _objectSpread(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? ownKeys(Object(source), !0).forEach((function(key) {
+          _defineProperty(target, key, source[key]);
+        })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach((function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        }));
+      }
+      return target;
+    }
+    function _defineProperty(obj, key, value) {
+      return (key = function _toPropertyKey(arg) {
+        var key = function _toPrimitive(input, hint) {
+          if ("object" !== _typeof(input) || null === input) return input;
+          var prim = input[Symbol.toPrimitive];
+          if (prim !== undefined) {
+            var res = prim.call(input, hint || "default");
+            if ("object" !== _typeof(res)) return res;
+            throw new TypeError("@@toPrimitive must return a primitive value.");
+          }
+          return ("string" === hint ? String : Number)(input);
+        }(arg, "string");
+        return "symbol" === _typeof(key) ? key : String(key);
+      }(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }
+    var defaultConfig = {
+      numRows: 4,
+      startCurrWeekOnRow: 1
+    };
+    function createDateCell(cellDate, today) {
+      var dayElem = document.createElement("td"), iterDate = cellDate.getDate(), iterMonth = cellDate.getMonth();
+      return cellDate < today && (dayElem.className += " day-past"), iterMonth != today.getMonth() && (dayElem.className += " month-other"), 
+      iterDate == today.getDate() && iterMonth == today.getMonth() && (dayElem.className += " day-today"), 
+      dayElem.innerText = iterDate.toString(), dayElem;
+    }
+    function createWeek(startDate, today) {
+      for (var row = document.createElement("tr"), j = 0; j < WeekDays.Short.length; j++) {
+        var dayElem = createDateCell(startDate, today);
+        row.appendChild(dayElem), startDate.setDate(startDate.getDate() + 1);
+      }
+      return row;
+    }
+    function createCalendarBody(today, currentWeekRowIndex, numRows) {
+      var calendarBody = document.createElement("tbody"), daysHeader = function createCalendarDaysHeader() {
+        var daysRow = document.createElement("tr");
+        daysRow.className += " days";
+        for (var i = 0; i < WeekDays.Short.length; i++) {
+          var dayElem = document.createElement("td");
+          daysRow.appendChild(dayElem), dayElem.innerText = WeekDays.Short[i];
+        }
+        return daysRow;
+      }();
+      calendarBody.appendChild(daysHeader);
+      var startDateOfCurrentWeek = today.getDate() - today.getDay(), calendarStartDate = new Date(today.getTime());
+      calendarStartDate.setDate(startDateOfCurrentWeek - 7 * currentWeekRowIndex);
+      for (var i = 0; i < numRows; i++) {
+        var row = createWeek(new Date(calendarStartDate.getTime()), today);
+        calendarBody.appendChild(row), calendarStartDate.setDate(calendarStartDate.getDate() + 7);
+      }
+      return calendarBody;
+    }
+    var Calendar = {
+      create: function createCalendar(config) {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, now = getCurrentDate(), calendarElem = function CreateTable() {
+          var calendarElem = document.createElement("table");
+          return calendarElem.className += " calendar", calendarElem.setAttribute("cellspacing", "0"), 
+          calendarElem.setAttribute("cellpadding", "4"), calendarElem;
+        }();
+        baseElem.appendChild(calendarElem);
+        var calendarTHead = document.createElement("thead");
+        calendarElem.appendChild(calendarTHead);
+        var calendarTh = function createCalendarHeader(today) {
+          var calendarTh = document.createElement("th");
+          return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = Months.Long[today.getMonth()] + " " + today.getFullYear(), 
+          calendarTh;
+        }(now);
+        calendarTHead.appendChild(calendarTh);
+        var calendarBody = createCalendarBody(now, startCurrWeekOnRow, numRows);
+        calendarElem.appendChild(calendarBody);
+      }
+    };
+    function getLeftZeroedString(input, numDigits) {
+      if (numDigits > 3) throw new Error("numDigits must be <= 3");
+      return ("000" + input).slice(-numDigits);
+    }
+    function setTime(clockElem, showSeconds) {
+      clockElem.innerText = function getTimeString(showSeconds) {
+        var now = getCurrentDate(), hours = now.getHours(), amPm = hours >= 12 ? " PM" : " AM", hoursStr = getLeftZeroedString(hours > 12 ? hours - 12 : hours, 2), minsStr = getLeftZeroedString(now.getMinutes(), 2), toReturn = "".concat(hoursStr, ":").concat(minsStr);
+        return showSeconds && (toReturn += ":" + getLeftZeroedString(now.getSeconds(), 2)), 
+        toReturn + amPm;
+      }(showSeconds);
+      var updateInMs = 1e3 * (60 - (new Date).getSeconds());
+      setTimeout((function() {
+        setTime(clockElem, showSeconds);
+      }), updateInMs);
+    }
+    var Clock = {
+      create: function createClock(config) {
+        var baseElem = config.baseElem, showSeconds = config.showSeconds, clockElem = document.createElement("div");
+        clockElem.className += " clock", setTime(clockElem, null != showSeconds && showSeconds), 
+        baseElem.appendChild(clockElem);
+      }
+    };
+    function setDate(dateElem, showUpdateIn) {
+      dateElem.innerText = function getDateString() {
+        var now = getCurrentDate(), month = getLeftZeroedString(now.getMonth() + 1, 2), date = getLeftZeroedString(now.getDate(), 2), year = now.getFullYear().toString().slice(-2);
+        return "".concat(month, "/").concat(date, "/").concat(year);
+      }();
+      var now = getCurrentDate(), updateInMs = 864e5 - 1e3 * (60 * now.getHours() * 60 + 60 * now.getMinutes() + now.getSeconds());
+      if (showUpdateIn) {
+        var updateInHours = (updateInMs / 1e3 / 60 / 60).toFixed(2);
+        dateElem.innerText += " (Update in: ".concat(updateInHours, " hrs.)");
+      }
+      setTimeout((function() {
+        setDate(dateElem, showUpdateIn);
+      }), updateInMs);
+    }
+    var DateWidget = {
+      create: function createDate(config) {
+        var baseElem = config.baseElem, showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
+        dateElem.className += " date", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
+        baseElem.appendChild(dateElem);
+      }
+    };
+    function logError(err) {
+      var consoleElem = function getConsoleElem() {
+        var consoleElem = document.getElementById("consoleElem");
+        if (!consoleElem) throw new Error("Could not find Console element in page");
+        return consoleElem;
+      }();
+      if (consoleElem.innerText += "--------------\nError details:\n", !(err instanceof Error)) return consoleElem.innerText += "  " + (null == err ? void 0 : err.toString()), 
+      void (consoleElem.innerText += "--------------\n");
+      for (var key in err) {
+        var val = err[key];
+        consoleElem.innerText += "  ".concat(key, ": ").concat(val, "\n");
+      }
+      consoleElem.innerText += "--------------\n";
+    }
+    document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
+      return function() {
+        try {
+          fn();
+        } catch (err) {
+          logError(err);
+        }
+      };
+    }((function handleOnLoad() {
+      var appElem = document.getElementById("app");
+      if (!appElem) throw new Error("Could not find app element in page");
+      Clock.create({
+        baseElem: appElem
+      }), DateWidget.create({
+        baseElem: appElem
+      }), Calendar.create({
+        baseElem: appElem
+      });
+    })));
+  }();
 } catch (err) {
   var _consoleElem = document.getElementById("consoleElem");
   if(!_consoleElem) {
