@@ -17,7 +17,7 @@ const defaultConfig = {
   startCurrWeekOnRow: 1,
 };
 
-/** @returns {HTMLTableElement} */
+/** @returns { HTMLTableElement } */
 function CreateTable() {
   const calendarElem = document.createElement('table');
   calendarElem.className += ' calendar';
@@ -28,8 +28,8 @@ function CreateTable() {
 
 /**
  * Returns header row with month name and year
- * @param {Date} today
- * @returns {HTMLTableCellElement}
+ * @param { Date } today
+ * @returns { HTMLTableCellElement }
  */
 function createCalendarHeader(today) {
   const calendarTh = document.createElement('th');
@@ -40,7 +40,7 @@ function createCalendarHeader(today) {
 
 /**
  * Returns a row of day names
- * @returns {HTMLTableRowElement}
+ * @returns { HTMLTableRowElement }
  */
 function createCalendarDaysHeader() {
   const daysRow = document.createElement('tr');
@@ -55,9 +55,9 @@ function createCalendarDaysHeader() {
 
 /**
  * Returns a cell for a single date with class names set
- * @param {Date} cellDate
- * @param {Date} today
- * @returns {HTMLTableCellElement}
+ * @param { Date } cellDate
+ * @param { Date } today
+ * @returns { HTMLTableCellElement }
  */
 function createDateCell(cellDate, today) {
   const dayElem = document.createElement('td');
@@ -82,9 +82,9 @@ function createDateCell(cellDate, today) {
 
 /**
  * Returns row of dates for a week
- * @param {Date} startDate
- * @param {Date} today
- * @returns {HTMLTableRowElement}
+ * @param { Date } startDate
+ * @param { Date } today
+ * @returns { HTMLTableRowElement }
  */
 function createWeek(startDate, today) {
   const row = document.createElement('tr');
@@ -98,10 +98,10 @@ function createWeek(startDate, today) {
 
 /**
  * Creates the body of the calendar
- * @param {Date} today
- * @param {Number} currentWeekRowIndex
- * @param {Number} numRows
- * @returns {HTMLTableSectionElement}
+ * @param { Date } today
+ * @param { Number } currentWeekRowIndex
+ * @param { Number } numRows
+ * @returns { HTMLTableSectionElement }
  */
 function createCalendarBody(today, currentWeekRowIndex, numRows) {
   const calendarBody = document.createElement('tbody');
@@ -125,7 +125,7 @@ function createCalendarBody(today, currentWeekRowIndex, numRows) {
 
 /**
  * Creates a calendar widget
- * @param {Config} config
+ * @param { Config } config
  */
 function createCalendar(config) {
   const { baseElem, numRows, startCurrWeekOnRow } = { ...defaultConfig, ...config };

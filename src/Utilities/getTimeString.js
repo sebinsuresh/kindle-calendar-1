@@ -2,8 +2,8 @@ import { getCurrentDate } from './getCurrentDate';
 import { getLeftZeroedString } from './getLeftZeroedString';
 
 /**
- * @param {boolean} showSeconds
- * @returns {string}
+ * @param { boolean } showSeconds
+ * @returns { string }
  */
 export function getTimeString(showSeconds) {
   const now = getCurrentDate();

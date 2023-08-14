@@ -1,7 +1,7 @@
 import { getCurrentDate } from './getCurrentDate';
 import { getLeftZeroedString } from './getLeftZeroedString';
 
-/** @returns {string} */
+/** @returns { string } */
 export function getDateString() {
   const now = getCurrentDate();
   const month = getLeftZeroedString(now.getMonth() + 1, 2);

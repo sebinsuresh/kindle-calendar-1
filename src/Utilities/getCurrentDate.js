@@ -1,6 +1,6 @@
 import { getCdtOffsetHours } from './getCdtOffsetHours';
 
-/** @returns {Date} */
+/** @returns { Date } */
 export function getCurrentDate() {
   const now = new Date();
   const offsetHours = now.getTimezoneOffset() == 0 ? getCdtOffsetHours() : 0;

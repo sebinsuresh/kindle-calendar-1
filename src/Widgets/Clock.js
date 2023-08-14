@@ -10,8 +10,8 @@ import { getTimeString } from '../Utilities/getTimeString';
  */
 
 /**
- * @param {HTMLElement} clockElem
- * @param {boolean} showSeconds
+ * @param { HTMLElement } clockElem
+ * @param { boolean } showSeconds
  */
 export function setTime(clockElem, showSeconds) {
   clockElem.innerText = getTimeString(showSeconds);
@@ -23,7 +23,7 @@ export function setTime(clockElem, showSeconds) {
   }, updateInMs);
 }
 
-/** @param {Config} config */
+/** @param { Config } config */
 export function createClock(config) {
   const { baseElem, showSeconds } = config;
 

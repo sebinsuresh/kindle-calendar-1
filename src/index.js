@@ -3,8 +3,8 @@ import { Clock } from './Widgets/Clock';
 import { DateWidget } from './Widgets/Date';
 
 /**
- * @param {HTMLElement} consoleElem
- * @param {unknown} err
+ * @param { HTMLElement } consoleElem
+ * @param { unknown } err
  */
 function logError(consoleElem, err) {
   const startMessage = '--------------\nError details:\n';

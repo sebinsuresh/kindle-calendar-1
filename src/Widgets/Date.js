@@ -5,15 +5,15 @@ import { getDateString } from '../Utilities/getDateString';
  * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
  *
  * @typedef DateConfigProperties
- * @type {object}
- * @property {boolean} [showUpdateIn] Show the time until the next update (in hours)
+ * @type { object }
+ * @property { boolean } [showUpdateIn] Show the time until the next update (in hours)
  *
  * @typedef { BaseWidgetConfig & DateConfigProperties } Config
  */
 
 /**
- * @param {HTMLElement} dateElem
- * @param {boolean} showUpdateIn
+ * @param { HTMLElement } dateElem
+ * @param { boolean } showUpdateIn
  */
 function setDate(dateElem, showUpdateIn) {
   dateElem.innerText = getDateString();
@@ -32,7 +32,7 @@ function setDate(dateElem, showUpdateIn) {
   }, updateInMs);
 }
 
-/** @param {Config} config */
+/** @param { Config } config */
 export function createDate(config) {
   const { baseElem, showUpdateIn } = config;
 
