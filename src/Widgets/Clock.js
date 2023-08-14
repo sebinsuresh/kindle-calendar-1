@@ -7,12 +7,12 @@ import { getTimeString } from '../Utilities/getTimeString';
  * @property { boolean } [showSeconds] Whether to show seconds or not
  *
  * @typedef { BaseWidgetConfig & ClockConfigProperties } Config
- * */
+ */
 
 /**
  * @param {HTMLElement} clockElem
  * @param {boolean} showSeconds
- * */
+ */
 export function setTime(clockElem, showSeconds) {
   clockElem.innerText = getTimeString(showSeconds);
 

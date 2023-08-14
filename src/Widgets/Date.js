@@ -9,12 +9,12 @@ import { getDateString } from '../Utilities/getDateString';
  * @property {boolean} [showUpdateIn] Show the time until the next update (in hours)
  *
  * @typedef { BaseWidgetConfig & DateConfigProperties } Config
- * */
+ */
 
 /**
  * @param {HTMLElement} dateElem
  * @param {boolean} showUpdateIn
- * */
+ */
 function setDate(dateElem, showUpdateIn) {
   dateElem.innerText = getDateString();
 
