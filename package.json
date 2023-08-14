@@ -18,6 +18,6 @@
     "dev-babel": "babel src --watch --out-dir dist",
     "build-babel": "babel src --out-dir dist",
     "dev": "nodemon --watch src --exec \"yarn run build\"",
-    "build": "webpack && node wrapTryCatch.js"
+    "build": "webpack && node postBundleScript.js"
   }
 }
