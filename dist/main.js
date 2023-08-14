@@ -146,7 +146,9 @@ try {
         }(now);
         calendarTHead.appendChild(calendarTh);
         var calendarBody = createCalendarBody(now, startCurrWeekOnRow, numRows);
-        calendarElem.appendChild(calendarBody);
+        calendarElem.appendChild(calendarBody), setTimeout((function() {
+          createCalendar(config);
+        }), 864e5 - 60 * now.getHours() * 60 * 1e3 - 60 * now.getMinutes() * 1e3 - 1e3 * now.getSeconds() - now.getMilliseconds());
       }
     };
     function getLeftZeroedString(input, numDigits) {

@@ -142,6 +142,17 @@ function createCalendar(config) {
 
   const calendarBody = createCalendarBody(now, startCurrWeekOnRow, numRows);
   calendarElem.appendChild(calendarBody);
+
+  const updateInMs =
+    1000 * 60 * 60 * 24 -
+    now.getHours() * 60 * 60 * 1000 -
+    now.getMinutes() * 60 * 1000 -
+    now.getSeconds() * 1000 -
+    now.getMilliseconds();
+  // calendarTh.innerText += ` | Update in ${(updateInMs / 1000 / 60 / 60).toFixed(2)} hours`;
+  setTimeout(() => {
+    createCalendar(config);
+  }, updateInMs);
 }
 
 export const Calendar = {
