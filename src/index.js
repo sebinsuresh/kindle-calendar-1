@@ -4,17 +4,27 @@ import { DateWidget } from './Widgets/Date';
 
 /**
  * @param {HTMLElement} consoleElem
- * @param {Error} err
+ * @param {unknown} err
  */
 function logError(consoleElem, err) {
-  consoleElem.innerText += '--------------\nError details:\n';
-  consoleElem.innerText += err.toString();
-  for (const key in err) {
-    // TODO: Avoid ignoring this error
-    // @ts-ignore
-    consoleElem.innerText += `${key}: ${err[key]}\n`;
+  const startMessage = '--------------\nError details:\n';
+  const endMessage = '--------------\n';
+
+  consoleElem.innerText += startMessage;
+  if (!(err instanceof Error)) {
+    consoleElem.innerText += '  ' + err?.toString();
+    consoleElem.innerText += endMessage;
+    return;
   }
-  consoleElem.innerText += '--------------\n';
+
+  for (const key in err) {
+    // On Kindle browser's JS engine, you can do this:
+    // @ts-ignore
+    const val = err[key];
+    consoleElem.innerText += `  ${key}: ${val}\n`;
+  }
+
+  consoleElem.innerText += endMessage;
 }
 
 function handleOnLoad() {
@@ -33,8 +43,6 @@ function handleOnLoad() {
     DateWidget.create({ baseElem: appElem });
     Calendar.create({ baseElem: appElem });
   } catch (err) {
-    // TODO: Avoid ignoring this error
-    // @ts-ignore
     logError(consoleElem, err);
   }
 }
