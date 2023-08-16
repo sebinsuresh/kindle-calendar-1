@@ -95,22 +95,21 @@ try {
     }
     var defaultConfig = {
       numRows: 4,
-      startCurrWeekOnRow: 1
+      startCurrWeekOnRow: 1,
+      showUpdateInHrs: !1
     };
-    function createDateCell(cellDate, today) {
-      var dayElem = document.createElement("td"), iterDate = cellDate.getDate(), iterMonth = cellDate.getMonth();
-      return cellDate < today && (dayElem.className += " day-past"), iterMonth != today.getMonth() && (dayElem.className += " month-other"), 
-      iterDate == today.getDate() && iterMonth == today.getMonth() && (dayElem.className += " day-today"), 
-      dayElem.innerText = iterDate.toString(), dayElem;
+    function createDateCell() {
+      var dayElem = document.createElement("td");
+      return dayElem.innerText = "#", dayElem;
     }
-    function createWeek(startDate, today) {
+    function createWeek() {
       for (var row = document.createElement("tr"), j = 0; j < WeekDays.Short.length; j++) {
-        var dayElem = createDateCell(startDate, today);
-        row.appendChild(dayElem), startDate.setDate(startDate.getDate() + 1);
+        var dayElem = createDateCell();
+        row.appendChild(dayElem);
       }
       return row;
     }
-    function createCalendarBody(today, currentWeekRowIndex, numRows) {
+    function createCalendarBody(numWeeks) {
       var calendarBody = document.createElement("tbody"), daysHeader = function createCalendarDaysHeader() {
         var daysRow = document.createElement("tr");
         daysRow.className += " days";
@@ -121,34 +120,54 @@ try {
         return daysRow;
       }();
       calendarBody.appendChild(daysHeader);
-      var startDateOfCurrentWeek = today.getDate() - today.getDay(), calendarStartDate = new Date(today.getTime());
-      calendarStartDate.setDate(startDateOfCurrentWeek - 7 * currentWeekRowIndex);
-      for (var i = 0; i < numRows; i++) {
-        var row = createWeek(new Date(calendarStartDate.getTime()), today);
-        calendarBody.appendChild(row), calendarStartDate.setDate(calendarStartDate.getDate() + 7);
+      for (var i = 0; i < numWeeks; i++) {
+        var row = createWeek();
+        calendarBody.appendChild(row);
       }
       return calendarBody;
     }
+    function setDateCell(cellDate, today, dayElem) {
+      var iterDate = cellDate.getDate(), iterMonth = cellDate.getMonth();
+      cellDate < today && (dayElem.className += " day-past"), iterMonth != today.getMonth() && (dayElem.className += " month-other"), 
+      iterDate === today.getDate() && iterMonth === today.getMonth() && (dayElem.className += " day-today"), 
+      dayElem.innerText = iterDate.toString();
+    }
+    function populateCalendar(calendarTable, showUpdateInHrs) {
+      var now = getCurrentDate();
+      !function setCalendarHeader(calendarTable, today) {
+        var content = Months.Long[today.getMonth()] + " " + today.getFullYear();
+        calendarTable.getElementsByTagName("th")[0].innerText = content;
+      }(calendarTable, now), function setCalendarDays(calendarTable, today) {
+        var _parseInt, _calendarTable$getAtt, _parseInt2, _calendarTable$getAtt2, rows = calendarTable.getElementsByTagName("tr"), numWeeks = null !== (_parseInt = parseInt(null !== (_calendarTable$getAtt = calendarTable.getAttribute("data-num-rows")) && void 0 !== _calendarTable$getAtt ? _calendarTable$getAtt : "")) && void 0 !== _parseInt ? _parseInt : defaultConfig.numRows, startCurrWeekOnRow = null !== (_parseInt2 = parseInt(null !== (_calendarTable$getAtt2 = calendarTable.getAttribute("data-start-curr-week-on-row")) && void 0 !== _calendarTable$getAtt2 ? _calendarTable$getAtt2 : "")) && void 0 !== _parseInt2 ? _parseInt2 : defaultConfig.startCurrWeekOnRow, startDateOfTodaysWeek = today.getDate() - today.getDay(), iterationDate = new Date(today.getTime());
+        iterationDate.setDate(startDateOfTodaysWeek - 7 * startCurrWeekOnRow);
+        for (var iterationWeekRow = rows[1], i = 0; i < WeekDays.Short.length * numWeeks; i++) setDateCell(iterationDate, today, iterationWeekRow.getElementsByTagName("td")[i % 7]), 
+        iterationDate.setDate(iterationDate.getDate() + 1), numWeeks > 1 && i % 7 == 6 && (iterationWeekRow = rows[2 + ~~(i / 7)]);
+      }(calendarTable, now);
+      var updateInMs = 864e5 - 60 * now.getHours() * 60 * 1e3 - 60 * now.getMinutes() * 1e3 - 1e3 * now.getSeconds() - now.getMilliseconds();
+      showUpdateInHrs && (calendarTable.getElementsByTagName("th")[0].innerText += " | Update in ".concat((updateInMs / 1e3 / 60 / 60).toFixed(2), " hours"));
+      setTimeout((function() {
+        populateCalendar(calendarTable, showUpdateInHrs);
+      }), updateInMs);
+    }
     var Calendar = {
       create: function createCalendar(config) {
-        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, now = getCurrentDate(), calendarElem = function CreateTable() {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable() {
           var calendarElem = document.createElement("table");
           return calendarElem.className += " calendar", calendarElem.setAttribute("cellspacing", "0"), 
           calendarElem.setAttribute("cellpadding", "4"), calendarElem;
         }();
-        baseElem.appendChild(calendarElem);
+        baseElem.appendChild(calendarElem), calendarElem.setAttribute("data-num-rows", numRows.toString()), 
+        calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
         var calendarTHead = document.createElement("thead");
         calendarElem.appendChild(calendarTHead);
-        var calendarTh = function createCalendarHeader(today) {
+        var calendarTh = function createCalendarHeader() {
           var calendarTh = document.createElement("th");
-          return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = Months.Long[today.getMonth()] + " " + today.getFullYear(), 
+          return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = "Month Year", 
           calendarTh;
-        }(now);
+        }();
         calendarTHead.appendChild(calendarTh);
-        var calendarBody = createCalendarBody(now, startCurrWeekOnRow, numRows);
-        calendarElem.appendChild(calendarBody), setTimeout((function() {
-          calendarElem.remove(), createCalendar(config);
-        }), 864e5 - 60 * now.getHours() * 60 * 1e3 - 60 * now.getMinutes() * 1e3 - 1e3 * now.getSeconds() - now.getMilliseconds());
+        var calendarBody = createCalendarBody(numRows);
+        calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs);
       }
     };
     function getLeftZeroedString(input, numDigits) {

@@ -8,6 +8,7 @@ import { getCurrentDate } from '../Utilities/getCurrentDate';
  * @typedef { Object } CalendarConfigProperties
  * @property { Number } [numRows] Number of rows to show in the calendar
  * @property { Number } [startCurrWeekOnRow] Which row to start the current week on
+ * @property { Boolean } [showUpdateInHrs] Whether to show the time until the next update
  *
  * @typedef { BaseWidgetConfig & CalendarConfigProperties } Config
  */
@@ -15,6 +16,7 @@ import { getCurrentDate } from '../Utilities/getCurrentDate';
 const defaultConfig = {
   numRows: 4,
   startCurrWeekOnRow: 1,
+  showUpdateInHrs: false,
 };
 
 /** @returns { HTMLTableElement } */
@@ -27,14 +29,13 @@ function CreateTable() {
 }
 
 /**
- * Returns header row with month name and year
- * @param { Date } today
+ * Returns header row for displaying month name and year
  * @returns { HTMLTableCellElement }
  */
-function createCalendarHeader(today) {
+function createCalendarHeader() {
   const calendarTh = document.createElement('th');
   calendarTh.setAttribute('colspan', '7');
-  calendarTh.innerText = Months.Long[today.getMonth()] + ' ' + today.getFullYear();
+  calendarTh.innerText = 'Month Year';
   return calendarTh;
 }
 
@@ -54,14 +55,62 @@ function createCalendarDaysHeader() {
 }
 
 /**
- * Returns a cell for a single date with class names set
- * @param { Date } cellDate
- * @param { Date } today
+ * Returns td element for the cell for a single date
  * @returns { HTMLTableCellElement }
  */
-function createDateCell(cellDate, today) {
+function createDateCell() {
   const dayElem = document.createElement('td');
+  dayElem.innerText = '#';
+  return dayElem;
+}
 
+/**
+ * Returns tr elements for for a week in the calendar
+ * @returns { HTMLTableRowElement }
+ */
+function createWeek() {
+  const row = document.createElement('tr');
+  for (let j = 0; j < WeekDays.Short.length; j++) {
+    const dayElem = createDateCell();
+    row.appendChild(dayElem);
+  }
+  return row;
+}
+
+/**
+ * Creates and returns the body of the calendar
+ * @param { Number } numWeeks
+ * @returns { HTMLTableSectionElement }
+ */
+function createCalendarBody(numWeeks) {
+  const calendarBody = document.createElement('tbody');
+
+  const daysHeader = createCalendarDaysHeader();
+  calendarBody.appendChild(daysHeader);
+
+  for (let i = 0; i < numWeeks; i++) {
+    const row = createWeek();
+    calendarBody.appendChild(row);
+  }
+  return calendarBody;
+}
+
+/**
+ * @param { HTMLTableElement } calendarTable
+ * @param { Date } today
+ */
+function setCalendarHeader(calendarTable, today) {
+  const content = Months.Long[today.getMonth()] + ' ' + today.getFullYear();
+  const header = calendarTable.getElementsByTagName('th')[0];
+  header.innerText = content;
+}
+
+/**
+ * @param {Date} cellDate
+ * @param {Date} today
+ * @param {HTMLTableCellElement} dayElem
+ */
+function setDateCell(cellDate, today, dayElem) {
   const iterDate = cellDate.getDate();
   const iterMonth = cellDate.getMonth();
 
@@ -71,82 +120,48 @@ function createDateCell(cellDate, today) {
   if (iterMonth != today.getMonth()) {
     dayElem.className += ' month-other';
   }
-  if (iterDate == today.getDate() && iterMonth == today.getMonth()) {
+  if (iterDate === today.getDate() && iterMonth === today.getMonth()) {
     dayElem.className += ' day-today';
   }
 
   dayElem.innerText = iterDate.toString();
-
-  return dayElem;
 }
 
 /**
- * Returns row of dates for a week
- * @param { Date } startDate
- * @param { Date } today
- * @returns { HTMLTableRowElement }
+ * @param {HTMLTableElement} calendarTable
+ * @param {Date} today
  */
-function createWeek(startDate, today) {
-  const row = document.createElement('tr');
-  for (let j = 0; j < WeekDays.Short.length; j++) {
-    const dayElem = createDateCell(startDate, today);
-    row.appendChild(dayElem);
-    startDate.setDate(startDate.getDate() + 1);
+function setCalendarDays(calendarTable, today) {
+  const rows = calendarTable.getElementsByTagName('tr');
+
+  const numWeeks = parseInt(calendarTable.getAttribute('data-num-rows') ?? '') ?? defaultConfig.numRows;
+  const startCurrWeekOnRow =
+    parseInt(calendarTable.getAttribute('data-start-curr-week-on-row') ?? '') ??
+    defaultConfig.startCurrWeekOnRow;
+
+  const startDateOfTodaysWeek = today.getDate() - today.getDay();
+  const iterationDate = new Date(today.getTime());
+  iterationDate.setDate(startDateOfTodaysWeek - startCurrWeekOnRow * 7);
+  let iterationWeekRow = rows[1];
+  for (let i = 0; i < WeekDays.Short.length * numWeeks; i++) {
+    const dayElem = iterationWeekRow.getElementsByTagName('td')[i % 7];
+    setDateCell(iterationDate, today, dayElem);
+    iterationDate.setDate(iterationDate.getDate() + 1);
+
+    if (numWeeks > 1 && i % 7 === 6) {
+      iterationWeekRow = rows[~~(i / 7) + 2];
+    }
   }
-  return row;
 }
 
 /**
- * Creates the body of the calendar
- * @param { Date } today
- * @param { Number } currentWeekRowIndex
- * @param { Number } numRows
- * @returns { HTMLTableSectionElement }
+ * @param {HTMLTableElement} calendarTable
+ * @param {Boolean} showUpdateInHrs
  */
-function createCalendarBody(today, currentWeekRowIndex, numRows) {
-  const calendarBody = document.createElement('tbody');
-
-  const daysHeader = createCalendarDaysHeader();
-  calendarBody.appendChild(daysHeader);
-
-  const startDateOfCurrentWeek = today.getDate() - today.getDay();
-  const calendarStartDate = new Date(today.getTime());
-  calendarStartDate.setDate(startDateOfCurrentWeek - currentWeekRowIndex * 7);
-
-  for (let i = 0; i < numRows; i++) {
-    const weekStartDate = new Date(calendarStartDate.getTime());
-    const row = createWeek(weekStartDate, today);
-    calendarBody.appendChild(row);
-
-    calendarStartDate.setDate(calendarStartDate.getDate() + 7);
-  }
-  return calendarBody;
-}
-
-/** @param {HTMLTableElement} calendarTable */
-function populateCalendarData(calendarTable) {
-  // TODO
-}
-
-/**
- * Creates a calendar widget
- * @param { Config } config
- */
-function createCalendar(config) {
-  const { baseElem, numRows, startCurrWeekOnRow } = { ...defaultConfig, ...config };
+function populateCalendar(calendarTable, showUpdateInHrs) {
   const now = getCurrentDate();
-
-  const calendarElem = CreateTable();
-  baseElem.appendChild(calendarElem);
-
-  const calendarTHead = document.createElement('thead');
-  calendarElem.appendChild(calendarTHead);
-
-  const calendarTh = createCalendarHeader(now);
-  calendarTHead.appendChild(calendarTh);
-
-  const calendarBody = createCalendarBody(now, startCurrWeekOnRow, numRows);
-  calendarElem.appendChild(calendarBody);
+  setCalendarHeader(calendarTable, now);
+  setCalendarDays(calendarTable, now);
 
   const updateInMs =
     1000 * 60 * 60 * 24 -
@@ -154,11 +169,38 @@ function createCalendar(config) {
     now.getMinutes() * 60 * 1000 -
     now.getSeconds() * 1000 -
     now.getMilliseconds();
-  // calendarTh.innerText += ` | Update in ${(updateInMs / 1000 / 60 / 60).toFixed(2)} hours`;
+
+  if (showUpdateInHrs) {
+    const calendarTh = calendarTable.getElementsByTagName('th')[0];
+    calendarTh.innerText += ` | Update in ${(updateInMs / 1000 / 60 / 60).toFixed(2)} hours`;
+  }
   setTimeout(() => {
-    calendarElem.remove();
-    createCalendar(config);
+    populateCalendar(calendarTable, showUpdateInHrs);
   }, updateInMs);
+}
+
+/**
+ * Creates a calendar widget
+ * @param { Config } config
+ */
+function createCalendar(config) {
+  const { baseElem, numRows, startCurrWeekOnRow, showUpdateInHrs } = { ...defaultConfig, ...config };
+
+  const calendarElem = CreateTable();
+  baseElem.appendChild(calendarElem);
+  calendarElem.setAttribute('data-num-rows', numRows.toString());
+  calendarElem.setAttribute('data-start-curr-week-on-row', startCurrWeekOnRow.toString());
+
+  const calendarTHead = document.createElement('thead');
+  calendarElem.appendChild(calendarTHead);
+
+  const calendarTh = createCalendarHeader();
+  calendarTHead.appendChild(calendarTh);
+
+  const calendarBody = createCalendarBody(numRows);
+  calendarElem.appendChild(calendarBody);
+
+  populateCalendar(calendarElem, showUpdateInHrs);
 }
 
 export const Calendar = {
