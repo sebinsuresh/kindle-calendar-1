@@ -206,7 +206,7 @@ try {
         var val = err[key];
         consoleElem.innerText += "  ".concat(key, ": ").concat(val, "\n");
       }
-      consoleElem.innerText += "--------------\n";
+      console.error(err), consoleElem.innerText += "--------------\n";
     }
     document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {

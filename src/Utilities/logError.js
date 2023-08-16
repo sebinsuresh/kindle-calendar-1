@@ -31,6 +31,8 @@ export function logError(err) {
     const val = err[key];
     consoleElem.innerText += `  ${key}: ${val}\n`;
   }
+  // For regular browsers:
+  console.error(err);
 
   consoleElem.innerText += endMessage;
 }
