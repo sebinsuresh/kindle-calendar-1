@@ -105,10 +105,14 @@ try {
         writable: !0
       }) : obj[key] = value, obj;
     }
-    var defaultConfig = {
+    var Themes = {
+      Light: 1,
+      Dark: 2
+    }, defaultConfig = {
       numRows: 4,
       startCurrWeekOnRow: 1,
-      showUpdateInHrs: !1
+      showUpdateInHrs: !1,
+      theme: Themes.Dark
     };
     function createDateCell() {
       var dayElem = document.createElement("td");
@@ -164,11 +168,13 @@ try {
     }
     var Calendar = {
       create: function createCalendar(config) {
-        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable() {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, theme = _defaultConfig$config.theme;
+        var calendarElem = function CreateTable(theme) {
           var calendarElem = document.createElement("table");
-          return calendarElem.className += " calendar", calendarElem.setAttribute("cellspacing", "0"), 
-          calendarElem.setAttribute("cellpadding", "4"), calendarElem;
-        }();
+          return calendarElem.className += " calendar", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
+          calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
+          calendarElem;
+        }(theme);
         baseElem.appendChild(calendarElem), calendarElem.setAttribute("data-num-rows", numRows.toString()), 
         calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
         var calendarTHead = document.createElement("thead");
@@ -181,7 +187,8 @@ try {
         calendarTHead.appendChild(calendarTh);
         var calendarBody = createCalendarBody(numRows);
         calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs);
-      }
+      },
+      Themes: Themes
     };
     function getLeftZeroedString(input, numDigits) {
       if (numDigits > 3) throw new Error("numDigits must be <= 3");

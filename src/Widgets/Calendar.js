@@ -9,20 +9,38 @@ import { getCurrentDate } from '../Utilities/getCurrentDate';
  * @property { Number } [numRows] Number of rows to show in the calendar
  * @property { Number } [startCurrWeekOnRow] Which row to start the current week on
  * @property { Boolean } [showUpdateInHrs] Whether to show the time until the next update
+ * @property { Number } [theme] Which theme to use from `Themes`
  *
  * @typedef { BaseWidgetConfig & CalendarConfigProperties } Config
  */
+
+const Themes = {
+  Light: 1,
+  Dark: 2,
+};
 
 const defaultConfig = {
   numRows: 4,
   startCurrWeekOnRow: 1,
   showUpdateInHrs: false,
+  theme: Themes.Dark,
 };
 
-/** @returns { HTMLTableElement } */
-function CreateTable() {
+const Modes = {
+  /** First day of month goes in 1st row */
+  Month: 1,
+  /** Current day appears in startCurrWeekOnRow-th row */
+  Week: 2,
+};
+
+/**
+ * @param { Number } theme Must be one of `Themes`
+ * @returns { HTMLTableElement }
+ */
+function CreateTable(theme) {
   const calendarElem = document.createElement('table');
   calendarElem.className += ' calendar';
+  calendarElem.className += theme === Themes.Dark ? ' dark' : ' light';
   calendarElem.setAttribute('cellspacing', '0');
   calendarElem.setAttribute('cellpadding', '4');
   return calendarElem;
@@ -190,9 +208,10 @@ function populateCalendar(calendarTable, showUpdateInHrs) {
  * @param { Config } config
  */
 function createCalendar(config) {
-  const { baseElem, numRows, startCurrWeekOnRow, showUpdateInHrs } = { ...defaultConfig, ...config };
+  const { baseElem, numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
 
-  const calendarElem = CreateTable();
+
+  const calendarElem = CreateTable(theme);
   baseElem.appendChild(calendarElem);
   calendarElem.setAttribute('data-num-rows', numRows.toString());
   calendarElem.setAttribute('data-start-curr-week-on-row', startCurrWeekOnRow.toString());
@@ -211,4 +230,5 @@ function createCalendar(config) {
 
 export const Calendar = {
   create: createCalendar,
+  Themes,
 };
