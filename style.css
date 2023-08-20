@@ -26,6 +26,8 @@
   margin-right: 4px;
 }
 
+/* Calendar Styles */
+
 .calendar {
   margin-left: auto;
   margin-right: auto;
@@ -40,6 +42,34 @@
   border-bottom: thin solid;
 }
 
+.calendar td.month-other {
+  color: #7f7f7f;
+}
+
+.calendar td.day-today {
+  font-size: 24px;
+}
+
+.calendar.dark {
+  background-color: black;
+  color: white;
+}
+
+.calendar.dark td.day-today {
+  background-color: white;
+  color: black;
+}
+
+.calendar.light {
+  background-color: white;
+  color: black;
+}
+
+.calendar.light td.day-today {
+  background-color: black;
+  color: white;
+}
+
 /* .days td:first-child {
   border-left: thin solid;
 }
@@ -50,13 +80,3 @@
 
 .calendar td.day-past {
 }*/
-
-.calendar td.month-other {
-  color: #7f7f7f;
-}
-
-.calendar td.day-today {
-  font-size: 24px;
-  background-color: black;
-  color: white;
-}
