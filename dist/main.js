@@ -140,6 +140,7 @@ try {
     }
     function setDateCell(cellDate, today, dayElem) {
       var iterDate = cellDate.getDate(), iterMonth = cellDate.getMonth();
+      dayElem.className = dayElem.className.replace(" day-past", "").replace(" month-other", "").replace(" day-today", "").trim(), 
       cellDate < today && (dayElem.className += " day-past"), iterMonth != today.getMonth() && (dayElem.className += " month-other"), 
       iterDate === today.getDate() && iterMonth === today.getMonth() && (dayElem.className += " day-today"), 
       dayElem.innerText = iterDate.toString();

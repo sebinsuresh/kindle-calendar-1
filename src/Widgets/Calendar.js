@@ -114,6 +114,12 @@ function setDateCell(cellDate, today, dayElem) {
   const iterDate = cellDate.getDate();
   const iterMonth = cellDate.getMonth();
 
+  dayElem.className = dayElem.className
+    .replace(' day-past', '')
+    .replace(' month-other', '')
+    .replace(' day-today', '')
+    .trim();
+
   if (cellDate < today) {
     dayElem.className += ' day-past';
   }
