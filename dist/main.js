@@ -2,10 +2,12 @@
 
 if (!Object.defineProperty) {
   Object.defineProperty = function defineProperty(object, property, descriptor) {
-    object[property] = descriptor;
+    if ('value' in descriptor) object[property] = descriptor.value;
+    else object[property] = descriptor;
     return object;
   }
 };
+
 // From https://gist.github.com/jonfalcon/4715325
 if (!Object.keys) {
   Object.keys = (function () {
@@ -112,7 +114,7 @@ try {
       numRows: 4,
       startCurrWeekOnRow: 1,
       showUpdateInHrs: !1,
-      theme: Themes.Dark
+      theme: Themes.Light
     };
     function createDateCell() {
       var dayElem = document.createElement("td");
@@ -168,13 +170,12 @@ try {
     }
     var Calendar = {
       create: function createCalendar(config) {
-        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, theme = _defaultConfig$config.theme;
-        var calendarElem = function CreateTable(theme) {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
           var calendarElem = document.createElement("table");
           return calendarElem.className += " calendar", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
           calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
           calendarElem;
-        }(theme);
+        }(_defaultConfig$config.theme);
         baseElem.appendChild(calendarElem), calendarElem.setAttribute("data-num-rows", numRows.toString()), 
         calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
         var calendarTHead = document.createElement("thead");

@@ -23,7 +23,7 @@ const defaultConfig = {
   numRows: 4,
   startCurrWeekOnRow: 1,
   showUpdateInHrs: false,
-  theme: Themes.Dark,
+  theme: Themes.Light,
 };
 
 const Modes = {
@@ -209,7 +209,6 @@ function populateCalendar(calendarTable, showUpdateInHrs) {
  */
 function createCalendar(config) {
   const { baseElem, numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
-
 
   const calendarElem = CreateTable(theme);
   baseElem.appendChild(calendarElem);
