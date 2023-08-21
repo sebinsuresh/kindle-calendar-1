@@ -1,11 +1,4 @@
-/** @returns {HTMLElement} */
-function getConsoleElem() {
-  const consoleElem = document.getElementById('consoleElem');
-  if (!consoleElem) {
-    throw new Error('Could not find Console element in page');
-  }
-  return consoleElem;
-}
+import { getConsoleElem } from './getConsoleElem';
 
 /**
  * Logs the given error object to the element with ID 'consoleElem'.
