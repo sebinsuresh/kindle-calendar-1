@@ -13,7 +13,7 @@ export function logError(err) {
   consoleElem.innerText += startMessage;
 
   if (!(err instanceof Error)) {
-    consoleElem.innerText += '  ' + err?.toString();
+    consoleElem.innerText += `  ${err}\n`;
     consoleElem.innerText += endMessage;
     return;
   }

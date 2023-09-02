@@ -236,7 +236,7 @@ try {
         if (!consoleElem) throw new Error("Could not find Console element in page");
         return consoleElem;
       }();
-      if (consoleElem.innerText += "--------------\nError details:\n", !(err instanceof Error)) return consoleElem.innerText += "  " + (null == err ? void 0 : err.toString()), 
+      if (consoleElem.innerText += "--------------\nError details:\n", !(err instanceof Error)) return consoleElem.innerText += "  ".concat(err, "\n"), 
       void (consoleElem.innerText += "--------------\n");
       for (var key in err) {
         var val = err[key];
