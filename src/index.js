@@ -10,6 +10,12 @@ function handleOnLoad() {
     throw new Error('Could not find app element in page');
   }
 
+  // For each widget, we should maybe specify:
+  // - The x position of this widget
+  // - The y position of this widget
+  // - Number of columns this widget takes up
+  // - Number of rows this widget takes up
+
   appElem.appendChild(Clock.create({}).returnElem);
   appElem.appendChild(DateWidget.create({}).returnElem);
   appElem.appendChild(Resolution.create({}).returnElem);

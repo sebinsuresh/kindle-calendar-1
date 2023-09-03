@@ -4,7 +4,7 @@
  *
  * @typedef BaseWidgetReturn
  * @type { object }
- * @property { HTMLElement } returnElem
+ * @property { HTMLElement } returnElem The element to be added to the DOM
  */
 
 export {};
