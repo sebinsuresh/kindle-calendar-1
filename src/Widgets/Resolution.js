@@ -1,11 +1,15 @@
 /**
- * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
+ * @typedef { import('./Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  *
  * @typedef { Object } ResolutionConfigProperties
  * @property { boolean } [showRefreshButton] Whether to show a refresh button
  *
  * @typedef { BaseWidgetConfig & ResolutionConfigProperties } Config
  */
+
+const defaultConfig = {
+  showRefreshButton: true,
+};
 
 /** @param {HTMLDivElement} widgetElem */
 function setContent(widgetElem) {
@@ -25,20 +29,23 @@ function createRefreshButton(widgetElem) {
   return refreshButton;
 }
 
-/** @param { Config } config */
+/**
+ * @param { Config } config
+ * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
+ */
 function createWidget(config) {
-  const { baseElem } = config;
+  const { showRefreshButton } = { ...defaultConfig, ...config };
 
   const widgetElem = document.createElement('div');
   widgetElem.className += ' resolution widget';
   setContent(widgetElem);
 
-  if (config.showRefreshButton ?? true) {
+  if (showRefreshButton) {
     const refreshButton = createRefreshButton(widgetElem);
     widgetElem.appendChild(refreshButton);
   }
 
-  baseElem.appendChild(widgetElem);
+  return { returnElem: widgetElem };
 }
 
 export const Resolution = {

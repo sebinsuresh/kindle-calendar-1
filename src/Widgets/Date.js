@@ -2,7 +2,7 @@ import { getCurrentDate } from '../Utilities/getCurrentDate';
 import { getDateString } from '../Utilities/getDateString';
 
 /**
- * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
+ * @typedef { import('./Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  *
  * @typedef DateConfigProperties
  * @type { object }
@@ -32,15 +32,18 @@ function setDate(dateElem, showUpdateIn) {
   }, updateInMs);
 }
 
-/** @param { Config } config */
+/**
+ * @param { Config } config
+ * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
+ */
 export function createDate(config) {
-  const { baseElem, showUpdateIn } = config;
+  const { showUpdateIn } = config;
 
   const dateElem = document.createElement('div');
   dateElem.className += ' date widget';
   setDate(dateElem, showUpdateIn ?? false);
 
-  baseElem.appendChild(dateElem);
+  return { returnElem: dateElem };
 }
 
 export const DateWidget = {

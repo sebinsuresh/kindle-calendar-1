@@ -166,7 +166,7 @@ try {
     }
     var Calendar = {
       create: function createCalendar(config) {
-        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
           var calendarElem = document.createElement("table");
           return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
           calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
@@ -182,8 +182,10 @@ try {
         }();
         calendarTHead.appendChild(calendarTh);
         var calendarBody = createCalendarBody(numRows);
-        calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
-        baseElem.appendChild(calendarElem);
+        return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
+        {
+          returnElem: calendarElem
+        };
       },
       Themes: Themes
     };
@@ -204,9 +206,11 @@ try {
     }
     var Clock = {
       create: function createClock(config) {
-        var baseElem = config.baseElem, showSeconds = config.showSeconds, clockElem = document.createElement("div");
-        clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
-        baseElem.appendChild(clockElem);
+        var showSeconds = config.showSeconds, clockElem = document.createElement("div");
+        return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
+        {
+          returnElem: clockElem
+        };
       }
     };
     function setDate(dateElem, showUpdateIn) {
@@ -225,9 +229,11 @@ try {
     }
     var DateWidget = {
       create: function createDate(config) {
-        var baseElem = config.baseElem, showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
-        dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
-        baseElem.appendChild(dateElem);
+        var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
+        return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
+        {
+          returnElem: dateElem
+        };
       }
     };
     function logError(err) {
@@ -244,6 +250,57 @@ try {
       }
       console.error(err), consoleElem.innerText += "--------------\n";
     }
+    function Resolution_typeof(obj) {
+      return Resolution_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+      } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      }, Resolution_typeof(obj);
+    }
+    function Resolution_ownKeys(object, enumerableOnly) {
+      var keys = Object.keys(object);
+      if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter((function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        }))), keys.push.apply(keys, symbols);
+      }
+      return keys;
+    }
+    function Resolution_objectSpread(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? Resolution_ownKeys(Object(source), !0).forEach((function(key) {
+          Resolution_defineProperty(target, key, source[key]);
+        })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : Resolution_ownKeys(Object(source)).forEach((function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        }));
+      }
+      return target;
+    }
+    function Resolution_defineProperty(obj, key, value) {
+      return (key = function Resolution_toPropertyKey(arg) {
+        var key = function Resolution_toPrimitive(input, hint) {
+          if ("object" !== Resolution_typeof(input) || null === input) return input;
+          var prim = input[Symbol.toPrimitive];
+          if (prim !== undefined) {
+            var res = prim.call(input, hint || "default");
+            if ("object" !== Resolution_typeof(res)) return res;
+            throw new TypeError("@@toPrimitive must return a primitive value.");
+          }
+          return ("string" === hint ? String : Number)(input);
+        }(arg, "string");
+        return "symbol" === Resolution_typeof(key) ? key : String(key);
+      }(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }
+    var Resolution_defaultConfig = {
+      showRefreshButton: !0
+    };
     function setContent(widgetElem) {
       var spanElem = widgetElem.querySelector("span");
       spanElem || (spanElem = document.createElement("span"), widgetElem.appendChild(spanElem)), 
@@ -251,8 +308,8 @@ try {
     }
     var Resolution = {
       create: function createWidget(config) {
-        var _config$showRefreshBu, baseElem = config.baseElem, widgetElem = document.createElement("div");
-        if (widgetElem.className += " resolution widget", setContent(widgetElem), null === (_config$showRefreshBu = config.showRefreshButton) || void 0 === _config$showRefreshBu || _config$showRefreshBu) {
+        var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
+        if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
           var refreshButton = function createRefreshButton(widgetElem) {
             var refreshButton = document.createElement("button");
             return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
@@ -261,7 +318,9 @@ try {
           }(widgetElem);
           widgetElem.appendChild(refreshButton);
         }
-        baseElem.appendChild(widgetElem);
+        return {
+          returnElem: widgetElem
+        };
       }
     };
     document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
@@ -275,15 +334,8 @@ try {
     }((function handleOnLoad() {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
-      Clock.create({
-        baseElem: appElem
-      }), DateWidget.create({
-        baseElem: appElem
-      }), Resolution.create({
-        baseElem: appElem
-      }), Calendar.create({
-        baseElem: appElem
-      });
+      appElem.appendChild(Clock.create({}).returnElem), appElem.appendChild(DateWidget.create({}).returnElem), 
+      appElem.appendChild(Resolution.create({}).returnElem), appElem.appendChild(Calendar.create({}).returnElem);
     })));
   }();
 } catch (err) {

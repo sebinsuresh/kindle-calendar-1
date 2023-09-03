@@ -10,10 +10,10 @@ function handleOnLoad() {
     throw new Error('Could not find app element in page');
   }
 
-  Clock.create({ baseElem: appElem });
-  DateWidget.create({ baseElem: appElem });
-  Resolution.create({ baseElem: appElem });
-  Calendar.create({ baseElem: appElem });
+  appElem.appendChild(Clock.create({}).returnElem);
+  appElem.appendChild(DateWidget.create({}).returnElem);
+  appElem.appendChild(Resolution.create({}).returnElem);
+  appElem.appendChild(Calendar.create({}).returnElem);
 }
 
 document.addEventListener('DOMContentLoaded', wrapTryCatch(handleOnLoad));

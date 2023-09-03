@@ -3,7 +3,7 @@ import { Months } from '../Constants/Months';
 import { getCurrentDate } from '../Utilities/getCurrentDate';
 
 /**
- * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
+ * @typedef { import('./Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  *
  * @typedef { Object } CalendarConfigProperties
  * @property { Number } [numRows] Number of rows to show in the calendar
@@ -206,9 +206,10 @@ function populateCalendar(calendarTable, showUpdateInHrs) {
 /**
  * Creates a calendar widget
  * @param { Config } config
+ * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
  */
 function createCalendar(config) {
-  const { baseElem, numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
+  const { numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
 
   const calendarElem = CreateTable(theme);
   calendarElem.setAttribute('data-num-rows', numRows.toString());
@@ -224,7 +225,8 @@ function createCalendar(config) {
   calendarElem.appendChild(calendarBody);
 
   populateCalendar(calendarElem, showUpdateInHrs);
-  baseElem.appendChild(calendarElem);
+
+  return { returnElem: calendarElem };
 }
 
 export const Calendar = {

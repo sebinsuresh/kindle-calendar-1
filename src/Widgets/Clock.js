@@ -1,7 +1,7 @@
 import { getTimeString } from '../Utilities/getTimeString';
 
 /**
- * @typedef { import('./Types/BaseWidgetConfig').BaseWidgetConfig } BaseWidgetConfig
+ * @typedef { import('./Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  *
  * @typedef { Object } ClockConfigProperties
  * @property { boolean } [showSeconds] Whether to show seconds or not
@@ -23,15 +23,18 @@ export function setTime(clockElem, showSeconds) {
   }, updateInMs);
 }
 
-/** @param { Config } config */
+/**
+ * @param { Config } config
+ * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
+ */
 export function createClock(config) {
-  const { baseElem, showSeconds } = config;
+  const { showSeconds } = config;
 
   const clockElem = document.createElement('div');
   clockElem.className += ' clock widget';
   setTime(clockElem, showSeconds ?? false);
 
-  baseElem.appendChild(clockElem);
+  return { returnElem: clockElem };
 }
 
 export const Clock = {
