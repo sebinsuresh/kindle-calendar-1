@@ -226,7 +226,12 @@ function createCalendar(config) {
 
   populateCalendar(calendarElem, showUpdateInHrs);
 
-  return { returnElem: calendarElem };
+  return {
+    returnElem: calendarElem,
+    minWidth: 252,
+    minHeight: 176,
+    // TODO: Add update function
+  };
 }
 
 export const Calendar = {

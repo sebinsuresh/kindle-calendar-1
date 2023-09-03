@@ -16,10 +16,17 @@ function handleOnLoad() {
   // - Number of columns this widget takes up
   // - Number of rows this widget takes up
 
-  appElem.appendChild(Clock.create({}).returnElem);
-  appElem.appendChild(DateWidget.create({}).returnElem);
-  appElem.appendChild(Resolution.create({}).returnElem);
-  appElem.appendChild(Calendar.create({}).returnElem);
+  const clockElem = Clock.create({}).returnElem;
+  appElem.appendChild(clockElem);
+
+  const dateElem = DateWidget.create({}).returnElem;
+  appElem.appendChild(dateElem);
+
+  const resolutionElem = Resolution.create({}).returnElem;
+  appElem.appendChild(resolutionElem);
+
+  const calendarElem = Calendar.create({}).returnElem;
+  appElem.appendChild(calendarElem);
 }
 
 document.addEventListener('DOMContentLoaded', wrapTryCatch(handleOnLoad));

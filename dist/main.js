@@ -184,7 +184,9 @@ try {
         var calendarBody = createCalendarBody(numRows);
         return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
         {
-          returnElem: calendarElem
+          returnElem: calendarElem,
+          minWidth: 252,
+          minHeight: 176
         };
       },
       Themes: Themes
@@ -201,7 +203,7 @@ try {
         return showSeconds && (toReturn += ":" + getLeftZeroedString(now.getSeconds(), 2)), 
         toReturn + amPm;
       }(showSeconds);
-      var updateInMs = 1e3 * (60 - (new Date).getSeconds());
+      var updateInMs = showSeconds ? 1e3 : 1e3 * (60 - (new Date).getSeconds());
       setTimeout((function() {
         setTime(clockElem, showSeconds);
       }), updateInMs);
@@ -211,7 +213,9 @@ try {
         var showSeconds = config.showSeconds, clockElem = document.createElement("div");
         return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
         {
-          returnElem: clockElem
+          returnElem: clockElem,
+          minWidth: showSeconds ? 179 : 133,
+          minHeight: 21
         };
       }
     };
@@ -234,7 +238,9 @@ try {
         var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
         return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
         {
-          returnElem: dateElem
+          returnElem: dateElem,
+          minWidth: 130,
+          minHeight: 21
         };
       }
     };
@@ -321,7 +327,9 @@ try {
           widgetElem.appendChild(refreshButton);
         }
         return {
-          returnElem: widgetElem
+          returnElem: widgetElem,
+          minWidth: showRefreshButton ? 105 : 71,
+          minHeight: showRefreshButton ? 30 : 21
         };
       }
     };
@@ -336,8 +344,14 @@ try {
     }((function handleOnLoad() {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
-      appElem.appendChild(Clock.create({}).returnElem), appElem.appendChild(DateWidget.create({}).returnElem), 
-      appElem.appendChild(Resolution.create({}).returnElem), appElem.appendChild(Calendar.create({}).returnElem);
+      var clockElem = Clock.create({}).returnElem;
+      appElem.appendChild(clockElem);
+      var dateElem = DateWidget.create({}).returnElem;
+      appElem.appendChild(dateElem);
+      var resolutionElem = Resolution.create({}).returnElem;
+      appElem.appendChild(resolutionElem);
+      var calendarElem = Calendar.create({}).returnElem;
+      appElem.appendChild(calendarElem);
     })));
   }();
 } catch (err) {

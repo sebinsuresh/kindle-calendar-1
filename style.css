@@ -21,6 +21,8 @@ table.widget,
 div.widget {
   /* position: relative; */
   /* display: block; */
+  display: inline-block;
+  border: thin solid;
 }
 
 /* Clock and Date Style */
@@ -44,12 +46,10 @@ div.widget {
 
 table.calendar {
   text-align: center;
-  border: thin solid;
 }
 
 table.calendar > tbody > tr.days > td {
   font-weight: bold;
-  /* font-size: 20px; */
   border-top: thin solid;
   border-bottom: thin solid;
 }
@@ -59,7 +59,7 @@ table.calendar > tbody > tr > td.month-other {
 }
 
 table.calendar > tbody > tr > td.day-today {
-  /* font-size: 24px; */
+  font-weight: bold;
 }
 
 table.calendar.light {

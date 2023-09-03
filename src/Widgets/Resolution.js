@@ -45,7 +45,12 @@ function createWidget(config) {
     widgetElem.appendChild(refreshButton);
   }
 
-  return { returnElem: widgetElem };
+  return {
+    returnElem: widgetElem,
+    minWidth: showRefreshButton ? 105 : 71,
+    minHeight: showRefreshButton ? 30 : 21,
+    // TODO: Add update function
+  };
 }
 
 export const Resolution = {

@@ -43,7 +43,12 @@ export function createDate(config) {
   dateElem.className += ' date widget';
   setDate(dateElem, showUpdateIn ?? false);
 
-  return { returnElem: dateElem };
+  return {
+    returnElem: dateElem,
+    minWidth: 130,
+    minHeight: 21,
+    // TODO: Add update function
+  };
 }
 
 export const DateWidget = {
