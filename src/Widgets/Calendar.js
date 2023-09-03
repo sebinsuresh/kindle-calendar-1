@@ -211,7 +211,6 @@ function createCalendar(config) {
   const { baseElem, numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
 
   const calendarElem = CreateTable(theme);
-  baseElem.appendChild(calendarElem);
   calendarElem.setAttribute('data-num-rows', numRows.toString());
   calendarElem.setAttribute('data-start-curr-week-on-row', startCurrWeekOnRow.toString());
 
@@ -225,6 +224,7 @@ function createCalendar(config) {
   calendarElem.appendChild(calendarBody);
 
   populateCalendar(calendarElem, showUpdateInHrs);
+  baseElem.appendChild(calendarElem);
 }
 
 export const Calendar = {

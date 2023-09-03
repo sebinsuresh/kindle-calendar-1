@@ -172,8 +172,7 @@ try {
           calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
           calendarElem;
         }(_defaultConfig$config.theme);
-        baseElem.appendChild(calendarElem), calendarElem.setAttribute("data-num-rows", numRows.toString()), 
-        calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
+        calendarElem.setAttribute("data-num-rows", numRows.toString()), calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
         var calendarTHead = document.createElement("thead");
         calendarElem.appendChild(calendarTHead);
         var calendarTh = function createCalendarHeader() {
@@ -183,7 +182,8 @@ try {
         }();
         calendarTHead.appendChild(calendarTh);
         var calendarBody = createCalendarBody(numRows);
-        calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs);
+        calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
+        baseElem.appendChild(calendarElem);
       },
       Themes: Themes
     };
