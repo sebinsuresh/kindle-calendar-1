@@ -164,33 +164,6 @@ try {
         populateCalendar(calendarTable, showUpdateInHrs);
       }), updateInMs);
     }
-    var Calendar = {
-      create: function createCalendar(config) {
-        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
-          var calendarElem = document.createElement("table");
-          return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
-          calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
-          calendarElem;
-        }(_defaultConfig$config.theme);
-        calendarElem.setAttribute("data-num-rows", numRows.toString()), calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
-        var calendarTHead = document.createElement("thead");
-        calendarElem.appendChild(calendarTHead);
-        var calendarTh = function createCalendarHeader() {
-          var calendarTh = document.createElement("th");
-          return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = "Month Year", 
-          calendarTh;
-        }();
-        calendarTHead.appendChild(calendarTh);
-        var calendarBody = createCalendarBody(numRows);
-        return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
-        {
-          returnElem: calendarElem,
-          minWidth: 252,
-          minHeight: 176
-        };
-      },
-      Themes: Themes
-    };
     function getLeftZeroedString(input, numDigits) {
       if (numDigits > 3) throw new Error("numDigits must be <= 3");
       return ("000" + input).slice(-numDigits);
@@ -208,17 +181,6 @@ try {
         setTime(clockElem, showSeconds);
       }), updateInMs);
     }
-    var Clock = {
-      create: function createClock(config) {
-        var showSeconds = config.showSeconds, clockElem = document.createElement("div");
-        return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
-        {
-          returnElem: clockElem,
-          minWidth: showSeconds ? 179 : 133,
-          minHeight: 21
-        };
-      }
-    };
     function setDate(dateElem, showUpdateIn) {
       dateElem.innerText = function getDateString() {
         var now = getCurrentDate(), month = getLeftZeroedString(now.getMonth() + 1, 2), date = getLeftZeroedString(now.getDate(), 2), year = now.getFullYear().toString().slice(-2);
@@ -233,17 +195,6 @@ try {
         setDate(dateElem, showUpdateIn);
       }), updateInMs);
     }
-    var DateWidget = {
-      create: function createDate(config) {
-        var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
-        return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
-        {
-          returnElem: dateElem,
-          minWidth: 130,
-          minHeight: 21
-        };
-      }
-    };
     function logError(err) {
       var consoleElem = function getConsoleElem() {
         var consoleElem = document.getElementById("consoleElem");
@@ -314,23 +265,86 @@ try {
       spanElem || (spanElem = document.createElement("span"), widgetElem.appendChild(spanElem)), 
       spanElem.innerText = "".concat(window.innerWidth, " x ").concat(window.innerHeight);
     }
-    var Resolution = {
-      create: function createWidget(config) {
-        var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
-        if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
-          var refreshButton = function createRefreshButton(widgetElem) {
-            var refreshButton = document.createElement("button");
-            return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
-              return setContent(widgetElem);
-            })), refreshButton;
-          }(widgetElem);
-          widgetElem.appendChild(refreshButton);
-        }
-        return {
-          returnElem: widgetElem,
-          minWidth: showRefreshButton ? 105 : 71,
-          minHeight: showRefreshButton ? 30 : 21
-        };
+    var Widgets = {
+      Clock: {
+        create: {
+          create: function createClock(config) {
+            var showSeconds = config.showSeconds, clockElem = document.createElement("div");
+            return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
+            {
+              returnElem: clockElem,
+              minWidth: showSeconds ? 179 : 133,
+              minHeight: 21
+            };
+          }
+        }.create,
+        defaultOptions: {}
+      },
+      Date: {
+        create: {
+          create: function createDate(config) {
+            var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
+            return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
+            {
+              returnElem: dateElem,
+              minWidth: 130,
+              minHeight: 21
+            };
+          }
+        }.create,
+        defaultOptions: {}
+      },
+      Resolution: {
+        create: {
+          create: function createWidget(config) {
+            var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
+            if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
+              var refreshButton = function createRefreshButton(widgetElem) {
+                var refreshButton = document.createElement("button");
+                return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
+                  return setContent(widgetElem);
+                })), refreshButton;
+              }(widgetElem);
+              widgetElem.appendChild(refreshButton);
+            }
+            return {
+              returnElem: widgetElem,
+              minWidth: showRefreshButton ? 105 : 71,
+              minHeight: showRefreshButton ? 30 : 21
+            };
+          }
+        }.create,
+        defaultOptions: {}
+      },
+      Calendar: {
+        create: {
+          create: function createCalendar(config) {
+            var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
+              var calendarElem = document.createElement("table");
+              return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
+              calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
+              calendarElem;
+            }(_defaultConfig$config.theme);
+            calendarElem.setAttribute("data-num-rows", numRows.toString()), calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
+            var calendarTHead = document.createElement("thead");
+            calendarElem.appendChild(calendarTHead);
+            var calendarTh = function createCalendarHeader() {
+              var calendarTh = document.createElement("th");
+              return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = "Month Year", 
+              calendarTh;
+            }();
+            calendarTHead.appendChild(calendarTh);
+            var calendarBody = createCalendarBody(numRows);
+            return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
+            {
+              returnElem: calendarElem,
+              minWidth: 252,
+              minHeight: 176
+            };
+          },
+          Themes: Themes
+        }.create,
+        defaultOptions: {}
       }
     };
     document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
@@ -344,14 +358,10 @@ try {
     }((function handleOnLoad() {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
-      var clockElem = Clock.create({}).returnElem;
-      appElem.appendChild(clockElem);
-      var dateElem = DateWidget.create({}).returnElem;
-      appElem.appendChild(dateElem);
-      var resolutionElem = Resolution.create({}).returnElem;
-      appElem.appendChild(resolutionElem);
-      var calendarElem = Calendar.create({}).returnElem;
-      appElem.appendChild(calendarElem);
+      for (var widgetName in Widgets) {
+        var widget = Widgets[widgetName], widgetElem = widget.create(widget.defaultOptions);
+        appElem.appendChild(widgetElem.returnElem);
+      }
     })));
   }();
 } catch (err) {

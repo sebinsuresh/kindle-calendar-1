@@ -4,6 +4,30 @@ import { DateWidget } from './Widgets/Date';
 import { wrapTryCatch } from './Utilities/wrapTryCatch';
 import { Resolution } from './Widgets/Resolution';
 
+/**
+ * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
+ * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetReturn } BaseWidgetReturn
+ * @type { { [key: string]: { create: (options: BaseWidgetConfig) => BaseWidgetReturn, defaultOptions: object } } }
+ */
+const Widgets = {
+  Clock: {
+    create: Clock.create,
+    defaultOptions: {},
+  },
+  Date: {
+    create: DateWidget.create,
+    defaultOptions: {},
+  },
+  Resolution: {
+    create: Resolution.create,
+    defaultOptions: {},
+  },
+  Calendar: {
+    create: Calendar.create,
+    defaultOptions: {},
+  },
+};
+
 function handleOnLoad() {
   const appElem = document.getElementById('app');
   if (!appElem) {
@@ -16,17 +40,11 @@ function handleOnLoad() {
   // - Number of columns this widget takes up
   // - Number of rows this widget takes up
 
-  const clockElem = Clock.create({}).returnElem;
-  appElem.appendChild(clockElem);
-
-  const dateElem = DateWidget.create({}).returnElem;
-  appElem.appendChild(dateElem);
-
-  const resolutionElem = Resolution.create({}).returnElem;
-  appElem.appendChild(resolutionElem);
-
-  const calendarElem = Calendar.create({}).returnElem;
-  appElem.appendChild(calendarElem);
+  for (const widgetName in Widgets) {
+    const widget = Widgets[widgetName];
+    const widgetElem = widget.create(widget.defaultOptions);
+    appElem.appendChild(widgetElem.returnElem);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', wrapTryCatch(handleOnLoad));
