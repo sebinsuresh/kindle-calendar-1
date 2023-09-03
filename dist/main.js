@@ -168,7 +168,7 @@ try {
       create: function createCalendar(config) {
         var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), baseElem = _defaultConfig$config.baseElem, numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
           var calendarElem = document.createElement("table");
-          return calendarElem.className += " calendar", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
+          return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
           calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
           calendarElem;
         }(_defaultConfig$config.theme);
@@ -205,7 +205,7 @@ try {
     var Clock = {
       create: function createClock(config) {
         var baseElem = config.baseElem, showSeconds = config.showSeconds, clockElem = document.createElement("div");
-        clockElem.className += " clock", setTime(clockElem, null != showSeconds && showSeconds), 
+        clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
         baseElem.appendChild(clockElem);
       }
     };
@@ -226,7 +226,7 @@ try {
     var DateWidget = {
       create: function createDate(config) {
         var baseElem = config.baseElem, showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
-        dateElem.className += " date", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
+        dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
         baseElem.appendChild(dateElem);
       }
     };
@@ -244,6 +244,26 @@ try {
       }
       console.error(err), consoleElem.innerText += "--------------\n";
     }
+    function setContent(widgetElem) {
+      var spanElem = widgetElem.querySelector("span");
+      spanElem || (spanElem = document.createElement("span"), widgetElem.appendChild(spanElem)), 
+      spanElem.innerText = "".concat(window.innerWidth, " x ").concat(window.innerHeight);
+    }
+    var Resolution = {
+      create: function createWidget(config) {
+        var _config$showRefreshBu, baseElem = config.baseElem, widgetElem = document.createElement("div");
+        if (widgetElem.className += " resolution widget", setContent(widgetElem), null === (_config$showRefreshBu = config.showRefreshButton) || void 0 === _config$showRefreshBu || _config$showRefreshBu) {
+          var refreshButton = function createRefreshButton(widgetElem) {
+            var refreshButton = document.createElement("button");
+            return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
+              return setContent(widgetElem);
+            })), refreshButton;
+          }(widgetElem);
+          widgetElem.appendChild(refreshButton);
+        }
+        baseElem.appendChild(widgetElem);
+      }
+    };
     document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
         try {
@@ -258,6 +278,8 @@ try {
       Clock.create({
         baseElem: appElem
       }), DateWidget.create({
+        baseElem: appElem
+      }), Resolution.create({
         baseElem: appElem
       }), Calendar.create({
         baseElem: appElem
