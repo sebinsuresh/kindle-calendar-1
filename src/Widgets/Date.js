@@ -37,7 +37,7 @@ export function createDate(config) {
   const { baseElem, showUpdateIn } = config;
 
   const dateElem = document.createElement('div');
-  dateElem.className += ' date';
+  dateElem.className += ' date widget';
   setDate(dateElem, showUpdateIn ?? false);
 
   baseElem.appendChild(dateElem);

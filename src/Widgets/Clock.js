@@ -28,7 +28,7 @@ export function createClock(config) {
   const { baseElem, showSeconds } = config;
 
   const clockElem = document.createElement('div');
-  clockElem.className += ' clock';
+  clockElem.className += ' clock widget';
   setTime(clockElem, showSeconds ?? false);
 
   baseElem.appendChild(clockElem);

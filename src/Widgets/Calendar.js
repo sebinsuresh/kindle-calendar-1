@@ -39,7 +39,7 @@ const Modes = {
  */
 function CreateTable(theme) {
   const calendarElem = document.createElement('table');
-  calendarElem.className += ' calendar';
+  calendarElem.className += ' calendar widget';
   calendarElem.className += theme === Themes.Dark ? ' dark' : ' light';
   calendarElem.setAttribute('cellspacing', '0');
   calendarElem.setAttribute('cellpadding', '4');
