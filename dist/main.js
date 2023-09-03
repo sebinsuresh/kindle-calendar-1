@@ -195,7 +195,9 @@ try {
     }
     function setTime(clockElem, showSeconds) {
       clockElem.innerText = function getTimeString(showSeconds) {
-        var now = getCurrentDate(), hours = now.getHours(), amPm = hours >= 12 ? " PM" : " AM", hoursStr = getLeftZeroedString(hours > 12 ? hours - 12 : hours, 2), minsStr = getLeftZeroedString(now.getMinutes(), 2), toReturn = "".concat(hoursStr, ":").concat(minsStr);
+        var now = getCurrentDate(), hours = now.getHours(), amPm = hours >= 12 ? " PM" : " AM", hoursStr = getLeftZeroedString(hours > 12 ? hours - 12 : hours, 2);
+        "00" === hoursStr && (hoursStr = "12");
+        var minsStr = getLeftZeroedString(now.getMinutes(), 2), toReturn = "".concat(hoursStr, ":").concat(minsStr);
         return showSeconds && (toReturn += ":" + getLeftZeroedString(now.getSeconds(), 2)), 
         toReturn + amPm;
       }(showSeconds);

@@ -12,7 +12,10 @@ export function getTimeString(showSeconds) {
   const amPmHours = hours > 12 ? hours - 12 : hours;
   const amPm = hours >= 12 ? ' PM' : ' AM';
 
-  const hoursStr = getLeftZeroedString(amPmHours, 2);
+  let hoursStr = getLeftZeroedString(amPmHours, 2);
+  if (hoursStr === '00') {
+    hoursStr = '12';
+  }
   const minsStr = getLeftZeroedString(now.getMinutes(), 2);
 
   let toReturn = `${hoursStr}:${minsStr}`;
