@@ -1,7 +1,12 @@
 * {
-  text-align: center;
-  font-size: 24px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
 }
 
 #consoleElem {
@@ -12,63 +17,69 @@
   font-size: 16px;
 }
 
+table.widget,
+div.widget {
+  /* position: relative; */
+  /* display: block; */
+}
+
+/* Clock and Date Style */
+
 .clock,
 .date {
   text-transform: uppercase;
   letter-spacing: 8px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
-.clock::after {
+/* .clock::after {
   content: ' | ';
   display: inline-block;
   margin-left: 4px;
   margin-right: 4px;
-}
+} */
 
 /* Calendar Styles */
 
-.calendar {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 16px;
+table.calendar {
+  text-align: center;
   border: thin solid;
 }
 
-.days td {
+table.calendar > tbody > tr.days > td {
   font-weight: bold;
-  font-size: 20px;
+  /* font-size: 20px; */
   border-top: thin solid;
   border-bottom: thin solid;
 }
 
-.calendar td.month-other {
+table.calendar > tbody > tr > td.month-other {
   color: #7f7f7f;
 }
 
-.calendar td.day-today {
-  font-size: 24px;
+table.calendar > tbody > tr > td.day-today {
+  /* font-size: 24px; */
 }
 
-.calendar.dark {
-  background-color: black;
-  color: white;
-}
-
-.calendar.dark td.day-today {
+table.calendar.light {
   background-color: white;
   color: black;
 }
 
-.calendar.light {
-  background-color: white;
-  color: black;
-}
-
-.calendar.light td.day-today {
+table.calendar.light > tbody > tr > td.day-today {
   background-color: black;
   color: white;
+}
+
+table.calendar.dark {
+  background-color: black;
+  color: white;
+}
+
+table.calendar.dark > tbody > tr > td.day-today {
+  background-color: white;
+  color: black;
 }
 
 /* .days td:first-child {
