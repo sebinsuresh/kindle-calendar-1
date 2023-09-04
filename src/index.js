@@ -7,8 +7,9 @@ import { Resolution } from './Widgets/Resolution';
 /**
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetReturn } BaseWidgetReturn
- * @type { { [key: string]: { create: (options: BaseWidgetConfig) => BaseWidgetReturn, defaultOptions: object } } }
  */
+
+/** @type { { [key: string]: { create: (options: BaseWidgetConfig) => BaseWidgetReturn, defaultOptions: BaseWidgetConfig } } } */
 const Widgets = {
   Clock: {
     create: Clock.create,
