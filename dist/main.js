@@ -738,6 +738,33 @@ try {
         populateCalendar(calendarTable, showUpdateInHrs);
       }), updateInMs);
     }
+    var Calendar = {
+      create: function createCalendar(config) {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
+          var calendarElem = document.createElement("table");
+          return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
+          calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
+          calendarElem;
+        }(_defaultConfig$config.theme);
+        calendarElem.setAttribute("data-num-rows", numRows.toString()), calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
+        var calendarTHead = document.createElement("thead");
+        calendarElem.appendChild(calendarTHead);
+        var calendarTh = function createCalendarHeader() {
+          var calendarTh = document.createElement("th");
+          return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = "Month Year", 
+          calendarTh;
+        }();
+        calendarTHead.appendChild(calendarTh);
+        var calendarBody = createCalendarBody(numRows);
+        return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
+        {
+          returnElem: calendarElem,
+          minWidth: 252,
+          minHeight: 176
+        };
+      },
+      Themes: Themes
+    };
     function getLeftZeroedString(input, numDigits) {
       if (numDigits > 3) throw new Error("numDigits must be <= 3");
       return ("000" + input).slice(-numDigits);
@@ -755,6 +782,17 @@ try {
         setTime(clockElem, showSeconds);
       }), updateInMs);
     }
+    var Clock = {
+      create: function createClock(config) {
+        var showSeconds = config.showSeconds, clockElem = document.createElement("div");
+        return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
+        {
+          returnElem: clockElem,
+          minWidth: showSeconds ? 179 : 133,
+          minHeight: 21
+        };
+      }
+    };
     function setDate(dateElem, showUpdateIn) {
       dateElem.innerText = function getDateString() {
         var now = getCurrentDate(), month = getLeftZeroedString(now.getMonth() + 1, 2), date = getLeftZeroedString(now.getDate(), 2), year = now.getFullYear().toString().slice(-2);
@@ -769,6 +807,17 @@ try {
         setDate(dateElem, showUpdateIn);
       }), updateInMs);
     }
+    var DateWidget = {
+      create: function createDate(config) {
+        var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
+        return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
+        {
+          returnElem: dateElem,
+          minWidth: 130,
+          minHeight: 21
+        };
+      }
+    };
     function logError(err) {
       var consoleElem = function getConsoleElem() {
         var consoleElem = document.getElementById("consoleElem");
@@ -839,89 +888,97 @@ try {
       spanElem || (spanElem = document.createElement("span"), widgetElem.appendChild(spanElem)), 
       spanElem.innerText = "".concat(window.innerWidth, " x ").concat(window.innerHeight);
     }
-    var Widgets = {
-      Clock: {
-        create: {
-          create: function createClock(config) {
-            var showSeconds = config.showSeconds, clockElem = document.createElement("div");
-            return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
-            {
-              returnElem: clockElem,
-              minWidth: showSeconds ? 179 : 133,
-              minHeight: 21
-            };
-          }
-        }.create,
-        defaultOptions: {}
-      },
-      Date: {
-        create: {
-          create: function createDate(config) {
-            var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
-            return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
-            {
-              returnElem: dateElem,
-              minWidth: 130,
-              minHeight: 21
-            };
-          }
-        }.create,
-        defaultOptions: {}
-      },
-      Resolution: {
-        create: {
-          create: function createWidget(config) {
-            var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
-            if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
-              var refreshButton = function createRefreshButton(widgetElem) {
-                var refreshButton = document.createElement("button");
-                return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
-                  return setContent(widgetElem);
-                })), refreshButton;
-              }(widgetElem);
-              widgetElem.appendChild(refreshButton);
-            }
-            return {
-              returnElem: widgetElem,
-              minWidth: showRefreshButton ? 105 : 71,
-              minHeight: showRefreshButton ? 30 : 21
-            };
-          }
-        }.create,
-        defaultOptions: {}
-      },
-      Calendar: {
-        create: {
-          create: function createCalendar(config) {
-            var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
-              var calendarElem = document.createElement("table");
-              return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
-              calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
-              calendarElem;
-            }(_defaultConfig$config.theme);
-            calendarElem.setAttribute("data-num-rows", numRows.toString()), calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
-            var calendarTHead = document.createElement("thead");
-            calendarElem.appendChild(calendarTHead);
-            var calendarTh = function createCalendarHeader() {
-              var calendarTh = document.createElement("th");
-              return calendarTh.setAttribute("colspan", "7"), calendarTh.innerText = "Month Year", 
-              calendarTh;
-            }();
-            calendarTHead.appendChild(calendarTh);
-            var calendarBody = createCalendarBody(numRows);
-            return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
-            {
-              returnElem: calendarElem,
-              minWidth: 252,
-              minHeight: 176
-            };
-          },
-          Themes: Themes
-        }.create,
-        defaultOptions: {}
+    var Resolution = {
+      create: function createWidget(config) {
+        var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
+        if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
+          var refreshButton = function createRefreshButton(widgetElem) {
+            var refreshButton = document.createElement("button");
+            return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
+              return setContent(widgetElem);
+            })), refreshButton;
+          }(widgetElem);
+          widgetElem.appendChild(refreshButton);
+        }
+        return {
+          returnElem: widgetElem,
+          minWidth: showRefreshButton ? 105 : 71,
+          minHeight: showRefreshButton ? 30 : 21
+        };
       }
     };
-    document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
+    function src_typeof(obj) {
+      return src_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+      } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      }, src_typeof(obj);
+    }
+    function _defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i];
+        descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, 
+        "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, src_toPropertyKey(descriptor.key), descriptor);
+      }
+    }
+    function src_toPropertyKey(arg) {
+      var key = function src_toPrimitive(input, hint) {
+        if ("object" !== src_typeof(input) || null === input) return input;
+        var prim = input[Symbol.toPrimitive];
+        if (prim !== undefined) {
+          var res = prim.call(input, hint || "default");
+          if ("object" !== src_typeof(res)) return res;
+          throw new TypeError("@@toPrimitive must return a primitive value.");
+        }
+        return ("string" === hint ? String : Number)(input);
+      }(arg, "string");
+      return "symbol" === src_typeof(key) ? key : String(key);
+    }
+    var WidgetManager = function() {
+      function WidgetManager() {
+        !function _classCallCheck(instance, Constructor) {
+          if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
+        }(this, WidgetManager);
+      }
+      return function _createClass(Constructor, protoProps, staticProps) {
+        return protoProps && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), 
+        Object.defineProperty(Constructor, "prototype", {
+          writable: !1
+        }), Constructor;
+      }(WidgetManager, null, [ {
+        key: "createWidget",
+        value: function createWidget(widgetName, options) {
+          var widget = WidgetManager.Widgets[widgetName];
+          if (!widget) throw new Error("Could not find widget with name ".concat(widgetName));
+          return widget.create(options);
+        }
+      } ]), WidgetManager;
+    }();
+    !function src_defineProperty(obj, key, value) {
+      return (key = src_toPropertyKey(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }(WidgetManager, "Widgets", {
+      clock: {
+        create: Clock.create,
+        defaultOptions: {}
+      },
+      date: {
+        create: DateWidget.create,
+        defaultOptions: {}
+      },
+      resolution: {
+        create: Resolution.create,
+        defaultOptions: {}
+      },
+      calendar: {
+        create: Calendar.create,
+        defaultOptions: {}
+      }
+    }), document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
         try {
           fn();
@@ -932,8 +989,8 @@ try {
     }((function handleOnLoad() {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
-      for (var widgetName in Widgets) {
-        var widget = Widgets[widgetName], widgetElem = widget.create(widget.defaultOptions);
+      for (var widgetName in WidgetManager.Widgets) {
+        var widget = WidgetManager.Widgets[widgetName], widgetElem = widget.create(widget.defaultOptions);
         appElem.appendChild(widgetElem.returnElem);
       }
     })));
