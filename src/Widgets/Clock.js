@@ -27,7 +27,7 @@ export function setTime(clockElem, showSeconds) {
  * @param { Config } config
  * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
  */
-export function createClock(config) {
+export function createWidget(config) {
   const { showSeconds } = config;
 
   const clockElem = document.createElement('div');
@@ -48,5 +48,5 @@ export function createClock(config) {
 }
 
 export const Clock = {
-  create: createClock,
+  create: createWidget,
 };

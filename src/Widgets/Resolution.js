@@ -33,7 +33,7 @@ function createRefreshButton(widgetElem) {
  * @param { Config } config
  * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
  */
-function createWidget(config) {
+export function createWidget(config) {
   const { showRefreshButton } = { ...defaultConfig, ...config };
 
   const widgetElem = document.createElement('div');
