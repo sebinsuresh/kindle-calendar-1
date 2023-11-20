@@ -45,7 +45,8 @@ export function ajax(options) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4) {
       const status = xhr.status;
-      const response = { status, response: xhr.responseText };
+      const responseString = xhr.responseText || `Status code: ${status}, No response text`;
+      const response = { status, response: responseString };
       if (status >= 200 && status < 300) {
         options.success && options.success(response);
       } else {
@@ -55,12 +56,7 @@ export function ajax(options) {
   };
 
   const newUrl = options.url + '?' + params;
-  if (options.method == 'GET') {
-    xhr.open('GET', newUrl, true);
-    xhr.send(null);
-  } else {
-    xhr.open(options.method, newUrl, true);
-    xhr.setRequestHeader('Content-Type', `application/${options.dataType}`);
-    xhr.send(options.data);
-  }
+  xhr.open(options.method, newUrl, true);
+  xhr.setRequestHeader('Content-Type', `application/${options.dataType}`);
+  xhr.send(options.data);
 }
