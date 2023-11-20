@@ -739,7 +739,7 @@ try {
       }), updateInMs);
     }
     var Calendar = {
-      create: function createCalendar(config) {
+      create: function createWidget(config) {
         var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
           var calendarElem = document.createElement("table");
           return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
@@ -783,7 +783,7 @@ try {
       }), updateInMs);
     }
     var Clock = {
-      create: function createClock(config) {
+      create: function Clock_createWidget(config) {
         var showSeconds = config.showSeconds, clockElem = document.createElement("div");
         return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
         {
@@ -808,7 +808,7 @@ try {
       }), updateInMs);
     }
     var DateWidget = {
-      create: function createDate(config) {
+      create: function Date_createWidget(config) {
         var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
         return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
         {
@@ -889,7 +889,7 @@ try {
       spanElem.innerText = "".concat(window.innerWidth, " x ").concat(window.innerHeight);
     }
     var Resolution = {
-      create: function createWidget(config) {
+      create: function Resolution_createWidget(config) {
         var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
         if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
           var refreshButton = function createRefreshButton(widgetElem) {
@@ -950,7 +950,7 @@ try {
         value: function createWidget(widgetName, options) {
           var widget = WidgetManager.Widgets[widgetName];
           if (!widget) throw new Error("Could not find widget with name ".concat(widgetName));
-          return widget.create(options);
+          return widget.create(null != options ? options : widget.defaultConfig);
         }
       } ]), WidgetManager;
     }();
@@ -964,19 +964,19 @@ try {
     }(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
-        defaultOptions: {}
+        defaultConfig: {}
       },
       date: {
         create: DateWidget.create,
-        defaultOptions: {}
+        defaultConfig: {}
       },
       resolution: {
         create: Resolution.create,
-        defaultOptions: {}
+        defaultConfig: {}
       },
       calendar: {
         create: Calendar.create,
-        defaultOptions: {}
+        defaultConfig: {}
       }
     }), document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
@@ -987,12 +987,13 @@ try {
         }
       };
     }((function handleOnLoad() {
-      var appElem = document.getElementById("app");
-      if (!appElem) throw new Error("Could not find app element in page");
-      for (var widgetName in WidgetManager.Widgets) {
-        var widget = WidgetManager.Widgets[widgetName], widgetElem = widget.create(widget.defaultOptions);
-        appElem.appendChild(widgetElem.returnElem);
-      }
+      if (!document.getElementById("app")) throw new Error("Could not find app element in page");
+      WidgetManager.Widgets.calendar.defaultConfig, WidgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1
+      });
     })));
   }();
 } catch (err) {

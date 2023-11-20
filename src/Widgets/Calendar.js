@@ -208,7 +208,7 @@ function populateCalendar(calendarTable, showUpdateInHrs) {
  * @param { Config } config
  * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
  */
-function createCalendar(config) {
+export function createWidget(config) {
   const { numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
 
   const calendarElem = CreateTable(theme);
@@ -235,6 +235,6 @@ function createCalendar(config) {
 }
 
 export const Calendar = {
-  create: createCalendar,
+  create: createWidget,
   Themes,
 };

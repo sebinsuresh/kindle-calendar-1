@@ -36,7 +36,7 @@ function setDate(dateElem, showUpdateIn) {
  * @param { Config } config
  * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
  */
-export function createDate(config) {
+export function createWidget(config) {
   const { showUpdateIn } = config;
 
   const dateElem = document.createElement('div');
@@ -52,5 +52,5 @@ export function createDate(config) {
 }
 
 export const DateWidget = {
-  create: createDate,
+  create: createWidget,
 };

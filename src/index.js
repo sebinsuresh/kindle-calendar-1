@@ -7,32 +7,39 @@ import { Resolution } from './Widgets/Resolution';
 /**
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetReturn } BaseWidgetReturn
+ *
+ * @typedef { keyof WidgetManager.Widgets } WidgetName
  */
 
 class WidgetManager {
-  /** @type { { [key: string]: { create: (options: BaseWidgetConfig) => BaseWidgetReturn, defaultOptions: BaseWidgetConfig } } } */
   static Widgets = {
     clock: {
       create: Clock.create,
-      defaultOptions: {},
+      /** @type {import('./Widgets/Clock').Config} */
+      defaultConfig: {},
     },
     date: {
       create: DateWidget.create,
-      defaultOptions: {},
+      /** @type {import('./Widgets/Date').Config} */
+      defaultConfig: {},
     },
     resolution: {
       create: Resolution.create,
-      defaultOptions: {},
+      /** @type {import('./Widgets/Resolution').Config} */
+      defaultConfig: {},
     },
     calendar: {
       create: Calendar.create,
-      defaultOptions: {},
+      /** @type {import('./Widgets/Calendar').Config}*/
+      defaultConfig: {},
     },
   };
 
   /**
-   * @param { string } widgetName Must be one of the keys in WidgetManager.Widgets
-   * @param { BaseWidgetConfig } options The options to pass to the widget
+   * @template { WidgetName } W
+   * @param { W } widgetName Must be one of the keys in WidgetManager.Widgets
+   * @param { Parameters<WidgetManager.Widgets[W]["create"]>["0"] } [options] The options to pass to the widget's `create()` function
+   * @returns Result of calling `create()` on the widget
    */
   static createWidget(widgetName, options) {
     const widget = WidgetManager.Widgets[widgetName];
@@ -40,7 +47,10 @@ class WidgetManager {
       throw new Error(`Could not find widget with name ${widgetName}`);
     }
 
-    return widget.create(options);
+    // Type casting to make things work without ts-ignore:
+    return /** @type { ReturnType<WidgetManager.Widgets[W]["create"]> } */ (
+      widget.create(options ?? widget.defaultConfig)
+    );
   }
 }
 
@@ -56,11 +66,20 @@ function handleOnLoad() {
   // - Number of columns this widget takes up
   // - Number of rows this widget takes up
 
-  for (const widgetName in WidgetManager.Widgets) {
-    const widget = WidgetManager.Widgets[widgetName];
-    const widgetElem = widget.create(widget.defaultOptions);
-    appElem.appendChild(widgetElem.returnElem);
-  }
+  const test1 = WidgetManager.Widgets.calendar.defaultConfig;
+
+  const test2 = WidgetManager.createWidget('calendar', {
+    numRows: 4,
+    startCurrWeekOnRow: 1,
+    showUpdateInHrs: false,
+    theme: 1,
+  });
+
+  // for (const widgetName in WidgetManager.Widgets) {
+  //   // Casting to avoid adding ts-ignore:
+  //   const widget = WidgetManager.createWidget(/**@type { WidgetName }*/ (widgetName), { theme: 1 });
+  //   appElem.appendChild(widget.returnElem);
+  // }
 }
 
 document.addEventListener('DOMContentLoaded', wrapTryCatch(handleOnLoad));
