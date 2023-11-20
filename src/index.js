@@ -8,32 +8,27 @@ import { Resolution } from './Widgets/Resolution';
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetReturn } BaseWidgetReturn
  *
- * @typedef { 'clock' | 'date' | 'resolution' | 'calendar' } WidgetName
+ * @typedef { keyof WidgetManager.Widgets } WidgetName
  */
 
 class WidgetManager {
-  // /** @type { { [key in WidgetName]: { create: (options: BaseWidgetConfig) => BaseWidgetReturn, defaultConfig: BaseWidgetConfig } } } */
   static Widgets = {
     clock: {
-      /** @type {import('./Widgets/Clock').createWidget} */
       create: Clock.create,
       /** @type {import('./Widgets/Clock').Config} */
       defaultConfig: {},
     },
     date: {
-      /** @type {import('./Widgets/Date').createWidget} */
       create: DateWidget.create,
       /** @type {import('./Widgets/Date').Config} */
       defaultConfig: {},
     },
     resolution: {
-      /** @type {import('./Widgets/Resolution').createWidget}*/
       create: Resolution.create,
       /** @type {import('./Widgets/Resolution').Config} */
       defaultConfig: {},
     },
     calendar: {
-      /** @type {import('./Widgets/Calendar').createWidget}*/
       create: Calendar.create,
       /** @type {import('./Widgets/Calendar').Config}*/
       defaultConfig: {},
@@ -41,9 +36,10 @@ class WidgetManager {
   };
 
   /**
-   * @param { WidgetName } widgetName Must be one of the keys in WidgetManager.Widgets
-   * @param { WidgetManager.Widgets[WidgetName]["defaultConfig"] } [options] The options to pass to the widget
-   * @returns { BaseWidgetReturn } Result of calling `create()` on the widget
+   * @template { WidgetName } W
+   * @param { W } widgetName Must be one of the keys in WidgetManager.Widgets
+   * @param { Parameters<WidgetManager.Widgets[W]["create"]>["0"] } [options] The options to pass to the widget's `create()` function
+   * @returns Result of calling `create()` on the widget
    */
   static createWidget(widgetName, options) {
     const widget = WidgetManager.Widgets[widgetName];
@@ -51,7 +47,10 @@ class WidgetManager {
       throw new Error(`Could not find widget with name ${widgetName}`);
     }
 
-    return widget.create(options ?? widget.defaultConfig);
+    // Type casting to make things work without ts-ignore:
+    return /** @type { ReturnType<WidgetManager.Widgets[W]["create"]> } */ (
+      widget.create(options ?? widget.defaultConfig)
+    );
   }
 }
 
@@ -77,7 +76,8 @@ function handleOnLoad() {
   });
 
   // for (const widgetName in WidgetManager.Widgets) {
-  //   const widget = WidgetManager.createWidget(widgetName, { someKey: 'value' });
+  //   // Casting to avoid adding ts-ignore:
+  //   const widget = WidgetManager.createWidget(/**@type { WidgetName }*/ (widgetName), { theme: 1 });
   //   appElem.appendChild(widget.returnElem);
   // }
 }
