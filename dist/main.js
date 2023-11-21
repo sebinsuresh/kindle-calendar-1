@@ -959,17 +959,15 @@ try {
         value: function createWidget(widgetName, options) {
           var widget = WidgetManager.Widgets[widgetName];
           if (!widget) throw new Error("Could not find widget with name ".concat(widgetName));
-          var element = widget.create(null != options ? options : widget.defaultConfig).returnElem;
-          element.style.left = options.xColumn * this.availableWidth / WidgetManager.GridColumns + WidgetManager.InnerPaddingPx + "px", 
-          element.style.top = options.yColumn * this.availableHeight / WidgetManager.GridRows + WidgetManager.InnerPaddingPx + "px", 
-          element.style.width = options.widthColumns * (this.availableWidth - 2 * WidgetManager.InnerPaddingPx) / WidgetManager.GridColumns + "px", 
-          element.style.height = options.heightRows * (this.availableHeight - 2 * WidgetManager.InnerPaddingPx) / WidgetManager.GridRows + "px", 
+          var element = widget.create(null != options ? options : widget.defaultConfig).returnElem, calculatedWidth = options.widthColumns * (this.availableWidth / WidgetManager.GridColumns), calculatedHeight = options.heightRows * (this.availableHeight / WidgetManager.GridRows), calculatedX = options.xColumn * (this.availableWidth / WidgetManager.GridColumns), calculatedY = options.yColumn * (this.availableHeight / WidgetManager.GridRows);
+          element.style.left = Math.round(calculatedX) + "px", element.style.top = Math.round(calculatedY) + "px", 
+          element.style.width = Math.round(calculatedWidth) + "px", element.style.height = Math.round(calculatedHeight) + "px", 
           this.appElem.appendChild(element);
         }
       } ]), WidgetManager;
     }();
     src_defineProperty(WidgetManager, "GridColumns", 6), src_defineProperty(WidgetManager, "GridRows", 6), 
-    src_defineProperty(WidgetManager, "InnerPaddingPx", 10), src_defineProperty(WidgetManager, "Widgets", {
+    src_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
         defaultConfig: {}
@@ -999,122 +997,41 @@ try {
       if (!appElem) throw new Error("Could not find app element in page");
       var widgetManager = new WidgetManager(appElem);
       widgetManager.createWidget("calendar", {
-        numRows: 4,
+        numRows: 3,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
         theme: 1,
         xColumn: 0,
         yColumn: 0,
-        widthColumns: 2,
-        heightRows: 2
+        widthColumns: 3,
+        heightRows: 3
       }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 2,
-        yColumn: 0,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 4,
-        yColumn: 0,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 0,
-        yColumn: 2,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 2,
-        yColumn: 2,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 4,
-        yColumn: 2,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 0,
-        yColumn: 4,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 2,
-        yColumn: 4,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 4,
-        yColumn: 4,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 1,
-        yColumn: 1,
-        widthColumns: 2,
-        heightRows: 2
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
+        numRows: 3,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
         theme: 1,
         xColumn: 3,
-        yColumn: 1,
-        widthColumns: 2,
-        heightRows: 2
+        yColumn: 0,
+        widthColumns: 3,
+        heightRows: 3
       }), widgetManager.createWidget("calendar", {
-        numRows: 4,
+        numRows: 3,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
         theme: 1,
-        xColumn: 1,
+        xColumn: 0,
         yColumn: 3,
-        widthColumns: 2,
-        heightRows: 2
+        widthColumns: 3,
+        heightRows: 3
       }), widgetManager.createWidget("calendar", {
-        numRows: 4,
+        numRows: 3,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
         theme: 1,
         xColumn: 3,
         yColumn: 3,
-        widthColumns: 2,
-        heightRows: 2
+        widthColumns: 3,
+        heightRows: 3
       });
     })));
   }();

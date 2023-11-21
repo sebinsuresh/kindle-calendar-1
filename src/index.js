@@ -27,7 +27,6 @@ class WidgetManager {
 
   static GridColumns = 6;
   static GridRows = 6;
-  static InnerPaddingPx = 10;
 
   static Widgets = {
     clock: {
@@ -69,20 +68,14 @@ class WidgetManager {
     );
 
     // TODO: Take minimum width and height into account
-    element.style.left =
-      (options.xColumn * this.availableWidth) / WidgetManager.GridColumns +
-      WidgetManager.InnerPaddingPx +
-      'px';
-    element.style.top =
-      (options.yColumn * this.availableHeight) / WidgetManager.GridRows + WidgetManager.InnerPaddingPx + 'px';
-    element.style.width =
-      (options.widthColumns * (this.availableWidth - 2 * WidgetManager.InnerPaddingPx)) /
-        WidgetManager.GridColumns +
-      'px';
-    element.style.height =
-      (options.heightRows * (this.availableHeight - 2 * WidgetManager.InnerPaddingPx)) /
-        WidgetManager.GridRows +
-      'px';
+    const calculatedWidth = options.widthColumns * (this.availableWidth / WidgetManager.GridColumns);
+    const calculatedHeight = options.heightRows * (this.availableHeight / WidgetManager.GridRows);
+    const calculatedX = options.xColumn * (this.availableWidth / WidgetManager.GridColumns);
+    const calculatedY = options.yColumn * (this.availableHeight / WidgetManager.GridRows);
+    element.style.left = Math.round(calculatedX) + 'px';
+    element.style.top = Math.round(calculatedY) + 'px';
+    element.style.width = Math.round(calculatedWidth) + 'px';
+    element.style.height = Math.round(calculatedHeight) + 'px';
 
     this.appElem.appendChild(element);
   }
@@ -97,146 +90,47 @@ function handleOnLoad() {
   const widgetManager = new WidgetManager(appElem);
 
   widgetManager.createWidget('calendar', {
-    numRows: 4,
+    numRows: 3,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: 1,
     xColumn: 0,
     yColumn: 0,
-    widthColumns: 2,
-    heightRows: 2,
+    widthColumns: 3,
+    heightRows: 3,
   });
 
   widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 2,
-    yColumn: 0,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 4,
-    yColumn: 0,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 0,
-    yColumn: 2,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 2,
-    yColumn: 2,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 4,
-    yColumn: 2,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 0,
-    yColumn: 4,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 2,
-    yColumn: 4,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 4,
-    yColumn: 4,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 1,
-    yColumn: 1,
-    widthColumns: 2,
-    heightRows: 2,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 4,
+    numRows: 3,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: 1,
     xColumn: 3,
-    yColumn: 1,
-    widthColumns: 2,
-    heightRows: 2,
+    yColumn: 0,
+    widthColumns: 3,
+    heightRows: 3,
   });
 
   widgetManager.createWidget('calendar', {
-    numRows: 4,
+    numRows: 3,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: 1,
-    xColumn: 1,
+    xColumn: 0,
     yColumn: 3,
-    widthColumns: 2,
-    heightRows: 2,
+    widthColumns: 3,
+    heightRows: 3,
   });
 
   widgetManager.createWidget('calendar', {
-    numRows: 4,
+    numRows: 3,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: 1,
     xColumn: 3,
     yColumn: 3,
-    widthColumns: 2,
-    heightRows: 2,
+    widthColumns: 3,
+    heightRows: 3,
   });
 
   // for (const widgetName in WidgetManager.Widgets) {
