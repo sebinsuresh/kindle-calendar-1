@@ -921,6 +921,14 @@ try {
         "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, src_toPropertyKey(descriptor.key), descriptor);
       }
     }
+    function src_defineProperty(obj, key, value) {
+      return (key = src_toPropertyKey(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }
     function src_toPropertyKey(arg) {
       var key = function src_toPrimitive(input, hint) {
         if ("object" !== src_typeof(input) || null === input) return input;
@@ -935,33 +943,33 @@ try {
       return "symbol" === src_typeof(key) ? key : String(key);
     }
     var WidgetManager = function() {
-      function WidgetManager() {
+      function WidgetManager(appElem) {
         !function _classCallCheck(instance, Constructor) {
           if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-        }(this, WidgetManager);
+        }(this, WidgetManager), this.appElem = appElem, this.availableWidth = document.documentElement.clientWidth, 
+        this.availableHeight = document.documentElement.clientHeight;
       }
       return function _createClass(Constructor, protoProps, staticProps) {
         return protoProps && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), 
         Object.defineProperty(Constructor, "prototype", {
           writable: !1
         }), Constructor;
-      }(WidgetManager, null, [ {
+      }(WidgetManager, [ {
         key: "createWidget",
         value: function createWidget(widgetName, options) {
           var widget = WidgetManager.Widgets[widgetName];
           if (!widget) throw new Error("Could not find widget with name ".concat(widgetName));
-          return widget.create(null != options ? options : widget.defaultConfig);
+          var element = widget.create(null != options ? options : widget.defaultConfig).returnElem;
+          element.style.left = options.xColumn * this.availableWidth / WidgetManager.GridColumns + WidgetManager.InnerPaddingPx + "px", 
+          element.style.top = options.yColumn * this.availableHeight / WidgetManager.GridRows + WidgetManager.InnerPaddingPx + "px", 
+          element.style.width = options.widthColumns * (this.availableWidth - 2 * WidgetManager.InnerPaddingPx) / WidgetManager.GridColumns + "px", 
+          element.style.height = options.heightRows * (this.availableHeight - 2 * WidgetManager.InnerPaddingPx) / WidgetManager.GridRows + "px", 
+          this.appElem.appendChild(element);
         }
       } ]), WidgetManager;
     }();
-    !function src_defineProperty(obj, key, value) {
-      return (key = src_toPropertyKey(key)) in obj ? Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: !0,
-        configurable: !0,
-        writable: !0
-      }) : obj[key] = value, obj;
-    }(WidgetManager, "Widgets", {
+    src_defineProperty(WidgetManager, "GridColumns", 6), src_defineProperty(WidgetManager, "GridRows", 6), 
+    src_defineProperty(WidgetManager, "InnerPaddingPx", 10), src_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
         defaultConfig: {}
@@ -987,12 +995,126 @@ try {
         }
       };
     }((function handleOnLoad() {
-      if (!document.getElementById("app")) throw new Error("Could not find app element in page");
-      WidgetManager.Widgets.calendar.defaultConfig, WidgetManager.createWidget("calendar", {
+      var appElem = document.getElementById("app");
+      if (!appElem) throw new Error("Could not find app element in page");
+      var widgetManager = new WidgetManager(appElem);
+      widgetManager.createWidget("calendar", {
         numRows: 4,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
-        theme: 1
+        theme: 1,
+        xColumn: 0,
+        yColumn: 0,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 2,
+        yColumn: 0,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 4,
+        yColumn: 0,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 0,
+        yColumn: 2,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 2,
+        yColumn: 2,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 4,
+        yColumn: 2,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 0,
+        yColumn: 4,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 2,
+        yColumn: 4,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 4,
+        yColumn: 4,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 1,
+        yColumn: 1,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 3,
+        yColumn: 1,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 1,
+        yColumn: 3,
+        widthColumns: 2,
+        heightRows: 2
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: 1,
+        xColumn: 3,
+        yColumn: 3,
+        widthColumns: 2,
+        heightRows: 2
       });
     })));
   }();

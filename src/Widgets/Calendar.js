@@ -43,6 +43,7 @@ function CreateTable(theme) {
   calendarElem.className += theme === Themes.Dark ? ' dark' : ' light';
   calendarElem.setAttribute('cellspacing', '0');
   calendarElem.setAttribute('cellpadding', '4');
+
   return calendarElem;
 }
 

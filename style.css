@@ -19,10 +19,9 @@ body {
 
 table.widget,
 div.widget {
-  /* position: relative; */
-  /* display: block; */
-  display: inline-block;
+  /* display: inline-block; */
   border: thin solid;
+  position: absolute;
 }
 
 /* Clock and Date Style */
