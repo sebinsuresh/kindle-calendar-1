@@ -82,6 +82,22 @@ table.calendar.dark > tbody > tr > td.day-today {
   color: black;
 }
 
+div.resolution {
+  background-color: white;
+  text-align: center;
+}
+
+div.resolution::before {
+  content: ' ';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+div.resolution > div {
+  display: inline-block;
+}
+
 /* .days td:first-child {
   border-left: thin solid;
 }

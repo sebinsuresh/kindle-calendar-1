@@ -230,7 +230,7 @@ export function createWidget(config) {
   return {
     returnElem: calendarElem,
     minWidth: 252,
-    minHeight: 176,
+    minHeight: 176, // assumes 4 rows
     // TODO: Add update function
   };
 }

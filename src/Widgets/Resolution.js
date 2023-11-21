@@ -38,11 +38,13 @@ export function createWidget(config) {
 
   const widgetElem = document.createElement('div');
   widgetElem.className += ' resolution widget';
-  setContent(widgetElem);
+  const containerElem = document.createElement('div');
+  setContent(containerElem);
+  widgetElem.appendChild(containerElem);
 
   if (showRefreshButton) {
-    const refreshButton = createRefreshButton(widgetElem);
-    widgetElem.appendChild(refreshButton);
+    const refreshButton = createRefreshButton(containerElem);
+    containerElem.appendChild(refreshButton);
   }
 
   return {

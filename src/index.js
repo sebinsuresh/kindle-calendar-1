@@ -90,47 +90,21 @@ function handleOnLoad() {
   const widgetManager = new WidgetManager(appElem);
 
   widgetManager.createWidget('calendar', {
-    numRows: 3,
+    numRows: 4,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: 1,
-    xColumn: 0,
-    yColumn: 0,
+    xColumn: 2,
+    yColumn: 1,
     widthColumns: 3,
     heightRows: 3,
   });
 
-  widgetManager.createWidget('calendar', {
-    numRows: 3,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 3,
-    yColumn: 0,
-    widthColumns: 3,
-    heightRows: 3,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 3,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 0,
-    yColumn: 3,
-    widthColumns: 3,
-    heightRows: 3,
-  });
-
-  widgetManager.createWidget('calendar', {
-    numRows: 3,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 3,
-    yColumn: 3,
-    widthColumns: 3,
-    heightRows: 3,
+  widgetManager.createWidget('resolution', {
+    heightRows: 1,
+    widthColumns: 1,
+    xColumn: 1,
+    yColumn: 2,
   });
 
   // for (const widgetName in WidgetManager.Widgets) {

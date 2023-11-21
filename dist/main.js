@@ -891,14 +891,16 @@ try {
     var Resolution = {
       create: function Resolution_createWidget(config) {
         var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
-        if (widgetElem.className += " resolution widget", setContent(widgetElem), showRefreshButton) {
+        widgetElem.className += " resolution widget";
+        var containerElem = document.createElement("div");
+        if (setContent(containerElem), widgetElem.appendChild(containerElem), showRefreshButton) {
           var refreshButton = function createRefreshButton(widgetElem) {
             var refreshButton = document.createElement("button");
             return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
               return setContent(widgetElem);
             })), refreshButton;
-          }(widgetElem);
-          widgetElem.appendChild(refreshButton);
+          }(containerElem);
+          containerElem.appendChild(refreshButton);
         }
         return {
           returnElem: widgetElem,
@@ -997,41 +999,19 @@ try {
       if (!appElem) throw new Error("Could not find app element in page");
       var widgetManager = new WidgetManager(appElem);
       widgetManager.createWidget("calendar", {
-        numRows: 3,
+        numRows: 4,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
         theme: 1,
-        xColumn: 0,
-        yColumn: 0,
+        xColumn: 2,
+        yColumn: 1,
         widthColumns: 3,
         heightRows: 3
-      }), widgetManager.createWidget("calendar", {
-        numRows: 3,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 3,
-        yColumn: 0,
-        widthColumns: 3,
-        heightRows: 3
-      }), widgetManager.createWidget("calendar", {
-        numRows: 3,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 0,
-        yColumn: 3,
-        widthColumns: 3,
-        heightRows: 3
-      }), widgetManager.createWidget("calendar", {
-        numRows: 3,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 3,
-        yColumn: 3,
-        widthColumns: 3,
-        heightRows: 3
+      }), widgetManager.createWidget("resolution", {
+        heightRows: 1,
+        widthColumns: 1,
+        xColumn: 1,
+        yColumn: 2
       });
     })));
   }();
