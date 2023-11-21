@@ -998,20 +998,30 @@ try {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
       var widgetManager = new WidgetManager(appElem);
-      widgetManager.createWidget("calendar", {
+      widgetManager.createWidget("date", {
+        xColumn: 1,
+        yColumn: 0,
+        widthColumns: 2,
+        heightRows: 1
+      }), widgetManager.createWidget("clock", {
+        xColumn: 3,
+        yColumn: 0,
+        widthColumns: 2,
+        heightRows: 1
+      }), widgetManager.createWidget("resolution", {
+        xColumn: 2.5,
+        yColumn: 4,
+        widthColumns: 1,
+        heightRows: 1
+      }), widgetManager.createWidget("calendar", {
         numRows: 4,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
         theme: 1,
-        xColumn: 2,
+        xColumn: 1.5,
         yColumn: 1,
         widthColumns: 3,
         heightRows: 3
-      }), widgetManager.createWidget("resolution", {
-        heightRows: 1,
-        widthColumns: 1,
-        xColumn: 1,
-        yColumn: 2
       });
     })));
   }();

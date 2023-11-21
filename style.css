@@ -21,7 +21,7 @@ body {
 table.widget,
 div.widget {
   /* display: inline-block; */
-  border: thin solid;
+  /* border: thin solid; */
   position: absolute;
 }
 
@@ -82,11 +82,15 @@ table.calendar.dark > tbody > tr > td.day-today {
   color: black;
 }
 
+div.clock,
+div.date,
 div.resolution {
   background-color: white;
   text-align: center;
 }
 
+div.date::before,
+div.clock::before,
 div.resolution::before {
   content: ' ';
   display: inline-block;
@@ -94,6 +98,8 @@ div.resolution::before {
   vertical-align: middle;
 }
 
+div.date,
+div.clock,
 div.resolution > div {
   display: inline-block;
 }

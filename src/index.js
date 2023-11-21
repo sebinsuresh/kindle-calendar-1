@@ -77,6 +77,8 @@ class WidgetManager {
     element.style.width = Math.round(calculatedWidth) + 'px';
     element.style.height = Math.round(calculatedHeight) + 'px';
 
+    // TODO: Use the width/height to determine the font size
+
     this.appElem.appendChild(element);
   }
 }
@@ -89,29 +91,37 @@ function handleOnLoad() {
 
   const widgetManager = new WidgetManager(appElem);
 
+  widgetManager.createWidget('date', {
+    xColumn: 1,
+    yColumn: 0,
+    widthColumns: 2,
+    heightRows: 1,
+  });
+
+  widgetManager.createWidget('clock', {
+    xColumn: 3,
+    yColumn: 0,
+    widthColumns: 2,
+    heightRows: 1,
+  });
+
+  widgetManager.createWidget('resolution', {
+    xColumn: 2.5,
+    yColumn: 4,
+    widthColumns: 1,
+    heightRows: 1,
+  });
+
   widgetManager.createWidget('calendar', {
     numRows: 4,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: 1,
-    xColumn: 2,
+    xColumn: 1.5,
     yColumn: 1,
     widthColumns: 3,
     heightRows: 3,
   });
-
-  widgetManager.createWidget('resolution', {
-    heightRows: 1,
-    widthColumns: 1,
-    xColumn: 1,
-    yColumn: 2,
-  });
-
-  // for (const widgetName in WidgetManager.Widgets) {
-  //   // Casting to avoid adding ts-ignore:
-  //   const widget = WidgetManager.createWidget(/**@type { WidgetName }*/ (widgetName), { theme: 1 });
-  //   appElem.appendChild(widget.returnElem);
-  // }
 }
 
 document.addEventListener('DOMContentLoaded', wrapTryCatch(handleOnLoad));
