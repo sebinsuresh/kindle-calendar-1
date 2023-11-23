@@ -3,6 +3,7 @@ import { Clock } from './Widgets/Clock';
 import { DateWidget } from './Widgets/Date';
 import { wrapTryCatch } from './Utilities/wrapTryCatch';
 import { Resolution } from './Widgets/Resolution';
+import { Grid } from './Widgets/grid';
 
 /**
  * @typedef { import('./Widgets/Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
@@ -47,6 +48,11 @@ class WidgetManager {
     calendar: {
       create: Calendar.create,
       /** @type {import('./Widgets/Calendar').Config}*/
+      defaultConfig: {},
+    },
+    grid: {
+      create: Grid.create,
+      /** @type {import('./Widgets/grid').Config}*/
       defaultConfig: {},
     },
   };
@@ -121,6 +127,16 @@ function handleOnLoad() {
     yColumn: 1,
     widthColumns: 3,
     heightRows: 3,
+  });
+
+  widgetManager.createWidget('grid', {
+    xColumn: 0,
+    yColumn: 0,
+    widthColumns: 6,
+    heightRows: 6,
+    columns: WidgetManager.GridColumns,
+    rows: WidgetManager.GridRows,
+    showHalfCells: true,
   });
 }
 

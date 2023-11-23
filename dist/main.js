@@ -909,6 +909,73 @@ try {
         };
       }
     };
+    function grid_typeof(obj) {
+      return grid_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+      } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      }, grid_typeof(obj);
+    }
+    function grid_ownKeys(object, enumerableOnly) {
+      var keys = Object.keys(object);
+      if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter((function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        }))), keys.push.apply(keys, symbols);
+      }
+      return keys;
+    }
+    function grid_objectSpread(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? grid_ownKeys(Object(source), !0).forEach((function(key) {
+          grid_defineProperty(target, key, source[key]);
+        })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : grid_ownKeys(Object(source)).forEach((function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        }));
+      }
+      return target;
+    }
+    function grid_defineProperty(obj, key, value) {
+      return (key = function grid_toPropertyKey(arg) {
+        var key = function grid_toPrimitive(input, hint) {
+          if ("object" !== grid_typeof(input) || null === input) return input;
+          var prim = input[Symbol.toPrimitive];
+          if (prim !== undefined) {
+            var res = prim.call(input, hint || "default");
+            if ("object" !== grid_typeof(res)) return res;
+            throw new TypeError("@@toPrimitive must return a primitive value.");
+          }
+          return ("string" === hint ? String : Number)(input);
+        }(arg, "string");
+        return "symbol" === grid_typeof(key) ? key : String(key);
+      }(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }
+    var grid_defaultConfig = {
+      rows: 6,
+      columns: 6,
+      showHalfCells: !1
+    };
+    var Grid = {
+      create: function grid_createWidget(config) {
+        var _defaultConfig$config = grid_objectSpread(grid_objectSpread({}, grid_defaultConfig), config), rows = _defaultConfig$config.rows, columns = _defaultConfig$config.columns, widgetElem = document.createElement("div");
+        widgetElem.className += " grid widget";
+        var gridElem = document.createElement("table");
+        return config.showHalfCells && (rows *= 2, columns *= 2), function grid_setContent(gridElem, rows, columns) {
+          for (var i = 0; i < rows; i += 1) for (var row = gridElem.insertRow(), j = 0; j < columns; j += 1) row.insertCell().innerHTML = "&nbsp;";
+        }(gridElem, rows, columns), widgetElem.appendChild(gridElem), {
+          returnElem: widgetElem,
+          minWidth: 1e3,
+          minHeight: 1e3
+        };
+      }
+    };
     function src_typeof(obj) {
       return src_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
@@ -985,6 +1052,10 @@ try {
       calendar: {
         create: Calendar.create,
         defaultConfig: {}
+      },
+      grid: {
+        create: Grid.create,
+        defaultConfig: {}
       }
     }), document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
@@ -1022,6 +1093,14 @@ try {
         yColumn: 1,
         widthColumns: 3,
         heightRows: 3
+      }), widgetManager.createWidget("grid", {
+        xColumn: 0,
+        yColumn: 0,
+        widthColumns: 6,
+        heightRows: 6,
+        columns: WidgetManager.GridColumns,
+        rows: WidgetManager.GridRows,
+        showHalfCells: !0
       });
     })));
   }();
