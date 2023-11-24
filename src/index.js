@@ -32,27 +32,27 @@ class WidgetManager {
   static Widgets = {
     clock: {
       create: Clock.create,
-      /** @type {import('./Widgets/Clock').Config} */
+      /** @type { import('./Widgets/Clock').Config } */
       defaultConfig: {},
     },
     date: {
       create: DateWidget.create,
-      /** @type {import('./Widgets/Date').Config} */
+      /** @type { import('./Widgets/Date').Config } */
       defaultConfig: {},
     },
     resolution: {
       create: Resolution.create,
-      /** @type {import('./Widgets/Resolution').Config} */
+      /** @type { import('./Widgets/Resolution').Config } */
       defaultConfig: {},
     },
     calendar: {
       create: Calendar.create,
-      /** @type {import('./Widgets/Calendar').Config}*/
+      /** @type { import('./Widgets/Calendar').Config } */
       defaultConfig: {},
     },
     grid: {
       create: Grid.create,
-      /** @type {import('./Widgets/grid').Config}*/
+      /** @type { import('./Widgets/grid').Config } */
       defaultConfig: {},
     },
   };

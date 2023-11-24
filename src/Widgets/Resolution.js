@@ -11,7 +11,7 @@ const defaultConfig = {
   showRefreshButton: true,
 };
 
-/** @param {HTMLDivElement} widgetElem */
+/** @param { HTMLDivElement } widgetElem */
 function setContent(widgetElem) {
   let spanElem = widgetElem.querySelector('span');
   if (!spanElem) {
@@ -21,7 +21,7 @@ function setContent(widgetElem) {
   spanElem.innerText = `${window.innerWidth} x ${window.innerHeight}`;
 }
 
-/** @param {HTMLDivElement} widgetElem */
+/** @param { HTMLDivElement } widgetElem */
 function createRefreshButton(widgetElem) {
   const refreshButton = document.createElement('button');
   refreshButton.innerText = '↻';

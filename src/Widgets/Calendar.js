@@ -125,9 +125,9 @@ function setCalendarHeader(calendarTable, today) {
 }
 
 /**
- * @param {Date} cellDate
- * @param {Date} today
- * @param {HTMLTableCellElement} dayElem
+ * @param { Date } cellDate
+ * @param { Date } today
+ * @param { HTMLTableCellElement } dayElem
  */
 function setDateCell(cellDate, today, dayElem) {
   const iterDate = cellDate.getDate();
@@ -153,8 +153,8 @@ function setDateCell(cellDate, today, dayElem) {
 }
 
 /**
- * @param {HTMLTableElement} calendarTable
- * @param {Date} today
+ * @param { HTMLTableElement } calendarTable
+ * @param { Date } today
  */
 function setCalendarDays(calendarTable, today) {
   const rows = calendarTable.getElementsByTagName('tr');
@@ -180,8 +180,8 @@ function setCalendarDays(calendarTable, today) {
 }
 
 /**
- * @param {HTMLTableElement} calendarTable
- * @param {Boolean} showUpdateInHrs
+ * @param { HTMLTableElement } calendarTable
+ * @param { Boolean } showUpdateInHrs
  */
 function populateCalendar(calendarTable, showUpdateInHrs) {
   const now = getCurrentDate();

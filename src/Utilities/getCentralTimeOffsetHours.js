@@ -1,5 +1,5 @@
 /** @param { Date } date */
-export function getCdtOffsetHours(date) {
+export function getCentralTimeOffsetHours(date) {
   // Daylight savings time starts on the second Sunday of March
   // and ends on the first Sunday of November
   const isDST =

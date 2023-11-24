@@ -1,4 +1,4 @@
-/** @returns {HTMLElement} */
+/** @returns { HTMLElement } */
 export function getConsoleElem() {
   const consoleElem = document.getElementById('consoleElem');
   if (!consoleElem) {

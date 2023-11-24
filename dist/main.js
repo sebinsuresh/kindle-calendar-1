@@ -629,7 +629,7 @@ try {
       return date.getDate() - date.getDay() >= 7 * (n - 1);
     }
     function getCurrentDate() {
-      var now = new Date, offsetHours = 0 == now.getTimezoneOffset() ? function getCdtOffsetHours(date) {
+      var now = new Date, offsetHours = 0 == now.getTimezoneOffset() ? function getCentralTimeOffsetHours(date) {
         return date.getMonth() > 2 && date.getMonth() < 10 || 2 === date.getMonth() && isOnOrAfterNthSunday(date, 2) || 10 === date.getMonth() && !isOnOrAfterNthSunday(date, 1) ? 5 : 6;
       }(now) : 0;
       return now.setHours(now.getHours() - offsetHours), now;
