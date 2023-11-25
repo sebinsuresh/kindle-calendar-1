@@ -11,32 +11,35 @@ function handleOnLoad() {
 
   const widgetManager = new WidgetManager(appElem);
 
-  widgetManager.createWidget('date', {
-    xColumn: 1,
+  widgetManager.createWidget('grid', {
+    xColumn: 0,
     yColumn: 0,
-    widthColumns: 2,
-    heightRows: 1,
+    widthColumns: WidgetManager.GridColumns,
+    heightRows: WidgetManager.GridRows,
+    columns: WidgetManager.GridColumns,
+    rows: WidgetManager.GridRows,
+    showHalfCells: false,
   });
 
   widgetManager.createWidget('day', {
-    xColumn: 0,
-    yColumn: 0,
+    xColumn: 1,
+    yColumn: 1,
     widthColumns: 1,
     heightRows: 1,
     displayMode: DayWidget.DisplayModes.Long,
   });
 
-  widgetManager.createWidget('clock', {
+  widgetManager.createWidget('date', {
     xColumn: 3,
-    yColumn: 0,
+    yColumn: 1,
     widthColumns: 2,
     heightRows: 1,
   });
 
-  widgetManager.createWidget('resolution', {
-    xColumn: 2.5,
-    yColumn: 4,
-    widthColumns: 1,
+  widgetManager.createWidget('clock', {
+    xColumn: 6,
+    yColumn: 1,
+    widthColumns: 2,
     heightRows: 1,
   });
 
@@ -45,21 +48,18 @@ function handleOnLoad() {
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
     theme: Calendar.Themes.Light,
-    xColumn: 1,
-    yColumn: 1,
-    widthColumns: 2,
-    heightRows: 2,
+    xColumn: 4,
+    yColumn: 4,
+    widthColumns: 4,
+    heightRows: 4,
     daysMode: Calendar.DaysModes.Shortest,
   });
 
-  widgetManager.createWidget('grid', {
-    xColumn: 0,
-    yColumn: 0,
-    widthColumns: WidgetManager.GridColumns,
-    heightRows: WidgetManager.GridRows,
-    columns: WidgetManager.GridColumns,
-    rows: WidgetManager.GridRows,
-    showHalfCells: true,
+  widgetManager.createWidget('resolution', {
+    xColumn: 5,
+    yColumn: 9,
+    widthColumns: 3,
+    heightRows: 1,
   });
 }
 

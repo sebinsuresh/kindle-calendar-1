@@ -21,7 +21,7 @@ body {
 table.widget,
 div.widget {
   /* display: inline-block; */
-  /* border: thin solid; */
+  border: thin solid;
   position: absolute;
 }
 
@@ -30,7 +30,7 @@ div.widget {
 .clock,
 .date {
   text-transform: uppercase;
-  letter-spacing: 8px;
+  letter-spacing: 6px;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   /* display: inline-block; */
 }
@@ -113,7 +113,7 @@ div.centered::before {
 }
 
 div.resolution > div {
-  display: inherit;
+  display: inline-block;
 }
 
 div.grid > table,

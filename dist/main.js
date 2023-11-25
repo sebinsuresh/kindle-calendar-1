@@ -1079,8 +1079,8 @@ try {
           for (var i = 0; i < rows; i += 1) for (var row = gridElem.insertRow(), j = 0; j < columns; j += 1) row.insertCell().innerHTML = "&nbsp;";
         }(gridElem, rows, columns), widgetElem.appendChild(gridElem), {
           returnElem: widgetElem,
-          minWidth: 1e3,
-          minHeight: 1e3
+          minWidth: 800,
+          minHeight: 506
         };
       }
     };
@@ -1123,8 +1123,8 @@ try {
       function WidgetManager(appElem) {
         !function _classCallCheck(instance, Constructor) {
           if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-        }(this, WidgetManager), this.appElem = appElem, this.availableWidth = document.documentElement.clientWidth, 
-        this.availableHeight = document.documentElement.clientHeight;
+        }(this, WidgetManager), this.appElem = appElem, this.availableWidth = document.documentElement.clientWidth - 2, 
+        this.availableHeight = document.documentElement.clientHeight - 2;
       }
       return function _createClass(Constructor, protoProps, staticProps) {
         return protoProps && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), 
@@ -1143,7 +1143,7 @@ try {
         }
       } ]), WidgetManager;
     }();
-    WidgetManager_defineProperty(WidgetManager, "GridColumns", 6), WidgetManager_defineProperty(WidgetManager, "GridRows", 6), 
+    WidgetManager_defineProperty(WidgetManager, "GridColumns", 12), WidgetManager_defineProperty(WidgetManager, "GridRows", 12), 
     WidgetManager_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
@@ -1181,45 +1181,45 @@ try {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
       var widgetManager = new WidgetManager(appElem);
-      widgetManager.createWidget("date", {
-        xColumn: 1,
-        yColumn: 0,
-        widthColumns: 2,
-        heightRows: 1
-      }), widgetManager.createWidget("day", {
-        xColumn: 0,
-        yColumn: 0,
-        widthColumns: 1,
-        heightRows: 1,
-        displayMode: DayWidget.DisplayModes.Long
-      }), widgetManager.createWidget("clock", {
-        xColumn: 3,
-        yColumn: 0,
-        widthColumns: 2,
-        heightRows: 1
-      }), widgetManager.createWidget("resolution", {
-        xColumn: 2.5,
-        yColumn: 4,
-        widthColumns: 1,
-        heightRows: 1
-      }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: Calendar.Themes.Light,
-        xColumn: 1,
-        yColumn: 1,
-        widthColumns: 2,
-        heightRows: 2,
-        daysMode: Calendar.DaysModes.Shortest
-      }), widgetManager.createWidget("grid", {
+      widgetManager.createWidget("grid", {
         xColumn: 0,
         yColumn: 0,
         widthColumns: WidgetManager.GridColumns,
         heightRows: WidgetManager.GridRows,
         columns: WidgetManager.GridColumns,
         rows: WidgetManager.GridRows,
-        showHalfCells: !0
+        showHalfCells: !1
+      }), widgetManager.createWidget("day", {
+        xColumn: 1,
+        yColumn: 1,
+        widthColumns: 1,
+        heightRows: 1,
+        displayMode: DayWidget.DisplayModes.Long
+      }), widgetManager.createWidget("date", {
+        xColumn: 3,
+        yColumn: 1,
+        widthColumns: 2,
+        heightRows: 1
+      }), widgetManager.createWidget("clock", {
+        xColumn: 6,
+        yColumn: 1,
+        widthColumns: 2,
+        heightRows: 1
+      }), widgetManager.createWidget("calendar", {
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: Calendar.Themes.Light,
+        xColumn: 4,
+        yColumn: 4,
+        widthColumns: 4,
+        heightRows: 4,
+        daysMode: Calendar.DaysModes.Shortest
+      }), widgetManager.createWidget("resolution", {
+        xColumn: 5,
+        yColumn: 9,
+        widthColumns: 3,
+        heightRows: 1
       });
     })));
   }();

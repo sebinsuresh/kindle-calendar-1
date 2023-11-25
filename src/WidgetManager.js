@@ -21,12 +21,13 @@ export class WidgetManager {
   /** @param { HTMLElement } appElem */
   constructor(appElem) {
     this.appElem = appElem;
-    this.availableWidth = document.documentElement.clientWidth;
-    this.availableHeight = document.documentElement.clientHeight;
+    // Subtract the border width from the available width/height:
+    this.availableWidth = document.documentElement.clientWidth - 2;
+    this.availableHeight = document.documentElement.clientHeight - 2;
   }
 
-  static GridColumns = 6;
-  static GridRows = 6;
+  static GridColumns = 12;
+  static GridRows = 12;
 
   static Widgets = {
     clock: {

@@ -51,8 +51,8 @@ export function createWidget(config) {
   return {
     returnElem: widgetElem,
     // TODO: Decide whether to use screen res
-    minWidth: 1000,
-    minHeight: 1000,
+    minWidth: 800,
+    minHeight: 506,
   };
 }
 
