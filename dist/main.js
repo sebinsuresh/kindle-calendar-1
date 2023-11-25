@@ -990,16 +990,20 @@ try {
     }
     var Note_defaultConfig = {
       text: "",
-      monospaced: !1
+      monospaced: !1,
+      hideScrollbar: !1,
+      fontSize: 16
     };
     var NoteWidget = {
       create: function Note_createWidget(config) {
-        var _defaultConfig$config = Note_objectSpread(Note_objectSpread({}, Note_defaultConfig), config), text = _defaultConfig$config.text, monospaced = _defaultConfig$config.monospaced, containerElem = document.createElement("div");
-        return containerElem.className += " note widget", function addNotes(noteElem, text, monospaced) {
+        var _defaultConfig$config = Note_objectSpread(Note_objectSpread({}, Note_defaultConfig), config), text = _defaultConfig$config.text, monospaced = _defaultConfig$config.monospaced, hideScrollbar = _defaultConfig$config.hideScrollbar, fontSize = _defaultConfig$config.fontSize, containerElem = document.createElement("div");
+        return containerElem.className += " note widget", hideScrollbar && (containerElem.className += " hide-scrollbar"), 
+        function addNotes(noteElem, text, monospaced, fontSize) {
           var noteTextContainer = document.createElement("pre");
           noteTextContainer.className += " note-text-container", noteTextContainer.innerText = text, 
-          monospaced && (noteTextContainer.className += " monospaced"), noteElem.appendChild(noteTextContainer);
-        }(containerElem, text, monospaced), {
+          monospaced && (noteTextContainer.className += " monospaced"), fontSize && (noteTextContainer.style.fontSize = "".concat(fontSize, "px")), 
+          noteElem.appendChild(noteTextContainer);
+        }(containerElem, text, monospaced, fontSize), {
           returnElem: containerElem,
           minWidth: 130,
           minHeight: 21
@@ -1186,11 +1190,11 @@ try {
       return "symbol" === WidgetManager_typeof(key) ? key : String(key);
     }
     var WidgetManager = function() {
-      function WidgetManager(appElem) {
+      function WidgetManager(appElem, padding) {
         !function _classCallCheck(instance, Constructor) {
           if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
-        }(this, WidgetManager), this.appElem = appElem, this.availableWidth = document.documentElement.clientWidth - 2, 
-        this.availableHeight = document.documentElement.clientHeight - 2;
+        }(this, WidgetManager), this.appElem = appElem, this.padding = padding, this.availableWidth = document.documentElement.clientWidth - 2 - 2 * this.padding, 
+        this.availableHeight = document.documentElement.clientHeight - 2 - 2 * this.padding;
       }
       return function _createClass(Constructor, protoProps, staticProps) {
         return protoProps && _defineProperties(Constructor.prototype, protoProps), staticProps && _defineProperties(Constructor, staticProps), 
@@ -1202,7 +1206,7 @@ try {
         value: function createWidget(widgetName, options) {
           var widget = WidgetManager.Widgets[widgetName];
           if (!widget) throw new Error("Could not find widget with name ".concat(widgetName));
-          var element = widget.create(null != options ? options : widget.defaultConfig).returnElem, calculatedWidth = options.widthColumns * (this.availableWidth / WidgetManager.GridColumns), calculatedHeight = options.heightRows * (this.availableHeight / WidgetManager.GridRows), calculatedX = options.xColumn * (this.availableWidth / WidgetManager.GridColumns), calculatedY = options.yColumn * (this.availableHeight / WidgetManager.GridRows);
+          var element = widget.create(null != options ? options : widget.defaultConfig).returnElem, calculatedWidth = options.widthColumns * (this.availableWidth / WidgetManager.GridColumns), calculatedHeight = options.heightRows * (this.availableHeight / WidgetManager.GridRows), calculatedX = this.padding + options.xColumn * (this.availableWidth / WidgetManager.GridColumns), calculatedY = this.padding + options.yColumn * (this.availableHeight / WidgetManager.GridRows);
           if (element.style.left = Math.round(calculatedX) + "px", element.style.top = Math.round(calculatedY) + "px", 
           element.style.width = Math.round(calculatedWidth) + "px", element.style.height = Math.round(calculatedHeight) + "px", 
           options.showShadow) {
@@ -1227,12 +1231,12 @@ try {
       } ]), WidgetManager;
     }();
     WidgetManager_defineProperty(WidgetManager, "GridColumns", 12), WidgetManager_defineProperty(WidgetManager, "GridRows", 12), 
-    WidgetManager_defineProperty(WidgetManager, "shadowWidth", 5), WidgetManager_defineProperty(WidgetManager, "shadowHeight", 5), 
-    WidgetManager_defineProperty(WidgetManager, "shadowXOffset", 8), WidgetManager_defineProperty(WidgetManager, "shadowYOffset", 8), 
     WidgetManager_defineProperty(WidgetManager, "ShadowTypes", {
       Solid: 1,
       Dashed: 2
-    }), WidgetManager_defineProperty(WidgetManager, "Widgets", {
+    }), WidgetManager_defineProperty(WidgetManager, "shadowWidth", 5), WidgetManager_defineProperty(WidgetManager, "shadowHeight", 5), 
+    WidgetManager_defineProperty(WidgetManager, "shadowXOffset", 8), WidgetManager_defineProperty(WidgetManager, "shadowYOffset", 8), 
+    WidgetManager_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
         defaultConfig: {}
@@ -1274,7 +1278,7 @@ try {
     }((function handleOnLoad() {
       var appElem = document.getElementById("app");
       if (!appElem) throw new Error("Could not find app element in page");
-      var widgetManager = new WidgetManager(appElem);
+      var widgetManager = new WidgetManager(appElem, 0);
       widgetManager.createWidget("grid", {
         xColumn: 0,
         yColumn: 0,
@@ -1283,28 +1287,28 @@ try {
         columns: WidgetManager.GridColumns,
         rows: WidgetManager.GridRows,
         showHalfCells: !1
-      }), widgetManager.createWidget("date", {
-        xColumn: 3,
-        yColumn: 1,
-        widthColumns: 2,
-        heightRows: 1,
-        showShadow: !0
       }), widgetManager.createWidget("day", {
-        xColumn: 1,
-        yColumn: 1,
-        widthColumns: 1,
+        xColumn: .5,
+        yColumn: .5,
+        widthColumns: 1.5,
         heightRows: 1,
         displayMode: DayWidget.DisplayModes.Long,
         showShadow: !0
+      }), widgetManager.createWidget("date", {
+        xColumn: 2.5,
+        yColumn: .5,
+        widthColumns: 2,
+        heightRows: 1,
+        showShadow: !0
       }), widgetManager.createWidget("clock", {
-        xColumn: 6,
-        yColumn: 1,
+        xColumn: 5,
+        yColumn: .5,
         widthColumns: 2,
         heightRows: 1,
         showShadow: !0
       }), widgetManager.createWidget("calendar", {
-        xColumn: 4,
-        yColumn: 4,
+        xColumn: .5,
+        yColumn: 2.5,
         widthColumns: 4,
         heightRows: 4,
         numRows: 4,
@@ -1314,20 +1318,28 @@ try {
         daysMode: Calendar.DaysModes.Shortest,
         showShadow: !0
       }), widgetManager.createWidget("resolution", {
-        xColumn: 5,
-        yColumn: 9,
-        widthColumns: 3,
+        xColumn: 5.5,
+        yColumn: 8,
+        widthColumns: 2,
         heightRows: 1,
         showShadow: !0
       }), widgetManager.createWidget("note", {
-        xColumn: 1,
-        yColumn: 3,
+        xColumn: .5,
+        yColumn: 7.5,
         widthColumns: 4,
-        heightRows: 3,
+        heightRows: 4,
         showShadow: !0,
-        shadowType: WidgetManager.ShadowTypes.Dashed,
-        text: "Things to do:\n\n  - Test item 1 Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1\n  - Test item 2\n  - Test item 3\n  - Test item 4",
+        text: "Things to do:\n- Test item 1\n- Test item 2\n- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\n- Test item 4",
         monospaced: !0
+      }), widgetManager.createWidget("note", {
+        xColumn: 5,
+        yColumn: 2.5,
+        widthColumns: 5,
+        heightRows: 5,
+        showShadow: !0,
+        text: "Work TODOs:\n- Investigate bugs in prod\n  - Replicate prod locally\n- Expense devices\n- Pick up new ticket",
+        monospaced: !0,
+        hideScrollbar: !0
       });
     })));
   }();

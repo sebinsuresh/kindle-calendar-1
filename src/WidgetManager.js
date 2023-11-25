@@ -21,24 +21,30 @@ import { Grid } from './Widgets/grid';
  * @property { Number } [shadowType] The type of shadow to show behind the widget
  */
 export class WidgetManager {
-  /** @param { HTMLElement } appElem */
-  constructor(appElem) {
+  /**
+   * @param { HTMLElement } appElem
+   * @param { Number } padding
+   */
+  constructor(appElem, padding) {
     this.appElem = appElem;
-    // Subtract the border width from the available width/height:
-    this.availableWidth = document.documentElement.clientWidth - 2;
-    this.availableHeight = document.documentElement.clientHeight - 2;
+    this.padding = padding;
+
+    // Subtract the border width from the available width/height, as well as padding:
+    this.availableWidth = document.documentElement.clientWidth - 2 - this.padding * 2;
+    this.availableHeight = document.documentElement.clientHeight - 2 - this.padding * 2;
   }
 
   static GridColumns = 12;
   static GridRows = 12;
-  static shadowWidth = 5;
-  static shadowHeight = 5;
-  static shadowXOffset = 8;
-  static shadowYOffset = 8;
   static ShadowTypes = {
     Solid: 1,
     Dashed: 2,
   };
+  // TODO: Consider making these configurable
+  static shadowWidth = 5;
+  static shadowHeight = 5;
+  static shadowXOffset = 8;
+  static shadowYOffset = 8;
 
   static Widgets = {
     clock: {
@@ -101,8 +107,8 @@ export class WidgetManager {
 
     const calculatedWidth = options.widthColumns * (this.availableWidth / WidgetManager.GridColumns);
     const calculatedHeight = options.heightRows * (this.availableHeight / WidgetManager.GridRows);
-    const calculatedX = options.xColumn * (this.availableWidth / WidgetManager.GridColumns);
-    const calculatedY = options.yColumn * (this.availableHeight / WidgetManager.GridRows);
+    const calculatedX = this.padding + options.xColumn * (this.availableWidth / WidgetManager.GridColumns);
+    const calculatedY = this.padding + options.yColumn * (this.availableHeight / WidgetManager.GridRows);
     element.style.left = Math.round(calculatedX) + 'px';
     element.style.top = Math.round(calculatedY) + 'px';
     element.style.width = Math.round(calculatedWidth) + 'px';

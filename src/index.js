@@ -9,7 +9,7 @@ function handleOnLoad() {
     throw new Error('Could not find app element in page');
   }
 
-  const widgetManager = new WidgetManager(appElem);
+  const widgetManager = new WidgetManager(appElem, 0);
 
   widgetManager.createWidget('grid', {
     xColumn: 0,
@@ -21,34 +21,34 @@ function handleOnLoad() {
     showHalfCells: false,
   });
 
-  widgetManager.createWidget('date', {
-    xColumn: 3,
-    yColumn: 1,
-    widthColumns: 2,
-    heightRows: 1,
-    showShadow: true,
-  });
-
   widgetManager.createWidget('day', {
-    xColumn: 1,
-    yColumn: 1,
-    widthColumns: 1,
+    xColumn: 0.5,
+    yColumn: 0.5,
+    widthColumns: 1.5,
     heightRows: 1,
     displayMode: DayWidget.DisplayModes.Long,
     showShadow: true,
   });
 
+  widgetManager.createWidget('date', {
+    xColumn: 2.5,
+    yColumn: 0.5,
+    widthColumns: 2,
+    heightRows: 1,
+    showShadow: true,
+  });
+
   widgetManager.createWidget('clock', {
-    xColumn: 6,
-    yColumn: 1,
+    xColumn: 5,
+    yColumn: 0.5,
     widthColumns: 2,
     heightRows: 1,
     showShadow: true,
   });
 
   widgetManager.createWidget('calendar', {
-    xColumn: 4,
-    yColumn: 4,
+    xColumn: 0.5,
+    yColumn: 2.5,
     widthColumns: 4,
     heightRows: 4,
     numRows: 4,
@@ -60,27 +60,40 @@ function handleOnLoad() {
   });
 
   widgetManager.createWidget('resolution', {
-    xColumn: 5,
-    yColumn: 9,
-    widthColumns: 3,
+    xColumn: 5.5,
+    yColumn: 8,
+    widthColumns: 2,
     heightRows: 1,
     showShadow: true,
   });
 
   widgetManager.createWidget('note', {
-    xColumn: 1,
-    yColumn: 3,
+    xColumn: 0.5,
+    yColumn: 7.5,
     widthColumns: 4,
-    heightRows: 3,
+    heightRows: 4,
     showShadow: true,
-    shadowType: WidgetManager.ShadowTypes.Dashed,
     text: `Things to do:
-
-  - Test item 1 Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1
-  - Test item 2
-  - Test item 3
-  - Test item 4`,
+- Test item 1
+- Test item 2
+- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+- Test item 4`,
     monospaced: true,
+  });
+
+  widgetManager.createWidget('note', {
+    xColumn: 5,
+    yColumn: 2.5,
+    widthColumns: 5,
+    heightRows: 5,
+    showShadow: true,
+    text: `Work TODOs:
+- Investigate bugs in prod
+  - Replicate prod locally
+- Expense devices
+- Pick up new ticket`,
+    monospaced: true,
+    hideScrollbar: true,
   });
 }
 
