@@ -33,8 +33,15 @@ div.widget {
 
 div.shadow {
   position: absolute;
+}
+
+div.shadow.solid {
   background-color: black;
-  z-index: -1;
+}
+
+div.shadow.dashed {
+  background-image: url('./assets/stripe_pattern.png');
+  background-repeat: repeat;
 }
 
 div.centered {

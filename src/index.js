@@ -22,7 +22,7 @@ function handleOnLoad() {
   });
 
   widgetManager.createWidget('date', {
-    xColumn: 2,
+    xColumn: 3,
     yColumn: 1,
     widthColumns: 2,
     heightRows: 1,
@@ -73,6 +73,7 @@ function handleOnLoad() {
     widthColumns: 4,
     heightRows: 3,
     showShadow: true,
+    shadowType: WidgetManager.ShadowTypes.Dashed,
     text: `Things to do:
 
   - Test item 1 Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1

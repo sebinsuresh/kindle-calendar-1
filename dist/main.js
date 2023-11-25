@@ -1207,7 +1207,16 @@ try {
           element.style.width = Math.round(calculatedWidth) + "px", element.style.height = Math.round(calculatedHeight) + "px", 
           options.showShadow) {
             var shadowElem = document.createElement("div");
-            shadowElem.className += " shadow", shadowElem.style.left = Math.round(calculatedX) + WidgetManager.shadowXOffset + "px", 
+            switch (shadowElem.className += " shadow", options.shadowType) {
+             case WidgetManager.ShadowTypes.Dashed:
+              shadowElem.className += " dashed";
+              break;
+
+             case WidgetManager.ShadowTypes.Solid:
+             default:
+              shadowElem.className += " solid";
+            }
+            shadowElem.style.left = Math.round(calculatedX) + WidgetManager.shadowXOffset + "px", 
             shadowElem.style.top = Math.round(calculatedY) + WidgetManager.shadowYOffset + "px", 
             shadowElem.style.width = Math.round(calculatedWidth) + WidgetManager.shadowWidth + "px", 
             shadowElem.style.height = Math.round(calculatedHeight) + WidgetManager.shadowHeight + "px", 
@@ -1220,7 +1229,10 @@ try {
     WidgetManager_defineProperty(WidgetManager, "GridColumns", 12), WidgetManager_defineProperty(WidgetManager, "GridRows", 12), 
     WidgetManager_defineProperty(WidgetManager, "shadowWidth", 5), WidgetManager_defineProperty(WidgetManager, "shadowHeight", 5), 
     WidgetManager_defineProperty(WidgetManager, "shadowXOffset", 8), WidgetManager_defineProperty(WidgetManager, "shadowYOffset", 8), 
-    WidgetManager_defineProperty(WidgetManager, "Widgets", {
+    WidgetManager_defineProperty(WidgetManager, "ShadowTypes", {
+      Solid: 1,
+      Dashed: 2
+    }), WidgetManager_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
         defaultConfig: {}
@@ -1272,7 +1284,7 @@ try {
         rows: WidgetManager.GridRows,
         showHalfCells: !1
       }), widgetManager.createWidget("date", {
-        xColumn: 2,
+        xColumn: 3,
         yColumn: 1,
         widthColumns: 2,
         heightRows: 1,
@@ -1313,6 +1325,7 @@ try {
         widthColumns: 4,
         heightRows: 3,
         showShadow: !0,
+        shadowType: WidgetManager.ShadowTypes.Dashed,
         text: "Things to do:\n\n  - Test item 1 Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1\n  - Test item 2\n  - Test item 3\n  - Test item 4",
         monospaced: !0
       });

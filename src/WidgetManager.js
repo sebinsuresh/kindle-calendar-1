@@ -18,6 +18,7 @@ import { Grid } from './Widgets/grid';
  * @property { Number } widthColumns The number of columns the widget takes up
  * @property { Number } heightRows The number of rows the widget takes up
  * @property { boolean } [showShadow] Whether to show a shadow behind the widget
+ * @property { Number } [shadowType] The type of shadow to show behind the widget
  */
 export class WidgetManager {
   /** @param { HTMLElement } appElem */
@@ -34,6 +35,10 @@ export class WidgetManager {
   static shadowHeight = 5;
   static shadowXOffset = 8;
   static shadowYOffset = 8;
+  static ShadowTypes = {
+    Solid: 1,
+    Dashed: 2,
+  };
 
   static Widgets = {
     clock: {
@@ -106,6 +111,14 @@ export class WidgetManager {
     if (options.showShadow) {
       const shadowElem = document.createElement('div');
       shadowElem.className += ' shadow';
+      switch (options.shadowType) {
+        case WidgetManager.ShadowTypes.Dashed:
+          shadowElem.className += ' dashed';
+          break;
+        case WidgetManager.ShadowTypes.Solid:
+        default:
+          shadowElem.className += ' solid';
+      }
 
       shadowElem.style.left = Math.round(calculatedX) + WidgetManager.shadowXOffset + 'px';
       shadowElem.style.top = Math.round(calculatedY) + WidgetManager.shadowYOffset + 'px';
