@@ -1137,13 +1137,23 @@ try {
           var widget = WidgetManager.Widgets[widgetName];
           if (!widget) throw new Error("Could not find widget with name ".concat(widgetName));
           var element = widget.create(null != options ? options : widget.defaultConfig).returnElem, calculatedWidth = options.widthColumns * (this.availableWidth / WidgetManager.GridColumns), calculatedHeight = options.heightRows * (this.availableHeight / WidgetManager.GridRows), calculatedX = options.xColumn * (this.availableWidth / WidgetManager.GridColumns), calculatedY = options.yColumn * (this.availableHeight / WidgetManager.GridRows);
-          element.style.left = Math.round(calculatedX) + "px", element.style.top = Math.round(calculatedY) + "px", 
+          if (element.style.left = Math.round(calculatedX) + "px", element.style.top = Math.round(calculatedY) + "px", 
           element.style.width = Math.round(calculatedWidth) + "px", element.style.height = Math.round(calculatedHeight) + "px", 
+          options.showShadow) {
+            var shadowElem = document.createElement("div");
+            shadowElem.className += " shadow", shadowElem.style.left = Math.round(calculatedX) + WidgetManager.shadowXOffset + "px", 
+            shadowElem.style.top = Math.round(calculatedY) + WidgetManager.shadowYOffset + "px", 
+            shadowElem.style.width = Math.round(calculatedWidth) + WidgetManager.shadowWidth + "px", 
+            shadowElem.style.height = Math.round(calculatedHeight) + WidgetManager.shadowHeight + "px", 
+            this.appElem.appendChild(shadowElem);
+          }
           this.appElem.appendChild(element);
         }
       } ]), WidgetManager;
     }();
     WidgetManager_defineProperty(WidgetManager, "GridColumns", 12), WidgetManager_defineProperty(WidgetManager, "GridRows", 12), 
+    WidgetManager_defineProperty(WidgetManager, "shadowWidth", 5), WidgetManager_defineProperty(WidgetManager, "shadowHeight", 5), 
+    WidgetManager_defineProperty(WidgetManager, "shadowXOffset", 3), WidgetManager_defineProperty(WidgetManager, "shadowYOffset", 3), 
     WidgetManager_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
@@ -1194,17 +1204,20 @@ try {
         yColumn: 1,
         widthColumns: 1,
         heightRows: 1,
-        displayMode: DayWidget.DisplayModes.Long
+        displayMode: DayWidget.DisplayModes.Long,
+        showShadow: !0
       }), widgetManager.createWidget("date", {
         xColumn: 3,
         yColumn: 1,
         widthColumns: 2,
-        heightRows: 1
+        heightRows: 1,
+        showShadow: !0
       }), widgetManager.createWidget("clock", {
         xColumn: 6,
         yColumn: 1,
         widthColumns: 2,
-        heightRows: 1
+        heightRows: 1,
+        showShadow: !0
       }), widgetManager.createWidget("calendar", {
         numRows: 4,
         startCurrWeekOnRow: 1,
@@ -1214,12 +1227,14 @@ try {
         yColumn: 4,
         widthColumns: 4,
         heightRows: 4,
-        daysMode: Calendar.DaysModes.Shortest
+        daysMode: Calendar.DaysModes.Shortest,
+        showShadow: !0
       }), widgetManager.createWidget("resolution", {
         xColumn: 5,
         yColumn: 9,
         widthColumns: 3,
-        heightRows: 1
+        heightRows: 1,
+        showShadow: !0
       });
     })));
   }();

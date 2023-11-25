@@ -27,6 +27,7 @@ function handleOnLoad() {
     widthColumns: 1,
     heightRows: 1,
     displayMode: DayWidget.DisplayModes.Long,
+    showShadow: true,
   });
 
   widgetManager.createWidget('date', {
@@ -34,6 +35,7 @@ function handleOnLoad() {
     yColumn: 1,
     widthColumns: 2,
     heightRows: 1,
+    showShadow: true,
   });
 
   widgetManager.createWidget('clock', {
@@ -41,6 +43,7 @@ function handleOnLoad() {
     yColumn: 1,
     widthColumns: 2,
     heightRows: 1,
+    showShadow: true,
   });
 
   widgetManager.createWidget('calendar', {
@@ -53,6 +56,7 @@ function handleOnLoad() {
     widthColumns: 4,
     heightRows: 4,
     daysMode: Calendar.DaysModes.Shortest,
+    showShadow: true,
   });
 
   widgetManager.createWidget('resolution', {
@@ -60,6 +64,7 @@ function handleOnLoad() {
     yColumn: 9,
     widthColumns: 3,
     heightRows: 1,
+    showShadow: true,
   });
 }
 

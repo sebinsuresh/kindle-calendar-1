@@ -23,6 +23,12 @@ div.widget {
   /* display: inline-block; */
   border: thin solid;
   position: absolute;
+  /* box-shadow: black 10px 10px; */
+}
+
+div.shadow {
+  position: absolute;
+  background-color: black;
 }
 
 /* Clock and Date Style */
