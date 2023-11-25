@@ -1,6 +1,7 @@
 import { Calendar } from './Widgets/Calendar';
 import { wrapTryCatch } from './Utilities/wrapTryCatch';
 import { WidgetManager } from './WidgetManager';
+import { DayWidget } from './Widgets/Day';
 
 function handleOnLoad() {
   const appElem = document.getElementById('app');
@@ -15,6 +16,14 @@ function handleOnLoad() {
     yColumn: 0,
     widthColumns: 2,
     heightRows: 1,
+  });
+
+  widgetManager.createWidget('day', {
+    xColumn: 0,
+    yColumn: 0,
+    widthColumns: 1,
+    heightRows: 1,
+    displayMode: DayWidget.DisplayModes.Long,
   });
 
   widgetManager.createWidget('clock', {

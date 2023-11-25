@@ -1,6 +1,7 @@
 import { Calendar } from './Widgets/Calendar';
 import { Clock } from './Widgets/Clock';
 import { DateWidget } from './Widgets/Date';
+import { DayWidget } from './Widgets/Day';
 import { Resolution } from './Widgets/Resolution';
 import { Grid } from './Widgets/grid';
 
@@ -51,6 +52,11 @@ export class WidgetManager {
     grid: {
       create: Grid.create,
       /** @type { import('./Widgets/grid').Config } */
+      defaultConfig: {},
+    },
+    day: {
+      create: DayWidget.create,
+      /** @type { import('./Widgets/Day').Config } */
       defaultConfig: {},
     },
   };

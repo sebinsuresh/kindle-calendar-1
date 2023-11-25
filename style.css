@@ -99,16 +99,18 @@ table.calendar.dark > tbody > tr > td.day-today {
 .calendar td.day-past {
 }*/
 
-div.clock,
 div.date,
-div.resolution {
+div.clock,
+div.resolution,
+div.day {
   background-color: white;
   text-align: center;
 }
 
 div.date::before,
 div.clock::before,
-div.resolution::before {
+div.resolution::before,
+div.day::before {
   content: ' ';
   display: inline-block;
   height: 100%;
@@ -117,6 +119,7 @@ div.resolution::before {
 
 div.date,
 div.clock,
+div.day,
 div.resolution > div {
   display: inline-block;
 }

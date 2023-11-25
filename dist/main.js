@@ -859,6 +859,86 @@ try {
         };
       }
     };
+    function Day_typeof(obj) {
+      return Day_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+      } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      }, Day_typeof(obj);
+    }
+    function Day_ownKeys(object, enumerableOnly) {
+      var keys = Object.keys(object);
+      if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter((function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        }))), keys.push.apply(keys, symbols);
+      }
+      return keys;
+    }
+    function Day_objectSpread(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? Day_ownKeys(Object(source), !0).forEach((function(key) {
+          Day_defineProperty(target, key, source[key]);
+        })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : Day_ownKeys(Object(source)).forEach((function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        }));
+      }
+      return target;
+    }
+    function Day_defineProperty(obj, key, value) {
+      return (key = function Day_toPropertyKey(arg) {
+        var key = function Day_toPrimitive(input, hint) {
+          if ("object" !== Day_typeof(input) || null === input) return input;
+          var prim = input[Symbol.toPrimitive];
+          if (prim !== undefined) {
+            var res = prim.call(input, hint || "default");
+            if ("object" !== Day_typeof(res)) return res;
+            throw new TypeError("@@toPrimitive must return a primitive value.");
+          }
+          return ("string" === hint ? String : Number)(input);
+        }(arg, "string");
+        return "symbol" === Day_typeof(key) ? key : String(key);
+      }(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }
+    var DisplayModes = {
+      Short: 1,
+      Long: 2
+    }, Day_defaultConfig = {
+      displayMode: DisplayModes.Long
+    };
+    function setDay(dayElem, displayMode) {
+      var now = getCurrentDate(), updateInMs = 864e5 - 1e3 * (60 * now.getHours() * 60 + 60 * now.getMinutes() + now.getSeconds());
+      switch (displayMode) {
+       case DisplayModes.Short:
+        dayElem.innerText = WeekDays.Short[now.getDay()];
+        break;
+
+       case DisplayModes.Long:
+       default:
+        dayElem.innerText = WeekDays.Long[now.getDay()];
+      }
+      setTimeout((function() {
+        setDay(dayElem, displayMode);
+      }), updateInMs);
+    }
+    var DayWidget = {
+      create: function Day_createWidget(config) {
+        var displayMode = Day_objectSpread(Day_objectSpread({}, Day_defaultConfig), config).displayMode, dateElem = document.createElement("div");
+        return dateElem.className += " day widget", setDay(dateElem, displayMode), {
+          returnElem: dateElem,
+          minWidth: 130,
+          minHeight: 21
+        };
+      },
+      DisplayModes: DisplayModes
+    };
     function Resolution_typeof(obj) {
       return Resolution_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
@@ -1083,6 +1163,10 @@ try {
       grid: {
         create: Grid.create,
         defaultConfig: {}
+      },
+      day: {
+        create: DayWidget.create,
+        defaultConfig: {}
       }
     }), document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
@@ -1101,6 +1185,12 @@ try {
         yColumn: 0,
         widthColumns: 2,
         heightRows: 1
+      }), widgetManager.createWidget("day", {
+        xColumn: 0,
+        yColumn: 0,
+        widthColumns: 1,
+        heightRows: 1,
+        displayMode: DayWidget.DisplayModes.Long
       }), widgetManager.createWidget("clock", {
         xColumn: 3,
         yColumn: 0,
