@@ -5,6 +5,8 @@ Uses Babel, WebPack, and some hand-rolled Polyfills to use some modern JS featur
 
 Uses JSDocs + some TypeScript features to provide type hints (tested working in VSCode only).
 
+![Screenshot](./assets/11_25_2023_screenshot.png)
+
 ## Running
 
 ```sh
@@ -17,3 +19,4 @@ yarn dev
 Serve `index.html` (served using VSCode live server extension currently) & open in the Kindle browser.
 
 Use one of the horizontal orientations - resolution is 800 x 506 px.
+
