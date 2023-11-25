@@ -104,20 +104,9 @@ div.resolution > div {
   display: inline-block;
 }
 
-/* .days td:first-child {
-  border-left: thin solid;
-}
-
-.days td:last-child {
-  border-right: thin solid;
-} 
-
-.calendar td.day-past {
-}*/
-
 div.grid > table,
 div.grid > table > tbody > tr > td {
-  border: thin solid;
+  border: thin dashed;
   border-collapse: collapse;
   border-spacing: 0px;
   background: none;
