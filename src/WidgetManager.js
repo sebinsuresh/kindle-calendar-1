@@ -102,6 +102,7 @@ export class WidgetManager {
       widget.create(options ?? widget.defaultConfig)
     );
 
+    // TODO: Return something that enables user to update/resize widgets created
     // TODO: Use the width/height to determine the font size
     // TODO: Take minimum width and height into account
 
