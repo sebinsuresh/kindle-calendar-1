@@ -31,8 +31,8 @@ export class WidgetManager {
   static GridRows = 12;
   static shadowWidth = 5;
   static shadowHeight = 5;
-  static shadowXOffset = 3;
-  static shadowYOffset = 3;
+  static shadowXOffset = 8;
+  static shadowYOffset = 8;
 
   static Widgets = {
     clock: {

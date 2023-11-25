@@ -21,20 +21,20 @@ function handleOnLoad() {
     showHalfCells: false,
   });
 
+  widgetManager.createWidget('date', {
+    xColumn: 2,
+    yColumn: 1,
+    widthColumns: 2,
+    heightRows: 1,
+    showShadow: true,
+  });
+
   widgetManager.createWidget('day', {
     xColumn: 1,
     yColumn: 1,
     widthColumns: 1,
     heightRows: 1,
     displayMode: DayWidget.DisplayModes.Long,
-    showShadow: true,
-  });
-
-  widgetManager.createWidget('date', {
-    xColumn: 3,
-    yColumn: 1,
-    widthColumns: 2,
-    heightRows: 1,
     showShadow: true,
   });
 

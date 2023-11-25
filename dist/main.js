@@ -1153,7 +1153,7 @@ try {
     }();
     WidgetManager_defineProperty(WidgetManager, "GridColumns", 12), WidgetManager_defineProperty(WidgetManager, "GridRows", 12), 
     WidgetManager_defineProperty(WidgetManager, "shadowWidth", 5), WidgetManager_defineProperty(WidgetManager, "shadowHeight", 5), 
-    WidgetManager_defineProperty(WidgetManager, "shadowXOffset", 3), WidgetManager_defineProperty(WidgetManager, "shadowYOffset", 3), 
+    WidgetManager_defineProperty(WidgetManager, "shadowXOffset", 8), WidgetManager_defineProperty(WidgetManager, "shadowYOffset", 8), 
     WidgetManager_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
@@ -1199,18 +1199,18 @@ try {
         columns: WidgetManager.GridColumns,
         rows: WidgetManager.GridRows,
         showHalfCells: !1
+      }), widgetManager.createWidget("date", {
+        xColumn: 2,
+        yColumn: 1,
+        widthColumns: 2,
+        heightRows: 1,
+        showShadow: !0
       }), widgetManager.createWidget("day", {
         xColumn: 1,
         yColumn: 1,
         widthColumns: 1,
         heightRows: 1,
         displayMode: DayWidget.DisplayModes.Long,
-        showShadow: !0
-      }), widgetManager.createWidget("date", {
-        xColumn: 3,
-        yColumn: 1,
-        widthColumns: 2,
-        heightRows: 1,
         showShadow: !0
       }), widgetManager.createWidget("clock", {
         xColumn: 6,
