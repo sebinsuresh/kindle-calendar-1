@@ -792,6 +792,20 @@ try {
       },
       DaysModes: DaysModes
     };
+    function logError(err) {
+      var consoleElem = function getConsoleElem() {
+        var consoleElem = document.getElementById("consoleElem");
+        if (!consoleElem) throw new Error("Could not find Console element in page");
+        return consoleElem;
+      }();
+      if (consoleElem.innerText += "--------------\nError details:\n", !(err instanceof Error)) return consoleElem.innerText += "  ".concat(err, "\n"), 
+      void (consoleElem.innerText += "--------------\n");
+      for (var key in err) {
+        var val = err[key];
+        consoleElem.innerText += "  ".concat(key, ": ").concat(val, "\n");
+      }
+      console.error(err), consoleElem.innerText += "--------------\n";
+    }
     function getLeftZeroedString(input, numDigits) {
       if (numDigits > 3) throw new Error("numDigits must be <= 3");
       return ("000" + input).slice(-numDigits);
@@ -845,20 +859,6 @@ try {
         };
       }
     };
-    function logError(err) {
-      var consoleElem = function getConsoleElem() {
-        var consoleElem = document.getElementById("consoleElem");
-        if (!consoleElem) throw new Error("Could not find Console element in page");
-        return consoleElem;
-      }();
-      if (consoleElem.innerText += "--------------\nError details:\n", !(err instanceof Error)) return consoleElem.innerText += "  ".concat(err, "\n"), 
-      void (consoleElem.innerText += "--------------\n");
-      for (var key in err) {
-        var val = err[key];
-        consoleElem.innerText += "  ".concat(key, ": ").concat(val, "\n");
-      }
-      console.error(err), consoleElem.innerText += "--------------\n";
-    }
     function Resolution_typeof(obj) {
       return Resolution_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
@@ -1003,40 +1003,40 @@ try {
         };
       }
     };
-    function src_typeof(obj) {
-      return src_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+    function WidgetManager_typeof(obj) {
+      return WidgetManager_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
       } : function(obj) {
         return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      }, src_typeof(obj);
+      }, WidgetManager_typeof(obj);
     }
     function _defineProperties(target, props) {
       for (var i = 0; i < props.length; i++) {
         var descriptor = props[i];
         descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, 
-        "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, src_toPropertyKey(descriptor.key), descriptor);
+        "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, WidgetManager_toPropertyKey(descriptor.key), descriptor);
       }
     }
-    function src_defineProperty(obj, key, value) {
-      return (key = src_toPropertyKey(key)) in obj ? Object.defineProperty(obj, key, {
+    function WidgetManager_defineProperty(obj, key, value) {
+      return (key = WidgetManager_toPropertyKey(key)) in obj ? Object.defineProperty(obj, key, {
         value: value,
         enumerable: !0,
         configurable: !0,
         writable: !0
       }) : obj[key] = value, obj;
     }
-    function src_toPropertyKey(arg) {
-      var key = function src_toPrimitive(input, hint) {
-        if ("object" !== src_typeof(input) || null === input) return input;
+    function WidgetManager_toPropertyKey(arg) {
+      var key = function WidgetManager_toPrimitive(input, hint) {
+        if ("object" !== WidgetManager_typeof(input) || null === input) return input;
         var prim = input[Symbol.toPrimitive];
         if (prim !== undefined) {
           var res = prim.call(input, hint || "default");
-          if ("object" !== src_typeof(res)) return res;
+          if ("object" !== WidgetManager_typeof(res)) return res;
           throw new TypeError("@@toPrimitive must return a primitive value.");
         }
         return ("string" === hint ? String : Number)(input);
       }(arg, "string");
-      return "symbol" === src_typeof(key) ? key : String(key);
+      return "symbol" === WidgetManager_typeof(key) ? key : String(key);
     }
     var WidgetManager = function() {
       function WidgetManager(appElem) {
@@ -1062,8 +1062,8 @@ try {
         }
       } ]), WidgetManager;
     }();
-    src_defineProperty(WidgetManager, "GridColumns", 6), src_defineProperty(WidgetManager, "GridRows", 6), 
-    src_defineProperty(WidgetManager, "Widgets", {
+    WidgetManager_defineProperty(WidgetManager, "GridColumns", 6), WidgetManager_defineProperty(WidgetManager, "GridRows", 6), 
+    WidgetManager_defineProperty(WidgetManager, "Widgets", {
       clock: {
         create: Clock.create,
         defaultConfig: {}
