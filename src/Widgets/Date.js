@@ -40,7 +40,7 @@ export function createWidget(config) {
   const { showUpdateIn } = config;
 
   const dateElem = document.createElement('div');
-  dateElem.className += ' date widget';
+  dateElem.className += ' date centered widget';
   setDate(dateElem, showUpdateIn ?? false);
 
   return {

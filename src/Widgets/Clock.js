@@ -31,7 +31,7 @@ export function createWidget(config) {
   const { showSeconds } = config;
 
   const clockElem = document.createElement('div');
-  clockElem.className += ' clock widget';
+  clockElem.className += ' clock centered widget';
   setTime(clockElem, showSeconds ?? false);
 
   return {

@@ -1,6 +1,5 @@
 import { WeekDays } from '../Constants/Days';
 import { getCurrentDate } from '../Utilities/getCurrentDate';
-import { getDateString } from '../Utilities/getDateString';
 
 /**
  * @typedef { import('./Types/BaseWidgetTypes').BaseWidgetConfig } BaseWidgetConfig
@@ -52,7 +51,7 @@ function setDay(dayElem, displayMode) {
 export function createWidget(config) {
   const { displayMode } = { ...defaultConfig, ...config };
   const dateElem = document.createElement('div');
-  dateElem.className += ' day widget';
+  dateElem.className += ' day centered widget';
   setDay(dateElem, displayMode);
 
   return {

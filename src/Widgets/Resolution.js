@@ -37,7 +37,7 @@ export function createWidget(config) {
   const { showRefreshButton } = { ...defaultConfig, ...config };
 
   const widgetElem = document.createElement('div');
-  widgetElem.className += ' resolution widget';
+  widgetElem.className += ' resolution centered widget';
   const containerElem = document.createElement('div');
   setContent(containerElem);
   widgetElem.appendChild(containerElem);

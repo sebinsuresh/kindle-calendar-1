@@ -826,7 +826,7 @@ try {
     var Clock = {
       create: function Clock_createWidget(config) {
         var showSeconds = config.showSeconds, clockElem = document.createElement("div");
-        return clockElem.className += " clock widget", setTime(clockElem, null != showSeconds && showSeconds), 
+        return clockElem.className += " clock centered widget", setTime(clockElem, null != showSeconds && showSeconds), 
         {
           returnElem: clockElem,
           minWidth: showSeconds ? 179 : 133,
@@ -851,7 +851,7 @@ try {
     var DateWidget = {
       create: function Date_createWidget(config) {
         var showUpdateIn = config.showUpdateIn, dateElem = document.createElement("div");
-        return dateElem.className += " date widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
+        return dateElem.className += " date centered widget", setDate(dateElem, null != showUpdateIn && showUpdateIn), 
         {
           returnElem: dateElem,
           minWidth: 130,
@@ -931,7 +931,8 @@ try {
     var DayWidget = {
       create: function Day_createWidget(config) {
         var displayMode = Day_objectSpread(Day_objectSpread({}, Day_defaultConfig), config).displayMode, dateElem = document.createElement("div");
-        return dateElem.className += " day widget", setDay(dateElem, displayMode), {
+        return dateElem.className += " day centered widget", setDay(dateElem, displayMode), 
+        {
           returnElem: dateElem,
           minWidth: 130,
           minHeight: 21
@@ -998,7 +999,7 @@ try {
     var Resolution = {
       create: function Resolution_createWidget(config) {
         var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
-        widgetElem.className += " resolution widget";
+        widgetElem.className += " resolution centered widget";
         var containerElem = document.createElement("div");
         if (setContent(containerElem), widgetElem.appendChild(containerElem), showRefreshButton) {
           var refreshButton = function createRefreshButton(widgetElem) {
