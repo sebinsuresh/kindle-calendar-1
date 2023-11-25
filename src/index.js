@@ -47,16 +47,16 @@ function handleOnLoad() {
     theme: Calendar.Themes.Light,
     xColumn: 1,
     yColumn: 1,
-    widthColumns: 2.5,
-    heightRows: 2.5,
+    widthColumns: 2,
+    heightRows: 2,
     daysMode: Calendar.DaysModes.Shortest,
   });
 
   widgetManager.createWidget('grid', {
     xColumn: 0,
     yColumn: 0,
-    widthColumns: 6,
-    heightRows: 6,
+    widthColumns: WidgetManager.GridColumns,
+    heightRows: WidgetManager.GridRows,
     columns: WidgetManager.GridColumns,
     rows: WidgetManager.GridRows,
     showHalfCells: true,
