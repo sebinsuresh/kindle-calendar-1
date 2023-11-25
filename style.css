@@ -18,6 +18,12 @@ body {
   font-size: 16px;
 }
 
+.monospaced {
+  font-family: monospace;
+}
+
+/* Widget styles */
+
 table.widget,
 div.widget {
   /* display: inline-block; */
@@ -29,6 +35,19 @@ div.shadow {
   position: absolute;
   background-color: black;
   z-index: -1;
+}
+
+div.centered {
+  background-color: white;
+  text-align: center;
+  display: inline-block;
+}
+
+div.centered::before {
+  content: ' ';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
 }
 
 /* Clock and Date Style */
@@ -105,22 +124,13 @@ table.calendar.dark > tbody > tr > td.day-today {
 .calendar td.day-past {
 }*/
 
-div.centered {
-  background-color: white;
-  text-align: center;
-  display: inline-block;
-}
-
-div.centered::before {
-  content: ' ';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-}
+/* Resolution widget styles */
 
 div.resolution > div {
   display: inline-block;
 }
+
+/* Grid widget styles */
 
 div.grid > table,
 div.grid > table > tbody > tr > td {
@@ -133,4 +143,19 @@ div.grid > table > tbody > tr > td {
 div.grid > table {
   width: 100%;
   height: 100%;
+}
+
+/* Note widget styles */
+
+div.note {
+  overflow-y: scroll;
+  background-color: white;
+}
+
+div.note > pre.note-text-container {
+  display: inline-block;
+  overflow-x: auto;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

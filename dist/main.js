@@ -940,6 +940,72 @@ try {
       },
       DisplayModes: DisplayModes
     };
+    function Note_typeof(obj) {
+      return Note_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
+        return typeof obj;
+      } : function(obj) {
+        return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      }, Note_typeof(obj);
+    }
+    function Note_ownKeys(object, enumerableOnly) {
+      var keys = Object.keys(object);
+      if (Object.getOwnPropertySymbols) {
+        var symbols = Object.getOwnPropertySymbols(object);
+        enumerableOnly && (symbols = symbols.filter((function(sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        }))), keys.push.apply(keys, symbols);
+      }
+      return keys;
+    }
+    function Note_objectSpread(target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = null != arguments[i] ? arguments[i] : {};
+        i % 2 ? Note_ownKeys(Object(source), !0).forEach((function(key) {
+          Note_defineProperty(target, key, source[key]);
+        })) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : Note_ownKeys(Object(source)).forEach((function(key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        }));
+      }
+      return target;
+    }
+    function Note_defineProperty(obj, key, value) {
+      return (key = function Note_toPropertyKey(arg) {
+        var key = function Note_toPrimitive(input, hint) {
+          if ("object" !== Note_typeof(input) || null === input) return input;
+          var prim = input[Symbol.toPrimitive];
+          if (prim !== undefined) {
+            var res = prim.call(input, hint || "default");
+            if ("object" !== Note_typeof(res)) return res;
+            throw new TypeError("@@toPrimitive must return a primitive value.");
+          }
+          return ("string" === hint ? String : Number)(input);
+        }(arg, "string");
+        return "symbol" === Note_typeof(key) ? key : String(key);
+      }(key)) in obj ? Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: !0,
+        configurable: !0,
+        writable: !0
+      }) : obj[key] = value, obj;
+    }
+    var Note_defaultConfig = {
+      text: "",
+      monospaced: !1
+    };
+    var NoteWidget = {
+      create: function Note_createWidget(config) {
+        var _defaultConfig$config = Note_objectSpread(Note_objectSpread({}, Note_defaultConfig), config), text = _defaultConfig$config.text, monospaced = _defaultConfig$config.monospaced, containerElem = document.createElement("div");
+        return containerElem.className += " note widget", function addNotes(noteElem, text, monospaced) {
+          var noteTextContainer = document.createElement("pre");
+          noteTextContainer.className += " note-text-container", noteTextContainer.innerText = text, 
+          monospaced && (noteTextContainer.className += " monospaced"), noteElem.appendChild(noteTextContainer);
+        }(containerElem, text, monospaced), {
+          returnElem: containerElem,
+          minWidth: 130,
+          minHeight: 21
+        };
+      }
+    };
     function Resolution_typeof(obj) {
       return Resolution_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
@@ -1178,6 +1244,12 @@ try {
       day: {
         create: DayWidget.create,
         defaultConfig: {}
+      },
+      note: {
+        create: NoteWidget.create,
+        defaultConfig: {
+          text: "This is a note"
+        }
       }
     }), document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
@@ -1219,14 +1291,14 @@ try {
         heightRows: 1,
         showShadow: !0
       }), widgetManager.createWidget("calendar", {
-        numRows: 4,
-        startCurrWeekOnRow: 1,
-        showUpdateInHrs: !1,
-        theme: Calendar.Themes.Light,
         xColumn: 4,
         yColumn: 4,
         widthColumns: 4,
         heightRows: 4,
+        numRows: 4,
+        startCurrWeekOnRow: 1,
+        showUpdateInHrs: !1,
+        theme: Calendar.Themes.Light,
         daysMode: Calendar.DaysModes.Shortest,
         showShadow: !0
       }), widgetManager.createWidget("resolution", {
@@ -1235,6 +1307,14 @@ try {
         widthColumns: 3,
         heightRows: 1,
         showShadow: !0
+      }), widgetManager.createWidget("note", {
+        xColumn: 1,
+        yColumn: 3,
+        widthColumns: 4,
+        heightRows: 3,
+        showShadow: !0,
+        text: "Things to do:\n\n  - Test item 1 Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1\n  - Test item 2\n  - Test item 3\n  - Test item 4",
+        monospaced: !0
       });
     })));
   }();

@@ -2,6 +2,7 @@ import { Calendar } from './Widgets/Calendar';
 import { Clock } from './Widgets/Clock';
 import { DateWidget } from './Widgets/Date';
 import { DayWidget } from './Widgets/Day';
+import { NoteWidget } from './Widgets/Note';
 import { Resolution } from './Widgets/Resolution';
 import { Grid } from './Widgets/grid';
 
@@ -64,6 +65,13 @@ export class WidgetManager {
       create: DayWidget.create,
       /** @type { import('./Widgets/Day').Config } */
       defaultConfig: {},
+    },
+    note: {
+      create: NoteWidget.create,
+      /** @type { import('./Widgets/Note').Config } */
+      defaultConfig: {
+        text: 'This is a note',
+      },
     },
   };
 

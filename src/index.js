@@ -47,14 +47,14 @@ function handleOnLoad() {
   });
 
   widgetManager.createWidget('calendar', {
-    numRows: 4,
-    startCurrWeekOnRow: 1,
-    showUpdateInHrs: false,
-    theme: Calendar.Themes.Light,
     xColumn: 4,
     yColumn: 4,
     widthColumns: 4,
     heightRows: 4,
+    numRows: 4,
+    startCurrWeekOnRow: 1,
+    showUpdateInHrs: false,
+    theme: Calendar.Themes.Light,
     daysMode: Calendar.DaysModes.Shortest,
     showShadow: true,
   });
@@ -65,6 +65,21 @@ function handleOnLoad() {
     widthColumns: 3,
     heightRows: 1,
     showShadow: true,
+  });
+
+  widgetManager.createWidget('note', {
+    xColumn: 1,
+    yColumn: 3,
+    widthColumns: 4,
+    heightRows: 3,
+    showShadow: true,
+    text: `Things to do:
+
+  - Test item 1 Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1Test item 1
+  - Test item 2
+  - Test item 3
+  - Test item 4`,
+    monospaced: true,
   });
 }
 
