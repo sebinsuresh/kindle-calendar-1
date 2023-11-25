@@ -10,6 +10,7 @@ import { getCurrentDate } from '../Utilities/getCurrentDate';
  * @property { Number } [startCurrWeekOnRow] Which row to start the current week on
  * @property { Boolean } [showUpdateInHrs] Whether to show the time until the next update
  * @property { Number } [theme] Which theme to use from `Themes`
+ * @property { Number } [daysMode] Which mode to display the days row, from `daysModes`
  *
  * @typedef { BaseWidgetConfig & CalendarConfigProperties } Config
  */
@@ -19,18 +20,24 @@ const Themes = {
   Dark: 2,
 };
 
+const DaysModes = {
+  Shortest: 1,
+  Short: 2,
+  Long: 3,
+};
+
+const CalendarModes = {
+  /** First day of month goes in 1st row */
+  Month: 1,
+  /** Current day appears in startCurrWeekOnRow-th row */
+  Week: 2,
+};
+
 const defaultConfig = {
   numRows: 4,
   startCurrWeekOnRow: 1,
   showUpdateInHrs: false,
   theme: Themes.Light,
-};
-
-const Modes = {
-  /** First day of month goes in 1st row */
-  Month: 1,
-  /** Current day appears in startCurrWeekOnRow-th row */
-  Week: 2,
 };
 
 /**
@@ -60,15 +67,27 @@ function createCalendarHeader() {
 
 /**
  * Returns a row of day names
+ * @param { Number } [daysMode] Must be one of `daysModes`
  * @returns { HTMLTableRowElement }
  */
-function createCalendarDaysHeader() {
+function createCalendarDaysHeader(daysMode) {
   const daysRow = document.createElement('tr');
   daysRow.className += ' days';
   for (let i = 0; i < WeekDays.Short.length; i++) {
     const dayElem = document.createElement('td');
     daysRow.appendChild(dayElem);
-    dayElem.innerText = WeekDays.Short[i];
+    switch (daysMode) {
+      case DaysModes.Shortest:
+        dayElem.innerText = WeekDays.Shortest[i];
+        break;
+      case DaysModes.Long:
+        dayElem.innerText = WeekDays.Long[i];
+        break;
+      case DaysModes.Short:
+      default:
+        dayElem.innerText = WeekDays.Short[i];
+        break;
+    }
   }
   return daysRow;
 }
@@ -99,12 +118,13 @@ function createWeek() {
 /**
  * Creates and returns the body of the calendar
  * @param { Number } numWeeks
+ * @param { Number } [daysMode] Must be one of `daysModes`
  * @returns { HTMLTableSectionElement }
  */
-function createCalendarBody(numWeeks) {
+function createCalendarBody(numWeeks, daysMode) {
   const calendarBody = document.createElement('tbody');
 
-  const daysHeader = createCalendarDaysHeader();
+  const daysHeader = createCalendarDaysHeader(daysMode);
   calendarBody.appendChild(daysHeader);
 
   for (let i = 0; i < numWeeks; i++) {
@@ -210,7 +230,7 @@ function populateCalendar(calendarTable, showUpdateInHrs) {
  * @returns { import('./Types/BaseWidgetTypes').BaseWidgetReturn }
  */
 export function createWidget(config) {
-  const { numRows, startCurrWeekOnRow, showUpdateInHrs, theme } = { ...defaultConfig, ...config };
+  const { numRows, startCurrWeekOnRow, showUpdateInHrs, theme, daysMode } = { ...defaultConfig, ...config };
 
   const calendarElem = CreateTable(theme);
   calendarElem.setAttribute('data-num-rows', numRows.toString());
@@ -222,7 +242,7 @@ export function createWidget(config) {
   const calendarTh = createCalendarHeader();
   calendarTHead.appendChild(calendarTh);
 
-  const calendarBody = createCalendarBody(numRows);
+  const calendarBody = createCalendarBody(numRows, daysMode);
   calendarElem.appendChild(calendarBody);
 
   populateCalendar(calendarElem, showUpdateInHrs);
@@ -238,4 +258,6 @@ export function createWidget(config) {
 export const Calendar = {
   create: createWidget,
   Themes,
+  CalendarModes,
+  DaysModes,
 };

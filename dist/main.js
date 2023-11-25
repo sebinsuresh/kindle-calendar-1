@@ -619,6 +619,7 @@ try {
   !function() {
     "use strict";
     var WeekDays = {
+      Shortest: [ "S", "M", "T", "W", "T", "F", "S" ],
       Short: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
       Long: [ "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ]
     }, Months = {
@@ -685,6 +686,10 @@ try {
     var Themes = {
       Light: 1,
       Dark: 2
+    }, DaysModes = {
+      Shortest: 1,
+      Short: 2,
+      Long: 3
     }, defaultConfig = {
       numRows: 4,
       startCurrWeekOnRow: 1,
@@ -702,16 +707,28 @@ try {
       }
       return row;
     }
-    function createCalendarBody(numWeeks) {
-      var calendarBody = document.createElement("tbody"), daysHeader = function createCalendarDaysHeader() {
+    function createCalendarBody(numWeeks, daysMode) {
+      var calendarBody = document.createElement("tbody"), daysHeader = function createCalendarDaysHeader(daysMode) {
         var daysRow = document.createElement("tr");
         daysRow.className += " days";
         for (var i = 0; i < WeekDays.Short.length; i++) {
           var dayElem = document.createElement("td");
-          daysRow.appendChild(dayElem), dayElem.innerText = WeekDays.Short[i];
+          switch (daysRow.appendChild(dayElem), daysMode) {
+           case DaysModes.Shortest:
+            dayElem.innerText = WeekDays.Shortest[i];
+            break;
+
+           case DaysModes.Long:
+            dayElem.innerText = WeekDays.Long[i];
+            break;
+
+           case DaysModes.Short:
+           default:
+            dayElem.innerText = WeekDays.Short[i];
+          }
         }
         return daysRow;
-      }();
+      }(daysMode);
       calendarBody.appendChild(daysHeader);
       for (var i = 0; i < numWeeks; i++) {
         var row = createWeek();
@@ -745,12 +762,12 @@ try {
     }
     var Calendar = {
       create: function createWidget(config) {
-        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, calendarElem = function CreateTable(theme) {
+        var _defaultConfig$config = _objectSpread(_objectSpread({}, defaultConfig), config), numRows = _defaultConfig$config.numRows, startCurrWeekOnRow = _defaultConfig$config.startCurrWeekOnRow, showUpdateInHrs = _defaultConfig$config.showUpdateInHrs, theme = _defaultConfig$config.theme, daysMode = _defaultConfig$config.daysMode, calendarElem = function CreateTable(theme) {
           var calendarElem = document.createElement("table");
           return calendarElem.className += " calendar widget", calendarElem.className += theme === Themes.Dark ? " dark" : " light", 
           calendarElem.setAttribute("cellspacing", "0"), calendarElem.setAttribute("cellpadding", "4"), 
           calendarElem;
-        }(_defaultConfig$config.theme);
+        }(theme);
         calendarElem.setAttribute("data-num-rows", numRows.toString()), calendarElem.setAttribute("data-start-curr-week-on-row", startCurrWeekOnRow.toString());
         var calendarTHead = document.createElement("thead");
         calendarElem.appendChild(calendarTHead);
@@ -760,7 +777,7 @@ try {
           calendarTh;
         }();
         calendarTHead.appendChild(calendarTh);
-        var calendarBody = createCalendarBody(numRows);
+        var calendarBody = createCalendarBody(numRows, daysMode);
         return calendarElem.appendChild(calendarBody), populateCalendar(calendarElem, showUpdateInHrs), 
         {
           returnElem: calendarElem,
@@ -768,7 +785,12 @@ try {
           minHeight: 176
         };
       },
-      Themes: Themes
+      Themes: Themes,
+      CalendarModes: {
+        Month: 1,
+        Week: 2
+      },
+      DaysModes: DaysModes
     };
     function getLeftZeroedString(input, numDigits) {
       if (numDigits > 3) throw new Error("numDigits must be <= 3");
@@ -1093,11 +1115,12 @@ try {
         numRows: 4,
         startCurrWeekOnRow: 1,
         showUpdateInHrs: !1,
-        theme: 1,
-        xColumn: 1.5,
+        theme: Calendar.Themes.Light,
+        xColumn: 1,
         yColumn: 1,
-        widthColumns: 3,
-        heightRows: 3
+        widthColumns: 2.5,
+        heightRows: 2.5,
+        daysMode: Calendar.DaysModes.Shortest
       }), widgetManager.createWidget("grid", {
         xColumn: 0,
         yColumn: 0,

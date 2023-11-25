@@ -122,11 +122,12 @@ function handleOnLoad() {
     numRows: 4,
     startCurrWeekOnRow: 1,
     showUpdateInHrs: false,
-    theme: 1,
-    xColumn: 1.5,
+    theme: Calendar.Themes.Light,
+    xColumn: 1,
     yColumn: 1,
-    widthColumns: 3,
-    heightRows: 3,
+    widthColumns: 2.5,
+    heightRows: 2.5,
+    daysMode: Calendar.DaysModes.Shortest,
   });
 
   widgetManager.createWidget('grid', {

@@ -48,6 +48,12 @@ table.calendar {
   text-align: center;
 }
 
+table.calendar > tbody > tr > td {
+  padding: 0;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
 table.calendar > tbody > tr.days > td {
   font-weight: bold;
   border-top: thin solid;
@@ -81,6 +87,17 @@ table.calendar.dark > tbody > tr > td.day-today {
   background-color: white;
   color: black;
 }
+
+/* .days td:first-child {
+  border-left: thin solid;
+}
+
+.days td:last-child {
+  border-right: thin solid;
+} 
+
+.calendar td.day-past {
+}*/
 
 div.clock,
 div.date,
