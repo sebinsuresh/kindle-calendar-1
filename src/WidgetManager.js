@@ -3,6 +3,7 @@ import { Clock } from './Widgets/Clock';
 import { DateWidget } from './Widgets/Date';
 import { DayWidget } from './Widgets/Day';
 import { NoteWidget } from './Widgets/Note';
+import { PageRefresh } from './Widgets/PageRefresh';
 import { Resolution } from './Widgets/Resolution';
 import { Grid } from './Widgets/grid';
 
@@ -83,6 +84,11 @@ export class WidgetManager {
       defaultConfig: {
         text: 'This is a note',
       },
+    },
+    pageRefresh: {
+      create: PageRefresh.create,
+      /** @type { import('./Widgets/PageRefresh').Config } */
+      defaultConfig: {},
     },
   };
 

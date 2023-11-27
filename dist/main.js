@@ -1010,6 +1010,34 @@ try {
         };
       }
     };
+    function setContent(widgetElem) {
+      var containerElem = document.createElement("div"), refreshButton = function createRefreshButton() {
+        var refreshButton = document.createElement("button");
+        return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
+          return location.reload();
+        })), refreshButton;
+      }();
+      containerElem.appendChild(refreshButton);
+      var checkBox = document.createElement("input");
+      checkBox.type = "checkbox", checkBox.checked = !1, checkBox.id = "page-refresh-checkbox-".concat(~~(100 * Math.random())), 
+      checkBox.addEventListener("change", (function() {
+        checkBox.checked;
+      })), containerElem.appendChild(checkBox);
+      var labelElem = document.createElement("label");
+      labelElem.innerText = "Click anywhere to refresh", labelElem.htmlFor = checkBox.id, 
+      containerElem.appendChild(labelElem), widgetElem.appendChild(containerElem);
+    }
+    var PageRefresh = {
+      create: function PageRefresh_createWidget(config) {
+        var widgetElem = document.createElement("div");
+        return widgetElem.className += " page-refresh centered widget", setContent(widgetElem), 
+        {
+          returnElem: widgetElem,
+          minWidth: 105,
+          minHeight: 30
+        };
+      }
+    };
     function Resolution_typeof(obj) {
       return Resolution_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(obj) {
         return typeof obj;
@@ -1061,7 +1089,7 @@ try {
     var Resolution_defaultConfig = {
       showRefreshButton: !0
     };
-    function setContent(widgetElem) {
+    function Resolution_setContent(widgetElem) {
       var spanElem = widgetElem.querySelector("span");
       spanElem || (spanElem = document.createElement("span"), widgetElem.appendChild(spanElem)), 
       spanElem.innerText = "".concat(window.innerWidth, " x ").concat(window.innerHeight);
@@ -1071,11 +1099,12 @@ try {
         var showRefreshButton = Resolution_objectSpread(Resolution_objectSpread({}, Resolution_defaultConfig), config).showRefreshButton, widgetElem = document.createElement("div");
         widgetElem.className += " resolution centered widget";
         var containerElem = document.createElement("div");
-        if (setContent(containerElem), widgetElem.appendChild(containerElem), showRefreshButton) {
-          var refreshButton = function createRefreshButton(widgetElem) {
+        if (Resolution_setContent(containerElem), widgetElem.appendChild(containerElem), 
+        showRefreshButton) {
+          var refreshButton = function Resolution_createRefreshButton(widgetElem) {
             var refreshButton = document.createElement("button");
             return refreshButton.innerText = "↻", refreshButton.addEventListener("click", (function() {
-              return setContent(widgetElem);
+              return Resolution_setContent(widgetElem);
             })), refreshButton;
           }(containerElem);
           containerElem.appendChild(refreshButton);
@@ -1230,6 +1259,17 @@ try {
         }
       } ]), WidgetManager;
     }();
+    function getCookie(Name) {
+      var search = Name + "=";
+      if (document.cookie.length > 0) {
+        var offset = document.cookie.indexOf(search);
+        if (-1 != offset) {
+          offset += search.length;
+          var end = document.cookie.indexOf(";", offset);
+          return -1 == end && (end = document.cookie.length), unescape(document.cookie.substring(offset, end));
+        }
+      }
+    }
     WidgetManager_defineProperty(WidgetManager, "GridColumns", 12), WidgetManager_defineProperty(WidgetManager, "GridRows", 12), 
     WidgetManager_defineProperty(WidgetManager, "ShadowTypes", {
       Solid: 1,
@@ -1266,6 +1306,10 @@ try {
         defaultConfig: {
           text: "This is a note"
         }
+      },
+      pageRefresh: {
+        create: PageRefresh.create,
+        defaultConfig: {}
       }
     }), document.addEventListener("DOMContentLoaded", function wrapTryCatch(fn) {
       return function() {
@@ -1323,13 +1367,19 @@ try {
         widthColumns: 2,
         heightRows: 1,
         showShadow: !0
+      }), widgetManager.createWidget("pageRefresh", {
+        xColumn: 6.5,
+        yColumn: 10,
+        widthColumns: 3,
+        heightRows: 1,
+        showShadow: !0
       }), widgetManager.createWidget("note", {
         xColumn: .5,
         yColumn: 7.5,
         widthColumns: 4,
         heightRows: 4,
         showShadow: !0,
-        text: "Things to do:\n- Test item 1\n- Test item 2\n- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\n- Test item 4",
+        text: "".concat(getCookie("test")),
         monospaced: !0
       }), widgetManager.createWidget("note", {
         xColumn: 5,
@@ -1340,7 +1390,11 @@ try {
         text: "Work TODOs:\n- Investigate bugs in prod\n  - Replicate prod locally\n- Expense devices\n- Pick up new ticket",
         monospaced: !0,
         hideScrollbar: !0
-      });
+      }), function setCookie(name, value, expires, path, theDomain, secure) {
+        value = escape(value);
+        var theCookie = name + "=" + value + (expires ? "; expires=" + expires.toGMTString() : "") + (path ? "; path=" + path : "") + (theDomain ? "; domain=" + theDomain : "") + (secure ? "; secure" : "");
+        document.cookie = theCookie;
+      }("test", "testvalue", new Date(2024, 0, 1));
     })));
   }();
 } catch (err) {

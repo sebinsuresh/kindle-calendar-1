@@ -67,17 +67,21 @@ function handleOnLoad() {
     showShadow: true,
   });
 
+  widgetManager.createWidget('pageRefresh', {
+    xColumn: 6.5,
+    yColumn: 10,
+    widthColumns: 3,
+    heightRows: 1,
+    showShadow: true,
+  });
+
   widgetManager.createWidget('note', {
     xColumn: 0.5,
     yColumn: 7.5,
     widthColumns: 4,
     heightRows: 4,
     showShadow: true,
-    text: `Things to do:
-- Test item 1
-- Test item 2
-- Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-- Test item 4`,
+    text: `${getCookie('test')}`,
     monospaced: true,
   });
 
@@ -95,6 +99,64 @@ function handleOnLoad() {
     monospaced: true,
     hideScrollbar: true,
   });
+
+  setCookie('test', 'testvalue', new Date(2024, 0, 1));
+}
+
+/**
+ * @param {string} name
+ * @param {string} value
+ * @param { Date } expires
+ * @param {string} [path]
+ * @param {string} [theDomain]
+ * @param {any} [secure]
+ */
+function setCookie(name, value, expires, path, theDomain, secure) {
+  value = escape(value);
+  var theCookie =
+    name +
+    '=' +
+    value +
+    // @ts-ignore - toGMTString is deprecated, but supported in Kindle browser
+    (expires ? '; expires=' + expires.toGMTString() : '') +
+    (path ? '; path=' + path : '') +
+    (theDomain ? '; domain=' + theDomain : '') +
+    (secure ? '; secure' : '');
+  document.cookie = theCookie;
+}
+
+/**
+ * @param {string} Name
+ */
+function getCookie(Name) {
+  var search = Name + '=';
+  if (document.cookie.length > 0) {
+    // if there are any cookies
+    var offset = document.cookie.indexOf(search);
+    if (offset != -1) {
+      // if cookie exists
+      offset += search.length;
+      // set index of beginning of value
+      var end = document.cookie.indexOf(';', offset);
+      // set index of end of cookie value
+      if (end == -1) end = document.cookie.length;
+      return unescape(document.cookie.substring(offset, end));
+    }
+  }
+}
+/**
+ * @param {string} name
+ * @param {string} path
+ * @param {string} domain
+ */
+function delCookie(name, path, domain) {
+  if (getCookie(name))
+    document.cookie =
+      name +
+      '=' +
+      (path ? ';path=' + path : '') +
+      (domain ? ';domain=' + domain : '') +
+      ';expires=Thu, 01-Jan-70 00:00:01 GMT';
 }
 
 document.addEventListener('DOMContentLoaded', wrapTryCatch(handleOnLoad));

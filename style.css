@@ -50,6 +50,11 @@ div.centered {
   display: inline-block;
 }
 
+div.centered > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 div.centered::before {
   content: ' ';
   display: inline-block;
